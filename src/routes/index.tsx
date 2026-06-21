@@ -306,9 +306,9 @@ function Index() {
               <a href={MAPS_URL} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] hover:bg-[color:var(--ink)]">
                 Cómo llegar
               </a>
-              <a href={WA_URL} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full border border-[color:var(--wine)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)]">
+              <button type="button" onClick={openReserva} className="inline-flex items-center gap-2 rounded-full border border-[color:var(--wine)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)]">
                 <WhatsAppIcon className="h-4 w-4" /> Reservar
-              </a>
+              </button>
             </div>
           </div>
 
