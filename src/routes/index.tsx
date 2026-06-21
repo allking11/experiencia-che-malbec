@@ -211,9 +211,9 @@ function Index() {
           </div>
 
           <div className="reveal mt-14 text-center">
-            <a href={WA_URL} target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] transition-all hover:bg-[color:var(--ink)]">
-              <WhatsAppIcon className="h-5 w-5" /> Consultar degustaciones
-            </a>
+            <button type="button" onClick={openReserva} className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] transition-all hover:bg-[color:var(--ink)]">
+              <WhatsAppIcon className="h-5 w-5" /> Reservar degustación
+            </button>
           </div>
         </div>
       </section>
