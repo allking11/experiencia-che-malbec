@@ -74,9 +74,9 @@ function Index() {
             <li><a href="#historia" className="hover:text-[color:var(--wine)] transition-colors">Historia</a></li>
             <li><a href="#ubicacion" className="hover:text-[color:var(--wine)] transition-colors">Ubicación</a></li>
           </ul>
-          <a href={WA_URL} target="_blank" rel="noopener" className="hidden items-center gap-2 rounded-full bg-[color:var(--wine)] px-5 py-2.5 text-sm font-semibold tracking-wide text-[color:var(--cream)] shadow-sm transition-all hover:bg-[color:var(--ink)] md:inline-flex">
+          <button type="button" onClick={openReserva} className="hidden items-center gap-2 rounded-full bg-[color:var(--wine)] px-5 py-2.5 text-sm font-semibold tracking-wide text-[color:var(--cream)] shadow-sm transition-all hover:bg-[color:var(--ink)] md:inline-flex">
             <WhatsAppIcon className="h-4 w-4" /> Reservar
-          </a>
+          </button>
         </nav>
       </header>
 
