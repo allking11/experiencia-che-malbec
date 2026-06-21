@@ -35,7 +35,7 @@
 
 :root {
   --radius: 0.5rem;
-  --cream: oklch(0.92 0.04 78);          /* #F4E0C5 */
+  --cream: #FEE9CC;
   --wine: oklch(0.38 0.08 38);           /* #6B3F2E */
   --gold: oklch(0.72 0.11 78);           /* #C7A25B */
   --ink: oklch(0.22 0.03 38);            /* #2B1E1A */
