@@ -336,9 +336,9 @@ function Index() {
           <p className="reveal mt-6 text-lg text-[color:var(--cream)]/85">
             Escribinos y reservá tu lugar. Te esperamos en Av. de Mayo 777.
           </p>
-          <a href={WA_URL} target="_blank" rel="noopener" className="reveal mt-10 inline-flex items-center gap-3 rounded-full bg-[color:var(--gold)] px-10 py-5 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink)] shadow-2xl transition-all hover:scale-[1.03] hover:bg-[color:var(--cream)]">
-            <WhatsAppIcon className="h-5 w-5" /> Hablar por WhatsApp
-          </a>
+          <button type="button" onClick={openReserva} className="reveal mt-10 inline-flex items-center gap-3 rounded-full bg-[color:var(--gold)] px-10 py-5 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink)] shadow-2xl transition-all hover:scale-[1.03] hover:bg-[color:var(--cream)]">
+            <WhatsAppIcon className="h-5 w-5" /> Reservar tu mesa
+          </button>
         </div>
       </section>
 
