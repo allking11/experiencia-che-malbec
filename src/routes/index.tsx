@@ -49,6 +49,8 @@ function WhatsAppIcon({ className = "" }: { className?: string }) {
 
 function Index() {
   useReveal();
+  const [reservaOpen, setReservaOpen] = useState(false);
+  const openReserva = () => setReservaOpen(true);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
