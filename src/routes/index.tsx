@@ -109,20 +109,55 @@ function Index() {
         </a>
       </section>
 
-      {/* PRUEBA SOCIAL */}
-      <section id="prueba" className="bg-[color:var(--cream)] py-20 sm:py-28">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <p className="gold-divider reveal">Prueba social</p>
-          <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
-            Una experiencia elegida por cientos de amantes del vino
-          </h2>
-          <div className="reveal mt-8 flex flex-col items-center gap-2">
-            <div className="text-3xl tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
-            <p className="font-serif text-xl italic text-[color:var(--ink)]/80">Más de 1100 reseñas en Google</p>
+      {/* OPINIONES / TESTIMONIOS */}
+      <section id="prueba" className="bg-[color:var(--wine)] py-20 text-[color:var(--cream)] sm:py-28">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
+            <div>
+              <p className="gold-divider reveal" style={{ color: "var(--gold)" }}>Opiniones</p>
+              <h2 className="reveal mt-5 font-serif text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
+                4.8 <span className="text-[color:var(--gold)]">★</span> en Google Maps
+              </h2>
+            </div>
+            <p className="reveal text-base leading-relaxed text-[color:var(--cream)]/80">
+              Lo que más destacan: la calidez del espacio, la cercanía de los sommeliers y las picadas abundantes.
+            </p>
           </div>
-          <a href="#experiencia" className="reveal mt-8 inline-block font-serif italic text-[color:var(--wine)] underline decoration-[color:var(--gold)] decoration-2 underline-offset-[6px] hover:decoration-[color:var(--wine)]">
-            Conocer la experiencia →
-          </a>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                q: "Una verdadera joya en medio del centro. Agustín nos guió copa a copa con mucha paciencia, explicando la historia de cada bodega. Las empanadas caseras son espectaculares. Ambiente íntimo ideal para bajar un cambio.",
+                n: "Mariana S.",
+                r: "Cliente local",
+              },
+              {
+                q: "Me encantó el lugar. Al estar dentro del histórico Palacio Vera, se respira una atmósfera única. Tienen etiquetas boutique muy interesantes y la atención del personal te hace sentir como en casa desde que entrás.",
+                n: "Jean-Pierre L.",
+                r: "Visitante",
+              },
+              {
+                q: "Los vinos y la comida son excelentes, y la atención del sommelier impecable. El local es chico y acogedor — siempre conviene reservar para asegurar la mesa.",
+                n: "Carlos G.",
+                r: "Reseña verificada",
+              },
+            ].map((t, i) => (
+              <article
+                key={t.n}
+                className="reveal flex flex-col rounded-sm border border-[color:var(--cream)]/10 bg-[color:var(--cream)]/[0.04] p-7 backdrop-blur-sm"
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
+                <div className="text-lg tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
+                <p className="mt-5 flex-1 font-serif text-lg italic leading-relaxed text-[color:var(--cream)]/95">
+                  “{t.q}”
+                </p>
+                <div className="mt-6">
+                  <p className="font-semibold text-[color:var(--cream)]">{t.n}</p>
+                  <p className="text-sm text-[color:var(--cream)]/60">{t.r}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
