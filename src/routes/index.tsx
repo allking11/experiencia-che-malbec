@@ -6,6 +6,7 @@ import copa from "@/assets/copa.jpg";
 import copaBotella from "@/assets/copa-botella.jpg";
 import burrata from "@/assets/burrata.jpg";
 import clientes from "@/assets/clientes.jpg";
+import feriaVinosVideo from "@/assets/feria-vinos.mp4";
 import { ReservationDialog } from "@/components/ReservationDialog";
 
 export const Route = createFileRoute("/")({
@@ -25,6 +26,8 @@ export const Route = createFileRoute("/")({
 const WA_NUMBER = "5491128481233";
 const WA_MSG = encodeURIComponent("Hola Che Malbec 👋 Quiero consultar por una degustación / reserva.");
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
+const WA_EVENT_MSG = encodeURIComponent("Hola Che Malbec 👋 Quiero reservar mi entrada para la Feria de Vinos del lunes 8 de julio.");
+const WA_EVENT_URL = `https://wa.me/${WA_NUMBER}?text=${WA_EVENT_MSG}`;
 const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=Che+Malbec+Av+de+Mayo+777+Buenos+Aires";
 
 function useReveal() {
@@ -254,6 +257,96 @@ function Index() {
             <img src={copaBotella} alt="Botella de Malbec argentino con copa Che Malbec" className="col-span-2 aspect-[4/5] w-full rounded-sm object-cover shadow-2xl sm:aspect-[5/4]" />
             <img src={burrata} alt="Plato de burrata con jamón crudo y rúcula" className="aspect-square w-full rounded-sm object-cover" />
             <img src={clientes} alt="Clientes disfrutando en el salón de Che Malbec" className="aspect-square w-full rounded-sm object-cover" />
+          </div>
+        </div>
+      </section>
+
+      {/* NOVEDADES / EVENTOS */}
+      <section id="novedades" className="bg-[color:var(--card)] py-24 sm:py-32 border-t border-[color:var(--gold)]/20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mx-auto max-w-2xl text-center md:mb-16 mb-12">
+            <p className="gold-divider reveal">Agenda de Eventos</p>
+            <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+              Novedades
+            </h2>
+          </div>
+
+          <div className="grid gap-12 md:grid-cols-2 md:items-center">
+            {/* Detalles del Evento */}
+            <div className="reveal order-2 md:order-1 space-y-6">
+              <span className="inline-block rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                Próximo Evento 🍷
+              </span>
+              <h3 className="font-serif text-3xl text-[color:var(--ink)] sm:text-4xl">
+                Feria de Vinos
+              </h3>
+              
+              <div className="rounded-lg bg-[color:var(--cream)]/40 p-5 border border-[color:var(--gold)]/20 space-y-3">
+                <p className="flex items-center gap-2.5 text-base font-semibold text-[color:var(--wine)]">
+                  <span className="text-xl">📅</span> Lunes 8 de Julio (¡Víspera de feriado!)
+                </p>
+                <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
+                  <span className="text-lg">⏰</span> 19:00 hs
+                </p>
+                <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
+                  <span className="text-lg">📍</span> Avenida de Mayo 777, Monserrat
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <p className="text-base leading-relaxed text-[color:var(--ink)]/85 font-medium">
+                  Te esperamos para disfrutar una noche a pura fiesta y vinitos con una propuesta imperdible:
+                </p>
+                <ul className="grid gap-3 text-sm text-[color:var(--ink)]/85">
+                  <li className="flex items-start gap-2">
+                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                    <span><strong>Más de 15 etiquetas boutique</strong> para degustar libremente.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                    <span><strong>Banda de rock de los 80's</strong> en vivo.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                    <span><strong>Canilla libre por tres horas</strong> (con reserva previa).</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                    <span>La copa del evento va de <strong>regalo</strong>.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                    <span><strong>Valor:</strong> $40.000 por persona.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-4">
+                <a
+                  href={WA_EVENT_URL}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg transition-all hover:scale-[1.02] hover:bg-[color:var(--ink)]"
+                >
+                  <WhatsAppIcon className="h-5 w-5" /> Reservar vía WhatsApp
+                </a>
+              </div>
+            </div>
+
+            {/* Video Promocional */}
+            <div className="reveal order-1 md:order-2 flex justify-center">
+              <div className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[340px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/30 bg-[color:var(--ink)]">
+                <video
+                  src={feriaVinosVideo}
+                  className="w-full h-full object-cover"
+                  controls
+                  playsInline
+                  loop
+                  muted
+                  preload="auto"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
