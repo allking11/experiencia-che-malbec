@@ -245,9 +245,9 @@ function Index() {
               ))}
             </ul>
 
-            <a href={WA_URL} target="_blank" rel="noopener" className="mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--gold)] transition-colors hover:bg-[color:var(--gold)] hover:text-[color:var(--ink)]">
-              Consultar la carta
-            </a>
+            <button type="button" onClick={openReserva} className="mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--gold)] transition-colors hover:bg-[color:var(--gold)] hover:text-[color:var(--ink)]">
+              Reservar mesa
+            </button>
           </div>
 
           <div className="reveal grid grid-cols-2 gap-4">
