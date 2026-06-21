@@ -8,6 +8,7 @@ import burrata from "@/assets/burrata.jpg";
 import clientes from "@/assets/clientes.jpg";
 import feriaVinosVideo from "@/assets/feria-vinos.mp4";
 import { ReservationDialog } from "@/components/ReservationDialog";
+import { Calendar, Clock, MapPin } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -283,13 +284,13 @@ function Index() {
               
               <div className="rounded-lg bg-[color:var(--cream)]/40 p-5 border border-[color:var(--gold)]/20 space-y-3">
                 <p className="flex items-center gap-2.5 text-base font-semibold text-[color:var(--wine)]">
-                  <span className="text-xl">📅</span> Lunes 8 de Julio (¡Víspera de feriado!)
+                  <Calendar className="h-5 w-5 text-[color:var(--gold)] shrink-0" /> Lunes 8 de Julio (¡Víspera de feriado!)
                 </p>
                 <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
-                  <span className="text-lg">⏰</span> 19:00 hs
+                  <Clock className="h-4 w-4 text-[color:var(--gold)] shrink-0" /> 19:00 hs
                 </p>
                 <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
-                  <span className="text-lg">📍</span> Avenida de Mayo 777, Monserrat
+                  <MapPin className="h-4 w-4 text-[color:var(--gold)] shrink-0" /> Avenida de Mayo 777, Monserrat
                 </p>
               </div>
 
