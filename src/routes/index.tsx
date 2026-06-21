@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import logo from "@/assets/logo.png.asset.json";
-import fachada from "@/assets/fachada.jpg.asset.json";
-import copa from "@/assets/copa.jpg.asset.json";
-import copaBotella from "@/assets/copa-botella.jpg.asset.json";
-import burrata from "@/assets/burrata.jpg.asset.json";
-import clientes from "@/assets/clientes.jpg.asset.json";
+import logo from "@/assets/logo.png";
+import fachada from "@/assets/fachada.jpg";
+import copa from "@/assets/copa.jpg";
+import copaBotella from "@/assets/copa-botella.jpg";
+import burrata from "@/assets/burrata.jpg";
+import clientes from "@/assets/clientes.jpg";
 import { ReservationDialog } from "@/components/ReservationDialog";
 
 export const Route = createFileRoute("/")({
@@ -15,8 +15,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Degustaciones guiadas, vinos argentinos boutique y picadas caseras en Av. de Mayo 777. Reservá por WhatsApp." },
       { property: "og:title", content: "Che Malbec — Wine Bar boutique en Buenos Aires" },
       { property: "og:description", content: "Vinos argentinos, degustaciones y momentos para compartir en pleno Buenos Aires." },
-      { property: "og:image", content: fachada.url },
-      { name: "twitter:image", content: fachada.url },
+      { property: "og:image", content: fachada },
+      { name: "twitter:image", content: fachada },
     ],
   }),
   component: Index,
@@ -65,7 +65,7 @@ function Index() {
       <header className={`fixed inset-x-0 top-0 z-40 bg-[color:var(--cream)] border-b border-[color:var(--gold)]/30 transition-all duration-500 ${scrolled ? "py-3 shadow-sm" : "py-5"}`}>
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5">
           <a href="#inicio" className="flex items-center gap-2">
-            <img src={logo.url} alt="Che Malbec Mercado & Wine Bar" className="h-10 w-auto md:h-12" />
+            <img src={logo} alt="Che Malbec Mercado & Wine Bar" className="h-10 w-auto md:h-12" />
           </a>
           <ul className="hidden items-center gap-8 text-sm font-medium text-[color:var(--ink)]/80 md:flex">
             <li><a href="#experiencia" className="hover:text-[color:var(--wine)] transition-colors">Experiencia</a></li>
@@ -83,7 +83,7 @@ function Index() {
       {/* HERO */}
       <section id="inicio" className="relative min-h-[100svh] w-full overflow-hidden">
         <div className="absolute inset-0">
-          <img src={fachada.url} alt="Fachada de Che Malbec en Av. de Mayo, Buenos Aires" className="h-full w-full object-cover ken-burns" />
+          <img src={fachada} alt="Fachada de Che Malbec en Av. de Mayo, Buenos Aires" className="h-full w-full object-cover ken-burns" />
           <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--ink)]/70 via-[color:var(--ink)]/45 to-[color:var(--ink)]/85" />
         </div>
         <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-6 pt-24 pb-16 text-center text-[color:var(--cream)]">
@@ -168,7 +168,7 @@ function Index() {
       <section id="experiencia" className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-20">
           <div className="reveal order-2 md:order-1">
-            <img src={copa.url} alt="Copa de vino servida en Che Malbec" className="aspect-[4/5] w-full rounded-sm object-cover shadow-xl" />
+            <img src={copa} alt="Copa de vino servida en Che Malbec" className="aspect-[4/5] w-full rounded-sm object-cover shadow-xl" />
           </div>
           <div className="reveal order-1 md:order-2">
             <p className="gold-divider">La experiencia</p>
@@ -251,9 +251,9 @@ function Index() {
           </div>
 
           <div className="reveal grid grid-cols-2 gap-4">
-            <img src={copaBotella.url} alt="Botella de Malbec argentino con copa Che Malbec" className="col-span-2 aspect-[4/5] w-full rounded-sm object-cover shadow-2xl sm:aspect-[5/4]" />
-            <img src={burrata.url} alt="Plato de burrata con jamón crudo y rúcula" className="aspect-square w-full rounded-sm object-cover" />
-            <img src={clientes.url} alt="Clientes disfrutando en el salón de Che Malbec" className="aspect-square w-full rounded-sm object-cover" />
+            <img src={copaBotella} alt="Botella de Malbec argentino con copa Che Malbec" className="col-span-2 aspect-[4/5] w-full rounded-sm object-cover shadow-2xl sm:aspect-[5/4]" />
+            <img src={burrata} alt="Plato de burrata con jamón crudo y rúcula" className="aspect-square w-full rounded-sm object-cover" />
+            <img src={clientes} alt="Clientes disfrutando en el salón de Che Malbec" className="aspect-square w-full rounded-sm object-cover" />
           </div>
         </div>
       </section>
@@ -343,7 +343,7 @@ function Index() {
       <footer className="bg-[color:var(--ink)] py-14 text-[color:var(--cream)]/80">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-3">
           <div>
-            <img src={logo.url} alt="Che Malbec" className="h-14 w-auto" />
+            <img src={logo} alt="Che Malbec" className="h-14 w-auto" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-[color:var(--cream)]/65">
               Wine bar boutique en Buenos Aires. Vinos argentinos, degustaciones guiadas y picadas para compartir.
             </p>
