@@ -262,9 +262,9 @@ function Index() {
       </section>
 
       {/* NOVEDADES / EVENTOS */}
-      <section id="novedades" className="bg-[color:var(--card)] py-24 sm:py-32 border-t border-[color:var(--gold)]/20">
+      <section id="novedades" className="bg-[color:var(--card)] py-10 md:py-12 border-t border-[color:var(--gold)]/20">
         <div className="mx-auto max-w-6xl px-6">
-          <div className="mx-auto max-w-2xl text-center md:mb-16 mb-12">
+          <div className="mx-auto max-w-2xl text-center md:mb-6 mb-4">
             <p className="gold-divider reveal">Agenda de Eventos</p>
             <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
               Novedades
