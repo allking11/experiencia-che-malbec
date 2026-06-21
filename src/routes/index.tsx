@@ -6,6 +6,7 @@ import copa from "@/assets/copa.jpg.asset.json";
 import copaBotella from "@/assets/copa-botella.jpg.asset.json";
 import burrata from "@/assets/burrata.jpg.asset.json";
 import clientes from "@/assets/clientes.jpg.asset.json";
+import { ReservationDialog } from "@/components/ReservationDialog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
