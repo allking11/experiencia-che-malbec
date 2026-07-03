@@ -4,7 +4,11 @@ type AppErrorOptions = {
   severity?: "error" | "warning" | "info";
 };
 
-export function reportAppError(error: unknown, context: Record<string, unknown> = {}, options?: AppErrorOptions) {
+export function reportAppError(
+  error: unknown,
+  context: Record<string, unknown> = {},
+  options?: AppErrorOptions,
+) {
   console.error("App Error Boundary Exception:", error, {
     route: typeof window !== "undefined" ? window.location.pathname : undefined,
     ...context,

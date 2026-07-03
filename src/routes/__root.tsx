@@ -23,7 +23,10 @@ function NotFoundComponent() {
           La página que buscás no existe o fue movida.
         </p>
         <div className="mt-6">
-          <Link to="/" className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90">
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
             Volver al inicio
           </Link>
         </div>
@@ -45,7 +48,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
         <h1 className="text-xl font-semibold tracking-tight text-foreground">Algo salió mal</h1>
         <p className="mt-2 text-sm text-muted-foreground">Probá refrescar la página.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button onClick={() => { router.invalidate(); reset(); }} className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+          <button
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          >
             Reintentar
           </button>
         </div>
@@ -60,10 +69,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Che Malbec — Mercado & Wine Bar boutique en Buenos Aires" },
-      { name: "description", content: "Wine bar boutique en Av. de Mayo 777. Degustaciones guiadas, vinos argentinos y picadas caseras. Reservá por WhatsApp." },
+      {
+        name: "description",
+        content:
+          "Wine bar boutique en Av. de Mayo 777. Degustaciones guiadas, vinos argentinos y picadas caseras. Reservá por WhatsApp.",
+      },
       { name: "author", content: "Che Malbec" },
       { property: "og:title", content: "Che Malbec — Mercado & Wine Bar" },
-      { property: "og:description", content: "Degustaciones guiadas, vinos argentinos boutique y gastronomía casera en el corazón de Buenos Aires." },
+      {
+        property: "og:description",
+        content:
+          "Degustaciones guiadas, vinos argentinos boutique y gastronomía casera en el corazón de Buenos Aires.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -71,7 +88,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,

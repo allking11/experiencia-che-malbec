@@ -35,10 +35,10 @@
 
 :root {
   --radius: 0.5rem;
-  --cream: #FEE9CC;
-  --wine: oklch(0.38 0.08 38);           /* #6B3F2E */
-  --gold: oklch(0.72 0.11 78);           /* #C7A25B */
-  --ink: oklch(0.22 0.03 38);            /* #2B1E1A */
+  --cream: #fee9cc;
+  --wine: oklch(0.38 0.08 38); /* #6B3F2E */
+  --gold: oklch(0.72 0.11 78); /* #C7A25B */
+  --ink: oklch(0.22 0.03 38); /* #2B1E1A */
 
   --background: var(--cream);
   --foreground: var(--ink);
@@ -61,35 +61,72 @@
   --popover-foreground: var(--ink);
 }
 
-.dark { color-scheme: light; }
+.dark {
+  color-scheme: light;
+}
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 600; letter-spacing: -0.01em; }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
 }
 
 @layer utilities {
   .gold-divider {
-    display: inline-flex; align-items: center; gap: .75rem;
-    color: var(--gold); font-family: var(--font-serif);
-    font-style: italic; font-size: .875rem; letter-spacing: .15em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--gold);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.875rem;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
   }
-  .gold-divider::before, .gold-divider::after {
-    content: ""; width: 2.5rem; height: 1px; background: var(--gold);
+  .gold-divider::before,
+  .gold-divider::after {
+    content: "";
+    width: 2.5rem;
+    height: 1px;
+    background: var(--gold);
   }
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease-out, transform .9s ease-out; }
-  .reveal.in { opacity: 1; transform: none; }
-  .ken-burns { animation: kenBurns 18s ease-out both; }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 0.9s ease-out,
+      transform 0.9s ease-out;
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: none;
+  }
+  .ken-burns {
+    animation: kenBurns 18s ease-out both;
+  }
   @keyframes kenBurns {
-    from { transform: scale(1.08); }
-    to { transform: scale(1); }
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
   }
 }

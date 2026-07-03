@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format, addDays, startOfDay } from "date-fns";
 import { es } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
@@ -28,9 +28,21 @@ import { toast } from "sonner";
 const WA_NUMBER = "5491128481233";
 
 const TIME_SLOTS = [
-  "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
-  "18:00", "18:30", "19:00", "19:30", "20:00", "20:30",
-  "21:00", "21:30", "22:00",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "18:00",
+  "18:30",
+  "19:00",
+  "19:30",
+  "20:00",
+  "20:30",
+  "21:00",
+  "21:30",
+  "22:00",
 ];
 
 const schema = z.object({
@@ -56,6 +68,27 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
 
   const today = startOfDay(new Date());
   const maxDate = addDays(today, 7);
+
+  const isToday = fecha ? format(fecha, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd") : false;
+  const now = new Date();
+  const currentHours = now.getHours();
+  const currentMinutes = now.getMinutes();
+
+  const filteredTimeSlots = TIME_SLOTS.filter((slot) => {
+    if (!isToday) return true;
+    const [hoursStr, minutesStr] = slot.split(":");
+    const slotHours = parseInt(hoursStr, 10);
+    const slotMinutes = parseInt(minutesStr, 10);
+    const nowInMinutes = currentHours * 60 + currentMinutes;
+    const slotInMinutes = slotHours * 60 + slotMinutes;
+    return slotInMinutes > nowInMinutes + 15; // 15-minute buffer
+  });
+
+  useEffect(() => {
+    if (hora && !filteredTimeSlots.includes(hora)) {
+      setHora("");
+    }
+  }, [fecha, filteredTimeSlots, hora]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,7 +125,9 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md bg-[color:var(--cream)] text-[color:var(--ink)] border-[color:var(--gold)]/40">
         <DialogHeader>
-          <p className="gold-divider" style={{ color: "var(--gold)" }}>Reservá tu mesa</p>
+          <p className="gold-divider" style={{ color: "var(--gold)" }}>
+            Reservá tu mesa
+          </p>
           <DialogTitle className="font-serif text-3xl text-[color:var(--wine)]">
             Pedí tu reserva
           </DialogTitle>
@@ -103,9 +138,9 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="nombre">Tu nombre</Label>
+            <Label htmlFor="reserva-nombre">Tu nombre</Label>
             <Input
-              id="nombre"
+              id="reserva-nombre"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               placeholder="Ej. Mariana López"
@@ -116,9 +151,9 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label>Comensales</Label>
+              <Label htmlFor="reserva-comensales-trigger">Comensales</Label>
               <Select value={comensales} onValueChange={setComensales}>
-                <SelectTrigger>
+                <SelectTrigger id="reserva-comensales-trigger">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -132,14 +167,22 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
             </div>
 
             <div className="space-y-2">
-              <Label>Horario</Label>
-              <Select value={hora} onValueChange={setHora}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Elegí" />
+              <Label htmlFor="reserva-hora-trigger">Horario</Label>
+              <Select
+                value={hora}
+                onValueChange={setHora}
+                disabled={filteredTimeSlots.length === 0}
+              >
+                <SelectTrigger id="reserva-hora-trigger">
+                  <SelectValue
+                    placeholder={filteredTimeSlots.length === 0 ? "Sin turnos" : "Elegí"}
+                  />
                 </SelectTrigger>
                 <SelectContent>
-                  {TIME_SLOTS.map((h) => (
-                    <SelectItem key={h} value={h}>{h} hs</SelectItem>
+                  {filteredTimeSlots.map((h) => (
+                    <SelectItem key={h} value={h}>
+                      {h} hs
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -151,17 +194,16 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
             <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
               <PopoverTrigger asChild>
                 <Button
+                  id="reserva-fecha-btn"
                   type="button"
                   variant="outline"
                   className={cn(
                     "w-full justify-start text-left font-normal",
-                    !fecha && "text-muted-foreground"
+                    !fecha && "text-muted-foreground",
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {fecha
-                    ? format(fecha, "EEEE d 'de' MMMM", { locale: es })
-                    : "Elegí una fecha"}
+                  {fecha ? format(fecha, "EEEE d 'de' MMMM", { locale: es }) : "Elegí una fecha"}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0 pointer-events-auto" align="start">
@@ -185,9 +227,9 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="notas">Notas (opcional)</Label>
+            <Label htmlFor="reserva-notas">Notas (opcional)</Label>
             <Input
-              id="notas"
+              id="reserva-notas"
               value={notas}
               onChange={(e) => setNotas(e.target.value)}
               placeholder="Cumpleaños, alergias, etc."
@@ -196,6 +238,7 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
           </div>
 
           <Button
+            id="reserva-submit-btn"
             type="submit"
             className="w-full rounded-full bg-[color:var(--wine)] py-6 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--cream)] hover:bg-[color:var(--ink)]"
           >
