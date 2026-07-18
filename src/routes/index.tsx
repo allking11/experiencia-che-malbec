@@ -156,8 +156,8 @@ function Index() {
       <header
         className={`fixed inset-x-0 top-0 z-40 border-b border-[color:var(--gold)]/20 transition-all duration-500 ${
           scrolled
-            ? "py-3 bg-[color:var(--cream)]/85 backdrop-blur-md shadow-md"
-            : "py-5 bg-[color:var(--cream)]"
+            ? "py-[9px] bg-[color:var(--cream)]/85 backdrop-blur-md shadow-md"
+            : "py-[17px] bg-[color:var(--cream)]"
         }`}
       >
         {/* Scroll Progress Bar */}
@@ -170,7 +170,7 @@ function Index() {
             <img
               src={logo}
               alt="Che Malbec Mercado & Wine Bar - Palacio Vera Monserrat"
-              className="h-6 w-auto md:h-8"
+              className="h-[29px] w-auto md:h-[38px]"
             />
           </a>
           <ul className="hidden items-center gap-8 text-sm font-medium text-[color:var(--ink)]/80 md:flex">
