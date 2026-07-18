@@ -170,7 +170,7 @@ function Index() {
             <img
               src={logo}
               alt="Che Malbec Mercado & Wine Bar - Palacio Vera Monserrat"
-              className="h-10 w-auto md:h-12"
+              className="h-6 w-auto md:h-8"
             />
           </a>
           <ul className="hidden items-center gap-8 text-sm font-medium text-[color:var(--ink)]/80 md:flex">
@@ -252,7 +252,7 @@ function Index() {
                 </SheetDescription>
                 <div>
                   <div className="flex items-center justify-between border-b border-[color:var(--gold)]/20 pb-4 mb-6">
-                    <img src={logo} alt="Che Malbec Wine Bar Boutique" className="h-10 w-auto" />
+                    <img src={logo} alt="Che Malbec Wine Bar Boutique" className="h-6 w-auto" />
                   </div>
                   <ul className="flex flex-col gap-6 text-lg font-medium text-[color:var(--ink)]">
                     <li>
@@ -865,7 +865,7 @@ function Index() {
       <footer className="bg-[color:var(--ink)] py-14 text-[color:var(--cream)]/80">
         <div className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-3">
           <div>
-            <img src={logo} alt="Che Malbec" className="h-14 w-auto" />
+            <img src={logo} alt="Che Malbec" className="h-8 w-auto" />
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-[color:var(--cream)]/65">
               Wine bar boutique en Buenos Aires. Vinos argentinos, degustaciones guiadas y picadas
               para compartir.
