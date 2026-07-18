@@ -9,26 +9,45 @@ import clientes from "@/assets/clientes.jpg";
 import feriaVinosVideo from "@/assets/feria-vinos.mp4";
 import { ReservationDialog } from "@/components/ReservationDialog";
 import { Calendar, Clock, MapPin, Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
+const SITE_URL = "https://che-malbec.vercel.app"; // Reemplazar por tu dominio final una vez adquirido
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Che Malbec — Wine Bar boutique en Buenos Aires" },
-      {
-        name: "description",
-        content:
-          "Degustaciones guiadas, vinos argentinos boutique y picadas caseras en Av. de Mayo 777. Reservá por WhatsApp.",
-      },
-      { property: "og:title", content: "Che Malbec — Wine Bar boutique en Buenos Aires" },
-      {
-        property: "og:description",
-        content: "Vinos argentinos, degustaciones y momentos para compartir en pleno Buenos Aires.",
-      },
-      { property: "og:image", content: fachada },
-      { name: "twitter:image", content: fachada },
-    ],
-  }),
+  head: () => {
+    const ogImageUrl = `${SITE_URL}${fachada}`;
+    return {
+      meta: [
+        { title: "Che Malbec — Boutique Wine Bar & Degustación de Vinos en Buenos Aires" },
+        {
+          name: "description",
+          content:
+            "Disfrutá de catas de vino y degustaciones guiadas por sommeliers en nuestro wine bar boutique. Ubicado en el Palacio Vera, Av. de Mayo 777, Montserrat.",
+        },
+        {
+          property: "og:title",
+          content: "Che Malbec — Boutique Wine Bar & Degustación de Vinos en Buenos Aires",
+        },
+        {
+          property: "og:description",
+          content:
+            "Degustaciones de vinos boutique, etiquetas exclusivas y gastronomía casera en un local histórico en Buenos Aires.",
+        },
+        { property: "og:image", content: ogImageUrl },
+        { name: "twitter:image", content: ogImageUrl },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: SITE_URL },
+        { property: "og:site_name", content: "Che Malbec" },
+        { property: "og:locale", content: "es_AR" },
+      ],
+    };
+  },
   component: Index,
 });
 
@@ -38,7 +57,7 @@ const WA_MSG = encodeURIComponent(
 );
 const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
 const WA_EVENT_MSG = encodeURIComponent(
-  "Hola Che Malbec 👋 Quiero reservar mi entrada para la Feria de Vinos del lunes 8 de julio.",
+  "Hola Che Malbec 👋 Quiero consultar por la fecha de la próxima Feria de Vinos.",
 );
 const WA_EVENT_URL = `https://wa.me/${WA_NUMBER}?text=${WA_EVENT_MSG}`;
 const MAPS_URL =
@@ -78,15 +97,65 @@ function Index() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const schemaJson = {
+    "@context": "https://schema.org",
+    "@type": "BarOrPub",
+    name: "Che Malbec - Boutique Wine Bar & Degustaciones",
+    image: `${SITE_URL}${fachada}`,
+    "@id": `${SITE_URL}/#bar`,
+    url: SITE_URL,
+    telephone: "+5491128481233",
+    priceRange: "$$$",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Avenida de Mayo 777 (Palacio Vera)",
+      addressLocality: "Buenos Aires",
+      addressRegion: "CABA",
+      postalCode: "C1084",
+      addressCountry: "AR",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: -34.608552,
+      longitude: -58.379768,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Monday",
+        opens: "11:00",
+        closes: "19:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        opens: "11:00",
+        closes: "23:00",
+      },
+    ],
+    sameAs: ["https://www.instagram.com/che.malbec"],
+    servesCuisine: "Argentine, Wine, Picadas, Empanadas",
+    description:
+      "Boutique wine bar and wine tasting experience located in the historic Palacio Vera building in Montserrat, Buenos Aires. Featuring guided tastings by professional sommeliers.",
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJson) }}
+      />
       {/* NAV */}
       <header
         className={`fixed inset-x-0 top-0 z-40 bg-[color:var(--cream)] border-b border-[color:var(--gold)]/30 transition-all duration-500 ${scrolled ? "py-3 shadow-sm" : "py-5"}`}
       >
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5">
           <a href="#inicio" id="nav-logo-link" className="flex items-center gap-2">
-            <img src={logo} alt="Che Malbec Mercado & Wine Bar" className="h-10 w-auto md:h-12" />
+            <img
+              src={logo}
+              alt="Che Malbec Mercado & Wine Bar - Palacio Vera Monserrat"
+              className="h-10 w-auto md:h-12"
+            />
           </a>
           <ul className="hidden items-center gap-8 text-sm font-medium text-[color:var(--ink)]/80 md:flex">
             <li>
@@ -161,9 +230,13 @@ function Index() {
                 side="right"
                 className="bg-[color:var(--cream)] border-l border-[color:var(--gold)]/40 text-[color:var(--ink)] flex flex-col justify-between p-6"
               >
+                <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
+                <SheetDescription className="sr-only">
+                  Enlaces de navegación móvil para Che Malbec
+                </SheetDescription>
                 <div>
                   <div className="flex items-center justify-between border-b border-[color:var(--gold)]/20 pb-4 mb-6">
-                    <img src={logo} alt="Che Malbec" className="h-10 w-auto" />
+                    <img src={logo} alt="Che Malbec Wine Bar Boutique" className="h-10 w-auto" />
                   </div>
                   <ul className="flex flex-col gap-6 text-lg font-medium text-[color:var(--ink)]">
                     <li>
@@ -240,489 +313,510 @@ function Index() {
         </nav>
       </header>
 
-      {/* HERO */}
-      <section id="inicio" className="relative min-h-[100svh] w-full overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={fachada}
-            alt="Fachada de Che Malbec en Av. de Mayo, Buenos Aires"
-            className="h-full w-full object-cover ken-burns"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--ink)]/70 via-[color:var(--ink)]/45 to-[color:var(--ink)]/85" />
-        </div>
-        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-6 pt-24 pb-16 text-center text-[color:var(--cream)]">
-          <span className="gold-divider mb-6 reveal in">Mercado & Wine Bar · Buenos Aires</span>
-          <h1 className="reveal in font-serif text-4xl leading-[1.1] sm:text-6xl md:text-7xl">
-            El vino argentino se disfruta mejor{" "}
-            <em className="text-[color:var(--gold)] not-italic font-medium">cuando se comparte</em>
-          </h1>
-          <p className="reveal in mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--cream)]/85 sm:text-lg">
-            Degustaciones guiadas, vinos boutique y gastronomía casera en un wine bar íntimo en el
-            corazón de Buenos Aires.
-          </p>
-          <div className="reveal in mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
-            <button
-              id="hero-reserve-btn"
-              type="button"
-              onClick={openReserva}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg transition-all hover:scale-[1.02] hover:bg-[color:var(--ink)] sm:w-auto cursor-pointer"
-            >
-              <WhatsAppIcon className="h-5 w-5" /> Reservar mesa
-            </button>
-            <a
-              href="#experiencia"
-              id="hero-view-experience-link"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[color:var(--gold)]/70 px-8 py-4 text-sm font-medium uppercase tracking-[0.12em] text-[color:var(--cream)] transition-colors hover:bg-[color:var(--cream)]/10 sm:w-auto"
-            >
-              Ver la experiencia
-            </a>
+      <main>
+        {/* HERO */}
+        <section id="inicio" className="relative min-h-[100svh] w-full overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={fachada}
+              alt="Fachada histórica de Che Malbec en el Palacio Vera, Avenida de Mayo, Buenos Aires"
+              className="h-full w-full object-cover ken-burns"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--ink)]/70 via-[color:var(--ink)]/45 to-[color:var(--ink)]/85" />
           </div>
-          <div className="reveal in mt-12 flex items-center gap-2 text-sm text-[color:var(--cream)]/80">
-            <span className="text-[color:var(--gold)]">★★★★★</span>
-            <span>+1100 reseñas en Google</span>
+          <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-6 pt-24 pb-16 text-center text-[color:var(--cream)]">
+            <span className="gold-divider mb-6 reveal in">
+              Boutique Wine Bar & Tastings in Buenos Aires
+            </span>
+            <h1 className="reveal in font-serif text-4xl leading-[1.1] sm:text-6xl md:text-7xl">
+              <span className="sr-only">
+                Che Malbec — Wine Bar Boutique & Degustación de Vinos en Palacio Vera
+              </span>
+              El vino argentino se disfruta mejor{" "}
+              <em className="text-[color:var(--gold)] not-italic font-medium">
+                cuando se comparte
+              </em>
+            </h1>
+            <p className="reveal in mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--cream)]/85 sm:text-lg">
+              Degustaciones guiadas por sommeliers, vinos de bodegas boutique y gastronomía casera
+              en un wine bar íntimo ubicado en el histórico Palacio Vera, en el corazón de Buenos
+              Aires.
+            </p>
+            <div className="reveal in mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
+              <button
+                id="hero-reserve-btn"
+                type="button"
+                onClick={openReserva}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg transition-all hover:scale-[1.02] hover:bg-[color:var(--ink)] sm:w-auto cursor-pointer"
+              >
+                <WhatsAppIcon className="h-5 w-5" /> Reservar mesa
+              </button>
+              <a
+                href="#experiencia"
+                id="hero-view-experience-link"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[color:var(--gold)]/70 px-8 py-4 text-sm font-medium uppercase tracking-[0.12em] text-[color:var(--cream)] transition-colors hover:bg-[color:var(--cream)]/10 sm:w-auto"
+              >
+                Ver la experiencia
+              </a>
+            </div>
+            <div className="reveal in mt-12 flex items-center gap-2 text-sm text-[color:var(--cream)]/80">
+              <span className="text-[color:var(--gold)]">★★★★★</span>
+              <span>+1100 reseñas en Google</span>
+            </div>
           </div>
-        </div>
-        <a
-          href="#opiniones"
-          id="hero-scroll-down-btn"
-          aria-label="Bajar"
-          className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[color:var(--cream)]/70 hover:text-[color:var(--gold)]"
-        >
-          <svg
-            width="22"
-            height="22"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
+          <a
+            href="#opiniones"
+            id="hero-scroll-down-btn"
+            aria-label="Bajar"
+            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[color:var(--cream)]/70 hover:text-[color:var(--gold)]"
           >
-            <path d="M12 5v14m0 0l-6-6m6 6l6-6" />
-          </svg>
-        </a>
-      </section>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            >
+              <path d="M12 5v14m0 0l-6-6m6 6l6-6" />
+            </svg>
+          </a>
+        </section>
 
-      {/* OPINIONES / TESTIMONIOS */}
-      <section
-        id="opiniones"
-        className="bg-[color:var(--wine)] py-20 text-[color:var(--cream)] sm:py-28"
-      >
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
-            <div>
-              <p className="gold-divider reveal" style={{ color: "var(--gold)" }}>
-                Opiniones
+        {/* OPINIONES / TESTIMONIOS */}
+        <section
+          id="opiniones"
+          className="bg-[color:var(--wine)] py-20 text-[color:var(--cream)] sm:py-28"
+        >
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
+              <div>
+                <p className="gold-divider reveal" style={{ color: "var(--gold)" }}>
+                  Opiniones
+                </p>
+                <h2 className="reveal mt-5 font-serif text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
+                  Reseñas de Che Malbec: 4.8 <span className="text-[color:var(--gold)]">★</span> en
+                  Google Maps
+                </h2>
+              </div>
+              <p className="reveal text-base leading-relaxed text-[color:var(--cream)]/80">
+                Lo que más destacan: la calidez del espacio, la cercanía de los sommeliers y las
+                picadas abundantes.
               </p>
-              <h2 className="reveal mt-5 font-serif text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
-                4.8 <span className="text-[color:var(--gold)]">★</span> en Google Maps
+            </div>
+
+            <div className="mt-14 grid gap-6 md:grid-cols-3">
+              {[
+                {
+                  q: "Una verdadera joya en medio del centro. Agustín nos guió copa a copa con mucha paciencia, explicando la historia de cada bodega. Las empanadas caseras son espectaculares. Ambiente íntimo ideal para bajar un cambio.",
+                  n: "Mariana S.",
+                  r: "Cliente local",
+                },
+                {
+                  q: "Me encantó el lugar. Al estar dentro del histórico Palacio Vera, se respira una atmósfera única. Tienen etiquetas boutique muy interesantes y la atención del personal te hace sentir como en casa desde que entrás.",
+                  n: "Jean-Pierre L.",
+                  r: "Visitante",
+                },
+                {
+                  q: "Los vinos y la comida son excelentes, y la atención del sommelier impecable. El local es chico y acogedor — siempre conviene reservar para asegurar la mesa.",
+                  n: "Carlos G.",
+                  r: "Reseña verificada",
+                },
+              ].map((t, i) => (
+                <article
+                  key={t.n}
+                  className="reveal flex flex-col rounded-sm border border-[color:var(--cream)]/10 bg-[color:var(--cream)]/[0.04] p-7 backdrop-blur-sm"
+                  style={{ transitionDelay: `${i * 80}ms` }}
+                >
+                  <div className="text-lg tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
+                  <p className="mt-5 flex-1 font-serif text-lg italic leading-relaxed text-[color:var(--cream)]/95">
+                    “{t.q}”
+                  </p>
+                  <div className="mt-6">
+                    <p className="font-semibold text-[color:var(--cream)]">{t.n}</p>
+                    <p className="text-sm text-[color:var(--cream)]/60">{t.r}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* EXPERIENCIA */}
+        <section
+          id="experiencia"
+          className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32"
+        >
+          <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-20">
+            <div className="reveal order-2 md:order-1">
+              <img
+                src={copa}
+                alt="Copa de vino Malbec servida por un sommelier en el salón boutique de Che Malbec"
+                className="aspect-[4/5] w-full rounded-sm object-cover shadow-xl"
+              />
+            </div>
+            <div className="reveal order-1 md:order-2">
+              <p className="gold-divider">La Experiencia en Palacio Vera</p>
+              <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+                Experiencia de Vinos Boutique y Guía de Sommeliers
+              </h2>
+              <p className="mt-6 text-lg leading-relaxed text-[color:var(--ink)]/80">
+                Un espacio creado para disfrutar excelentes vinos argentinos seleccionados por
+                nuestros sommeliers, compartir una buena mesa y aprender sobre cada etiqueta
+                boutique en un ambiente relajado.
+              </p>
+              <p className="mt-4 text-base leading-relaxed text-[color:var(--ink)]/70">
+                Entrar a Che Malbec en el histórico Palacio Vera es como descubrir un pequeño
+                refugio porteño en Montserrat donde el tiempo se detiene: maderas cálidas,
+                iluminación íntima y una carta de picadas caseras pensada para acompañar cada copa.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* DEGUSTACIONES */}
+        <section id="degustaciones" className="bg-[color:var(--cream)] py-24 sm:py-32">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="gold-divider reveal">Degustaciones de Vinos</p>
+              <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+                Degustación de Vinos y Catas Guiadas por Sommeliers
               </h2>
             </div>
-            <p className="reveal text-base leading-relaxed text-[color:var(--cream)]/80">
-              Lo que más destacan: la calidez del espacio, la cercanía de los sommeliers y las
-              picadas abundantes.
-            </p>
-          </div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-3">
-            {[
-              {
-                q: "Una verdadera joya en medio del centro. Agustín nos guió copa a copa con mucha paciencia, explicando la historia de cada bodega. Las empanadas caseras son espectaculares. Ambiente íntimo ideal para bajar un cambio.",
-                n: "Mariana S.",
-                r: "Cliente local",
-              },
-              {
-                q: "Me encantó el lugar. Al estar dentro del histórico Palacio Vera, se respira una atmósfera única. Tienen etiquetas boutique muy interesantes y la atención del personal te hace sentir como en casa desde que entrás.",
-                n: "Jean-Pierre L.",
-                r: "Visitante",
-              },
-              {
-                q: "Los vinos y la comida son excelentes, y la atención del sommelier impecable. El local es chico y acogedor — siempre conviene reservar para asegurar la mesa.",
-                n: "Carlos G.",
-                r: "Reseña verificada",
-              },
-            ].map((t, i) => (
-              <article
-                key={t.n}
-                className="reveal flex flex-col rounded-sm border border-[color:var(--cream)]/10 bg-[color:var(--cream)]/[0.04] p-7 backdrop-blur-sm"
-                style={{ transitionDelay: `${i * 80}ms` }}
-              >
-                <div className="text-lg tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
-                <p className="mt-5 flex-1 font-serif text-lg italic leading-relaxed text-[color:var(--cream)]/95">
-                  “{t.q}”
-                </p>
-                <div className="mt-6">
-                  <p className="font-semibold text-[color:var(--cream)]">{t.n}</p>
-                  <p className="text-sm text-[color:var(--cream)]/60">{t.r}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* EXPERIENCIA */}
-      <section
-        id="experiencia"
-        className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32"
-      >
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-20">
-          <div className="reveal order-2 md:order-1">
-            <img
-              src={copa}
-              alt="Copa de vino servida en Che Malbec"
-              className="aspect-[4/5] w-full rounded-sm object-cover shadow-xl"
-            />
-          </div>
-          <div className="reveal order-1 md:order-2">
-            <p className="gold-divider">La experiencia</p>
-            <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
-              Mucho más que tomar una copa de vino
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-[color:var(--ink)]/80">
-              Un espacio creado para disfrutar vinos argentinos, compartir una buena mesa y aprender
-              sobre cada etiqueta en un ambiente relajado.
-            </p>
-            <p className="mt-4 text-base leading-relaxed text-[color:var(--ink)]/70">
-              Entrar a Che Malbec es como descubrir un pequeño rincón porteño donde el tiempo se
-              detiene: maderas cálidas, luz baja y una carta pensada para acompañar cada copa.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* DEGUSTACIONES */}
-      <section id="degustaciones" className="bg-[color:var(--cream)] py-24 sm:py-32">
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="gold-divider reveal">Nuestras propuestas</p>
-            <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
-              Degustaciones para descubrir vinos argentinos
-            </h2>
-          </div>
-
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
-            {[
-              {
-                t: "Degustaciones guiadas",
-                d: "Vinos seleccionados para descubrir nuevos sabores junto a quien sabe contarlos.",
-              },
-              {
-                t: "Catas por pasos",
-                d: "Una experiencia pensada para explorar distintas etiquetas, copa por copa.",
-              },
-              {
-                t: "Maridajes",
-                d: "Combinaciones con picadas, quesos, fiambres y gastronomía casera.",
-              },
-            ].map((c, i) => (
-              <article
-                key={c.t}
-                className="reveal group relative flex flex-col rounded-sm border border-[color:var(--gold)]/40 bg-[color:var(--card)] p-8 transition-all hover:-translate-y-1 hover:border-[color:var(--gold)] hover:shadow-xl"
-                style={{ transitionDelay: `${i * 80}ms` }}
-              >
-                <span className="font-serif text-sm italic text-[color:var(--gold)]">0{i + 1}</span>
-                <h3 className="mt-3 text-2xl text-[color:var(--wine)]">{c.t}</h3>
-                <p className="mt-4 flex-1 text-[color:var(--ink)]/75 leading-relaxed">{c.d}</p>
-                <div className="mt-6 h-px w-12 bg-[color:var(--gold)] transition-all group-hover:w-20" />
-              </article>
-            ))}
-          </div>
-
-          <div className="reveal mt-14 text-center">
-            <button
-              id="degustaciones-reserve-btn"
-              type="button"
-              onClick={openReserva}
-              className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] transition-all hover:bg-[color:var(--ink)] cursor-pointer"
-            >
-              <WhatsAppIcon className="h-5 w-5" /> Reservar degustación
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* CARTA */}
-      <section
-        id="carta"
-        className="relative bg-[color:var(--ink)] py-24 text-[color:var(--cream)] sm:py-32"
-      >
-        <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 md:grid-cols-[1.1fr_1fr]">
-          <div className="reveal">
-            <p className="gold-divider">La carta</p>
-            <h2 className="mt-5 font-serif text-3xl sm:text-4xl md:text-5xl">
-              Vinos y sabores para compartir
-            </h2>
-            <p className="mt-6 max-w-md text-[color:var(--cream)]/75 leading-relaxed">
-              Una propuesta breve, cuidada y honesta. Ideal para acompañar una copa, una charla
-              larga o una cata por pasos.
-            </p>
-
-            <ul className="mt-10 space-y-4">
+            <div className="mt-16 grid gap-8 md:grid-cols-3">
               {[
-                "Vinos argentinos por copa y botella",
-                "Etiquetas boutique seleccionadas",
-                "Picadas abundantes",
-                "Empanadas caseras",
-                "Tablas de quesos y fiambres",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 border-b border-[color:var(--cream)]/15 pb-4"
+                {
+                  t: "Degustaciones Guiadas por Sommeliers",
+                  d: "Catas y degustaciones guiadas de vinos argentinos premium, donde aprenderás la historia y notas de cada bodega boutique.",
+                },
+                {
+                  t: "Catas por Pasos de Vinos Boutique",
+                  d: "Una experiencia sensorial exclusiva para explorar diversas etiquetas de vinos boutique de regiones vitivinícolas del país.",
+                },
+                {
+                  t: "Maridaje con Picadas Caseras",
+                  d: "Combinación ideal de copas seleccionadas con tablas de quesos artesanales, fiambres de calidad y empanadas caseras.",
+                },
+              ].map((c, i) => (
+                <article
+                  key={c.t}
+                  className="reveal group relative flex flex-col rounded-sm border border-[color:var(--gold)]/40 bg-[color:var(--card)] p-8 transition-all hover:-translate-y-1 hover:border-[color:var(--gold)] hover:shadow-xl"
+                  style={{ transitionDelay: `${i * 80}ms` }}
                 >
-                  <span className="mt-2 h-px w-5 shrink-0 bg-[color:var(--gold)]" />
-                  <span className="font-serif text-lg italic text-[color:var(--cream)]/95">
-                    {item}
+                  <span className="font-serif text-sm italic text-[color:var(--gold)]">
+                    0{i + 1}
                   </span>
-                </li>
+                  <h3 className="mt-3 text-2xl text-[color:var(--wine)]">{c.t}</h3>
+                  <p className="mt-4 flex-1 text-[color:var(--ink)]/75 leading-relaxed">{c.d}</p>
+                  <div className="mt-6 h-px w-12 bg-[color:var(--gold)] transition-all group-hover:w-20" />
+                </article>
               ))}
-            </ul>
+            </div>
 
-            <button
-              id="carta-reserve-btn"
-              type="button"
-              onClick={openReserva}
-              className="mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--gold)] transition-colors hover:bg-[color:var(--gold)] hover:text-[color:var(--ink)] cursor-pointer"
-            >
-              Reservar mesa
-            </button>
+            <div className="reveal mt-14 text-center">
+              <button
+                id="degustaciones-reserve-btn"
+                type="button"
+                onClick={openReserva}
+                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] transition-all hover:bg-[color:var(--ink)] cursor-pointer"
+              >
+                <WhatsAppIcon className="h-5 w-5" /> Reservar degustación
+              </button>
+            </div>
           </div>
+        </section>
 
-          <div className="reveal grid grid-cols-2 gap-4">
-            <img
-              src={copaBotella}
-              alt="Botella de Malbec argentino con copa Che Malbec"
-              className="col-span-2 aspect-[4/5] w-full rounded-sm object-cover shadow-2xl sm:aspect-[5/4]"
-            />
-            <img
-              src={burrata}
-              alt="Plato de burrata con jamón crudo y rúcula"
-              className="aspect-square w-full rounded-sm object-cover"
-            />
-            <img
-              src={clientes}
-              alt="Clientes disfrutando en el salón de Che Malbec"
-              className="aspect-square w-full rounded-sm object-cover"
-            />
+        {/* CARTA */}
+        <section
+          id="carta"
+          className="relative bg-[color:var(--ink)] py-24 text-[color:var(--cream)] sm:py-32"
+        >
+          <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 md:grid-cols-[1.1fr_1fr]">
+            <div className="reveal">
+              <p className="gold-divider">La carta</p>
+              <h2 className="mt-5 font-serif text-3xl sm:text-4xl md:text-5xl">
+                Nuestra Carta: Vinos Argentinos y Picadas Caseras
+              </h2>
+              <p className="mt-6 max-w-md text-[color:var(--cream)]/75 leading-relaxed">
+                Una propuesta gastronómica honesta en Monserrat. Ideal para acompañar una copa de
+                Malbec, una charla relajada o una cata de vinos por pasos.
+              </p>
+
+              <ul className="mt-10 space-y-4">
+                {[
+                  "Vinos argentinos por copa y botella",
+                  "Etiquetas boutique seleccionadas",
+                  "Picadas abundantes",
+                  "Empanadas caseras",
+                  "Tablas de quesos y fiambres",
+                ].map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 border-b border-[color:var(--cream)]/15 pb-4"
+                  >
+                    <span className="mt-2 h-px w-5 shrink-0 bg-[color:var(--gold)]" />
+                    <span className="font-serif text-lg italic text-[color:var(--cream)]/95">
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                id="carta-reserve-btn"
+                type="button"
+                onClick={openReserva}
+                className="mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--gold)] transition-colors hover:bg-[color:var(--gold)] hover:text-[color:var(--ink)] cursor-pointer"
+              >
+                Reservar mesa
+              </button>
+            </div>
+
+            <div className="reveal grid grid-cols-2 gap-4">
+              <img
+                src={copaBotella}
+                alt="Botella de Malbec argentino de bodega boutique y copa servida en el wine bar Che Malbec"
+                className="col-span-2 aspect-[4/5] w-full rounded-sm object-cover shadow-2xl sm:aspect-[5/4]"
+              />
+              <img
+                src={burrata}
+                alt="Plato de burrata fresca con jamón crudo y rúcula, ideal para maridar con vinos tintos boutique en Che Malbec"
+                className="aspect-square w-full rounded-sm object-cover"
+              />
+              <img
+                src={clientes}
+                alt="Clientes compartiendo una degustación de vinos boutique y picadas caseras en la cava de Che Malbec"
+                className="aspect-square w-full rounded-sm object-cover"
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* NOVEDADES / EVENTOS */}
-      <section
-        id="novedades"
-        className="bg-[color:var(--card)] py-10 md:py-12 border-t border-[color:var(--gold)]/20"
-      >
-        <div className="mx-auto max-w-6xl px-6">
-          <div className="mx-auto max-w-2xl text-center md:mb-6 mb-4">
-            <p className="gold-divider reveal">Agenda de Eventos</p>
+        {/* NOVEDADES / EVENTOS */}
+        <section
+          id="novedades"
+          className="bg-[color:var(--card)] py-10 md:py-12 border-t border-[color:var(--gold)]/20"
+        >
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mx-auto max-w-2xl text-center md:mb-6 mb-4">
+              <p className="gold-divider reveal">Agenda de Eventos</p>
+              <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+                Eventos de Wine Bar: Feria de Vinos y Más
+              </h2>
+            </div>
+
+            <div className="grid gap-12 md:grid-cols-2 md:items-center">
+              {/* Detalles del Evento */}
+              <div className="reveal order-2 md:order-1 space-y-6">
+                <span className="inline-block rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                  Próximo Evento 🍷
+                </span>
+                <h3 className="font-serif text-3xl text-[color:var(--ink)] sm:text-4xl">
+                  Feria de Vinos Boutique en CABA
+                </h3>
+
+                <div className="rounded-lg bg-[color:var(--cream)]/40 p-5 border border-[color:var(--gold)]/20 space-y-3">
+                  <p className="flex items-center gap-2.5 text-base font-semibold text-[color:var(--wine)]">
+                    <Calendar className="h-5 w-5 text-[color:var(--gold)] shrink-0" /> Próxima
+                    edición: ¡Muy pronto!
+                  </p>
+                  <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
+                    <Clock className="h-4 w-4 text-[color:var(--gold)] shrink-0" /> Consultar fechas
+                    y horarios
+                  </p>
+                  <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
+                    <MapPin className="h-4 w-4 text-[color:var(--gold)] shrink-0" /> Avenida de Mayo
+                    777, Monserrat
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <p className="text-base leading-relaxed text-[color:var(--ink)]/85 font-medium">
+                    Te esperamos para disfrutar una noche a pura fiesta y vinitos con una propuesta
+                    imperdible:
+                  </p>
+                  <ul className="grid gap-3 text-sm text-[color:var(--ink)]/85">
+                    <li className="flex items-start gap-2">
+                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                      <span>
+                        <strong>Más de 15 etiquetas de bodegas boutique</strong> y vinos de autor
+                        para degustar libremente.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                      <span>
+                        <strong>Banda de rock de los 80's</strong> en vivo.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                      <span>
+                        <strong>Canilla libre por tres horas</strong> (con reserva previa).
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                      <span>
+                        La copa del evento va de <strong>regalo</strong>.
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
+                      <span>
+                        <strong>Valor:</strong> Consultar valor vigente.
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="pt-4">
+                  <a
+                    id="event-reserve-link"
+                    href={WA_EVENT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg transition-all hover:scale-[1.02] hover:bg-[color:var(--ink)]"
+                  >
+                    <WhatsAppIcon className="h-5 w-5" /> Consultar próximas fechas
+                  </a>
+                </div>
+              </div>
+
+              {/* Video Promocional */}
+              <div className="reveal order-1 md:order-2 flex justify-center">
+                <div className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[340px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/30 bg-[color:var(--ink)]">
+                  <video
+                    src={feriaVinosVideo}
+                    className="w-full h-full object-cover"
+                    controls
+                    playsInline
+                    loop
+                    muted
+                    preload="auto"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* HISTORIA */}
+        <section id="historia" className="bg-[color:var(--cream)] py-24 sm:py-32">
+          <div className="mx-auto max-w-3xl px-6 text-center">
+            <p className="gold-divider reveal">Nuestra historia</p>
             <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
-              Novedades
+              Nuestra Historia: Pasión por el Vino Boutique y las Catas
             </h2>
+            <p className="reveal mt-8 font-serif text-xl italic leading-relaxed text-[color:var(--ink)]/85 sm:text-2xl">
+              “Che Malbec nació de la curiosidad por descubrir el mundo del vino y compartir esa
+              pasión con otros.”
+            </p>
+            <div className="reveal mx-auto mt-8 max-w-2xl space-y-5 text-[color:var(--ink)]/75 leading-relaxed">
+              <p>
+                Empezó como un hobby —vender vinos para descubrir nuevas etiquetas boutique— y
+                creció tras un viaje a Italia, donde una enoteca de barrio nos hizo comprender la
+                calidez y cercanía que queríamos replicar en Buenos Aires.
+              </p>
+              <p>
+                Hoy es un espacio íntimo en el histórico Palacio Vera (Montserrat) diseñado para
+                disfrutar excelentes vinos argentinos, conocer etiquetas exclusivas guiados por
+                sommeliers y vivir momentos de risas, desconexión y maridajes gourmet.
+              </p>
+            </div>
           </div>
+        </section>
 
-          <div className="grid gap-12 md:grid-cols-2 md:items-center">
-            {/* Detalles del Evento */}
-            <div className="reveal order-2 md:order-1 space-y-6">
-              <span className="inline-block rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
-                Próximo Evento 🍷
-              </span>
-              <h3 className="font-serif text-3xl text-[color:var(--ink)] sm:text-4xl">
-                Feria de Vinos
-              </h3>
+        {/* UBICACIÓN */}
+        <section
+          id="ubicacion"
+          className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32"
+        >
+          <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-16">
+            <div className="reveal">
+              <p className="gold-divider">Cómo Llegar</p>
+              <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+                Visitanos en Monserrat: Palacio Vera
+              </h2>
 
-              <div className="rounded-lg bg-[color:var(--cream)]/40 p-5 border border-[color:var(--gold)]/20 space-y-3">
-                <p className="flex items-center gap-2.5 text-base font-semibold text-[color:var(--wine)]">
-                  <Calendar className="h-5 w-5 text-[color:var(--gold)] shrink-0" /> Lunes 8 de
-                  Julio (¡Víspera de feriado!)
+              <address className="mt-8 not-italic">
+                <p className="font-serif text-2xl text-[color:var(--ink)]">Avenida de Mayo 777</p>
+                <p className="text-[color:var(--ink)]/70">
+                  Histórico Palacio Vera · Monserrat · CABA, Argentina
                 </p>
-                <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
-                  <Clock className="h-4 w-4 text-[color:var(--gold)] shrink-0" /> 19:00 hs
-                </p>
-                <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
-                  <MapPin className="h-4 w-4 text-[color:var(--gold)] shrink-0" /> Avenida de Mayo
-                  777, Monserrat
-                </p>
+              </address>
+
+              <div className="mt-8">
+                <h3 className="font-serif text-sm uppercase tracking-[0.18em] text-[color:var(--gold)]">
+                  Horarios
+                </h3>
+                <dl className="mt-4 divide-y divide-[color:var(--gold)]/30 text-[color:var(--ink)]/85">
+                  <div className="flex justify-between py-3">
+                    <dt>Lunes</dt>
+                    <dd>11:00 — 19:00</dd>
+                  </div>
+                  <div className="flex justify-between py-3">
+                    <dt>Martes a sábado</dt>
+                    <dd>11:00 — 23:00</dd>
+                  </div>
+                  <div className="flex justify-between py-3">
+                    <dt>Domingo</dt>
+                    <dd className="text-[color:var(--ink)]/50">Cerrado</dd>
+                  </div>
+                </dl>
               </div>
 
-              <div className="space-y-4">
-                <p className="text-base leading-relaxed text-[color:var(--ink)]/85 font-medium">
-                  Te esperamos para disfrutar una noche a pura fiesta y vinitos con una propuesta
-                  imperdible:
-                </p>
-                <ul className="grid gap-3 text-sm text-[color:var(--ink)]/85">
-                  <li className="flex items-start gap-2">
-                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                    <span>
-                      <strong>Más de 15 etiquetas boutique</strong> para degustar libremente.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                    <span>
-                      <strong>Banda de rock de los 80's</strong> en vivo.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                    <span>
-                      <strong>Canilla libre por tres horas</strong> (con reserva previa).
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                    <span>
-                      La copa del evento va de <strong>regalo</strong>.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                    <span>
-                      <strong>Valor:</strong> $40.000 por persona.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="pt-4">
-                <a
-                  id="event-reserve-link"
-                  href={WA_EVENT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg transition-all hover:scale-[1.02] hover:bg-[color:var(--ink)]"
+              <div className="mt-8 flex flex-wrap gap-3">
+                <button
+                  id="ubicacion-reserve-btn"
+                  type="button"
+                  onClick={openReserva}
+                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--wine)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] cursor-pointer"
                 >
-                  <WhatsAppIcon className="h-5 w-5" /> Reservar vía WhatsApp
-                </a>
+                  <WhatsAppIcon className="h-4 w-4" /> Reservar
+                </button>
               </div>
             </div>
 
-            {/* Video Promocional */}
-            <div className="reveal order-1 md:order-2 flex justify-center">
-              <div className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[340px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/30 bg-[color:var(--ink)]">
-                <video
-                  src={feriaVinosVideo}
-                  className="w-full h-full object-cover"
-                  controls
-                  playsInline
-                  loop
-                  muted
-                  preload="auto"
+            <div className="reveal">
+              <div className="overflow-hidden rounded-sm border border-[color:var(--gold)]/40 shadow-xl">
+                <iframe
+                  title="Mapa de Che Malbec"
+                  src="https://www.google.com/maps?q=Avenida+de+Mayo+777,+Buenos+Aires&output=embed"
+                  className="h-[420px] w-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* HISTORIA */}
-      <section id="historia" className="bg-[color:var(--cream)] py-24 sm:py-32">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="gold-divider reveal">Nuestra historia</p>
-          <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
-            Una pasión convertida en experiencia
-          </h2>
-          <p className="reveal mt-8 font-serif text-xl italic leading-relaxed text-[color:var(--ink)]/85 sm:text-2xl">
-            “Che Malbec nació de la curiosidad por descubrir el mundo del vino y compartir esa
-            pasión con otros.”
-          </p>
-          <div className="reveal mx-auto mt-8 max-w-2xl space-y-5 text-[color:var(--ink)]/75 leading-relaxed">
-            <p>
-              Empezó como un hobby — vender vinos para poder probarlos — y creció con un viaje a
-              Italia, donde un pequeño local de barrio nos hizo entender lo que queríamos crear acá.
+        {/* CTA FINAL */}
+        <section className="relative overflow-hidden bg-[color:var(--wine)] py-24 text-[color:var(--cream)] sm:py-32">
+          <div className="mx-auto max-w-3xl px-6 text-center">
+            <p className="gold-divider reveal" style={{ color: "var(--gold)" }}>
+              Reservá tu mesa
             </p>
-            <p>
-              Hoy es un espacio íntimo en pleno Monserrat para disfrutar vinos argentinos, conocer
-              nuevas etiquetas y vivir esos momentos de risas, desconexión y buena mesa.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* UBICACIÓN */}
-      <section
-        id="ubicacion"
-        className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32"
-      >
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-16">
-          <div className="reveal">
-            <p className="gold-divider">Visitanos</p>
-            <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
-              En el corazón de Buenos Aires
+            <h2 className="reveal mt-5 font-serif text-3xl leading-tight sm:text-5xl md:text-6xl">
+              ¿Listo para disfrutar{" "}
+              <em className="not-italic text-[color:var(--gold)]">una cata de vinos única?</em>
             </h2>
-
-            <address className="mt-8 not-italic">
-              <p className="font-serif text-2xl text-[color:var(--ink)]">Avenida de Mayo 777</p>
-              <p className="text-[color:var(--ink)]/70">Monserrat · CABA, Argentina</p>
-            </address>
-
-            <div className="mt-8">
-              <h3 className="font-serif text-sm uppercase tracking-[0.18em] text-[color:var(--gold)]">
-                Horarios
-              </h3>
-              <dl className="mt-4 divide-y divide-[color:var(--gold)]/30 text-[color:var(--ink)]/85">
-                <div className="flex justify-between py-3">
-                  <dt>Lunes</dt>
-                  <dd>11:00 — 19:00</dd>
-                </div>
-                <div className="flex justify-between py-3">
-                  <dt>Martes a sábado</dt>
-                  <dd>11:00 — 23:00</dd>
-                </div>
-                <div className="flex justify-between py-3">
-                  <dt>Domingo</dt>
-                  <dd className="text-[color:var(--ink)]/50">Cerrado</dd>
-                </div>
-              </dl>
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <button
-                id="ubicacion-reserve-btn"
-                type="button"
-                onClick={openReserva}
-                className="inline-flex items-center gap-2 rounded-full border border-[color:var(--wine)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] cursor-pointer"
-              >
-                <WhatsAppIcon className="h-4 w-4" /> Reservar
-              </button>
-            </div>
+            <p className="reveal mt-6 text-lg text-[color:var(--cream)]/85">
+              Escribinos y reservá tu lugar. Te esperamos en Av. de Mayo 777.
+            </p>
+            <button
+              id="cta-reserve-btn"
+              type="button"
+              onClick={openReserva}
+              className="reveal mt-10 inline-flex items-center gap-3 rounded-full bg-[color:var(--gold)] px-10 py-5 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink)] shadow-2xl transition-all hover:scale-[1.03] hover:bg-[color:var(--cream)] cursor-pointer"
+            >
+              <WhatsAppIcon className="h-5 w-5" /> Reservar tu mesa
+            </button>
           </div>
-
-          <div className="reveal">
-            <div className="overflow-hidden rounded-sm border border-[color:var(--gold)]/40 shadow-xl">
-              <iframe
-                title="Mapa de Che Malbec"
-                src="https://www.google.com/maps?q=Avenida+de+Mayo+777,+Buenos+Aires&output=embed"
-                className="h-[420px] w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA FINAL */}
-      <section className="relative overflow-hidden bg-[color:var(--wine)] py-24 text-[color:var(--cream)] sm:py-32">
-        <div className="mx-auto max-w-3xl px-6 text-center">
-          <p className="gold-divider reveal" style={{ color: "var(--gold)" }}>
-            Reservá tu mesa
-          </p>
-          <h2 className="reveal mt-5 font-serif text-3xl leading-tight sm:text-5xl md:text-6xl">
-            ¿Listo para disfrutar{" "}
-            <em className="not-italic text-[color:var(--gold)]">una nueva copa?</em>
-          </h2>
-          <p className="reveal mt-6 text-lg text-[color:var(--cream)]/85">
-            Escribinos y reservá tu lugar. Te esperamos en Av. de Mayo 777.
-          </p>
-          <button
-            id="cta-reserve-btn"
-            type="button"
-            onClick={openReserva}
-            className="reveal mt-10 inline-flex items-center gap-3 rounded-full bg-[color:var(--gold)] px-10 py-5 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink)] shadow-2xl transition-all hover:scale-[1.03] hover:bg-[color:var(--cream)] cursor-pointer"
-          >
-            <WhatsAppIcon className="h-5 w-5" /> Reservar tu mesa
-          </button>
-        </div>
-      </section>
+        </section>
+      </main>
 
       {/* FOOTER */}
       <footer className="bg-[color:var(--ink)] py-14 text-[color:var(--cream)]/80">

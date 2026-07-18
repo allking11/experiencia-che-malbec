@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { format, addDays, startOfDay } from "date-fns";
 import { es } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
@@ -48,7 +48,10 @@ const TIME_SLOTS = [
 const schema = z.object({
   nombre: z.string().trim().min(2, "Ingresá tu nombre").max(60),
   comensales: z.number().int().min(1).max(12),
-  fecha: z.date(),
+  fecha: z.date({
+    required_error: "Elegí una fecha para tu reserva",
+    invalid_type_error: "Elegí una fecha para tu reserva",
+  }),
   hora: z.string().min(1, "Elegí un horario"),
   notas: z.string().trim().max(200).optional(),
 });
@@ -66,29 +69,34 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
   const [notas, setNotas] = useState("");
   const [calendarOpen, setCalendarOpen] = useState(false);
 
-  const today = startOfDay(new Date());
-  const maxDate = addDays(today, 7);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const today = useMemo(() => startOfDay(new Date()), [open]);
+  const maxDate = useMemo(() => addDays(today, 7), [today]);
 
-  const isToday = fecha ? format(fecha, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd") : false;
-  const now = new Date();
-  const currentHours = now.getHours();
-  const currentMinutes = now.getMinutes();
+  const isToday = useMemo(() => {
+    return fecha ? format(fecha, "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd") : false;
+  }, [fecha]);
 
-  const filteredTimeSlots = TIME_SLOTS.filter((slot) => {
-    if (!isToday) return true;
-    const [hoursStr, minutesStr] = slot.split(":");
-    const slotHours = parseInt(hoursStr, 10);
-    const slotMinutes = parseInt(minutesStr, 10);
+  const filteredTimeSlots = useMemo(() => {
+    if (!isToday) return TIME_SLOTS;
+    const now = new Date();
+    const currentHours = now.getHours();
+    const currentMinutes = now.getMinutes();
     const nowInMinutes = currentHours * 60 + currentMinutes;
-    const slotInMinutes = slotHours * 60 + slotMinutes;
-    return slotInMinutes > nowInMinutes + 15; // 15-minute buffer
-  });
+    return TIME_SLOTS.filter((slot) => {
+      const [hoursStr, minutesStr] = slot.split(":");
+      const slotHours = parseInt(hoursStr, 10);
+      const slotMinutes = parseInt(minutesStr, 10);
+      const slotInMinutes = slotHours * 60 + slotMinutes;
+      return slotInMinutes > nowInMinutes + 15; // 15-minute buffer
+    });
+  }, [isToday]);
 
   useEffect(() => {
     if (hora && !filteredTimeSlots.includes(hora)) {
       setHora("");
     }
-  }, [fecha, filteredTimeSlots, hora]);
+  }, [filteredTimeSlots, hora]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

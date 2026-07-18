@@ -68,24 +68,29 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Che Malbec — Mercado & Wine Bar boutique en Buenos Aires" },
+      { title: "Che Malbec | Boutique Wine Bar & Degustación de Vinos en Buenos Aires" },
       {
         name: "description",
         content:
-          "Wine bar boutique en Av. de Mayo 777. Degustaciones guiadas, vinos argentinos y picadas caseras. Reservá por WhatsApp.",
+          "Descubrí el mejor wine bar boutique de Buenos Aires en el histórico Palacio Vera (Montserrat). Degustaciones de vinos guiadas por sommeliers, catas de Malbec y picadas caseras. ¡Reservá hoy!",
       },
       { name: "author", content: "Che Malbec" },
-      { property: "og:title", content: "Che Malbec — Mercado & Wine Bar" },
+      { name: "robots", content: "index, follow" },
+      { property: "og:title", content: "Che Malbec | Boutique Wine Bar & Degustación de Vinos" },
       {
         property: "og:description",
         content:
-          "Degustaciones guiadas, vinos argentinos boutique y gastronomía casera en el corazón de Buenos Aires.",
+          "Disfrutá una degustación de vinos guiada por sommeliers en el histórico Palacio Vera de Montserrat, Buenos Aires. Vinos boutique y picadas argentinas.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "icon", type: "image/png", href: "/favicon-32x32.png", sizes: "32x32" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "manifest", href: "/site.webmanifest" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -105,6 +110,14 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="es">
       <head>
         <HeadContent />
+        <noscript>
+          <style>{`
+            .reveal {
+              opacity: 1 !important;
+              transform: none !important;
+            }
+          `}</style>
+        </noscript>
       </head>
       <body>
         {children}
