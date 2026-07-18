@@ -89,9 +89,16 @@ function Index() {
   const openReserva = () => setReservaOpen(true);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress((window.scrollY / totalHeight) * 100);
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -147,8 +154,17 @@ function Index() {
       />
       {/* NAV */}
       <header
-        className={`fixed inset-x-0 top-0 z-40 bg-[color:var(--cream)] border-b border-[color:var(--gold)]/30 transition-all duration-500 ${scrolled ? "py-3 shadow-sm" : "py-5"}`}
+        className={`fixed inset-x-0 top-0 z-40 border-b border-[color:var(--gold)]/20 transition-all duration-500 ${
+          scrolled
+            ? "py-3 bg-[color:var(--cream)]/85 backdrop-blur-md shadow-md"
+            : "py-5 bg-[color:var(--cream)]"
+        }`}
       >
+        {/* Scroll Progress Bar */}
+        <div
+          className="absolute bottom-0 left-0 h-[2px] bg-[color:var(--gold)] transition-all duration-100 ease-out"
+          style={{ width: `${scrollProgress}%` }}
+        />
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5">
           <a href="#inicio" id="nav-logo-link" className="flex items-center gap-2">
             <img
@@ -162,7 +178,7 @@ function Index() {
               <a
                 href="#experiencia"
                 id="nav-link-experiencia"
-                className="hover:text-[color:var(--wine)] transition-colors"
+                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
               >
                 Experiencia
               </a>
@@ -171,7 +187,7 @@ function Index() {
               <a
                 href="#degustaciones"
                 id="nav-link-degustaciones"
-                className="hover:text-[color:var(--wine)] transition-colors"
+                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
               >
                 Degustaciones
               </a>
@@ -180,7 +196,7 @@ function Index() {
               <a
                 href="#carta"
                 id="nav-link-carta"
-                className="hover:text-[color:var(--wine)] transition-colors"
+                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
               >
                 Carta
               </a>
@@ -189,7 +205,7 @@ function Index() {
               <a
                 href="#historia"
                 id="nav-link-historia"
-                className="hover:text-[color:var(--wine)] transition-colors"
+                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
               >
                 Historia
               </a>
@@ -198,7 +214,7 @@ function Index() {
               <a
                 href="#ubicacion"
                 id="nav-link-ubicacion"
-                className="hover:text-[color:var(--wine)] transition-colors"
+                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
               >
                 Ubicación
               </a>
@@ -208,7 +224,7 @@ function Index() {
             id="nav-reserve-btn"
             type="button"
             onClick={openReserva}
-            className="hidden items-center gap-2 rounded-full bg-[color:var(--wine)] px-5 py-2.5 text-sm font-semibold tracking-wide text-[color:var(--cream)] shadow-sm transition-all hover:bg-[color:var(--ink)] md:inline-flex cursor-pointer"
+            className="btn-tactile hidden items-center gap-2 rounded-full bg-[color:var(--wine)] px-5 py-2.5 text-sm font-semibold tracking-wide text-[color:var(--cream)] shadow-sm md:inline-flex cursor-pointer"
           >
             <WhatsAppIcon className="h-4 w-4" /> Reservar
           </button>
@@ -325,10 +341,16 @@ function Index() {
             <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--ink)]/70 via-[color:var(--ink)]/45 to-[color:var(--ink)]/85" />
           </div>
           <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-6 pt-24 pb-16 text-center text-[color:var(--cream)]">
-            <span className="gold-divider mb-6 reveal in">
+            <span
+              className="gold-divider mb-6 reveal reveal-slide-down in"
+              style={{ transitionDelay: "150ms" }}
+            >
               Boutique Wine Bar & Tastings in Buenos Aires
             </span>
-            <h1 className="reveal in font-serif text-4xl leading-[1.1] sm:text-6xl md:text-7xl">
+            <h1
+              className="reveal reveal-slide-up in font-serif text-4xl leading-[1.1] sm:text-6xl md:text-7xl"
+              style={{ transitionDelay: "300ms" }}
+            >
               <span className="sr-only">
                 Che Malbec — Wine Bar Boutique & Degustación de Vinos en Palacio Vera
               </span>
@@ -337,29 +359,38 @@ function Index() {
                 cuando se comparte
               </em>
             </h1>
-            <p className="reveal in mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--cream)]/85 sm:text-lg">
+            <p
+              className="reveal reveal-fade in mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--cream)]/85 sm:text-lg"
+              style={{ transitionDelay: "450ms" }}
+            >
               Degustaciones guiadas por sommeliers, vinos de bodegas boutique y gastronomía casera
               en un wine bar íntimo ubicado en el histórico Palacio Vera, en el corazón de Buenos
               Aires.
             </p>
-            <div className="reveal in mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row">
+            <div
+              className="reveal reveal-slide-up in mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
+              style={{ transitionDelay: "600ms" }}
+            >
               <button
                 id="hero-reserve-btn"
                 type="button"
                 onClick={openReserva}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg transition-all hover:scale-[1.02] hover:bg-[color:var(--ink)] sm:w-auto cursor-pointer"
+                className="btn-tactile inline-flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg sm:w-auto cursor-pointer"
               >
                 <WhatsAppIcon className="h-5 w-5" /> Reservar mesa
               </button>
               <a
                 href="#experiencia"
                 id="hero-view-experience-link"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[color:var(--gold)]/70 px-8 py-4 text-sm font-medium uppercase tracking-[0.12em] text-[color:var(--cream)] transition-colors hover:bg-[color:var(--cream)]/10 sm:w-auto"
+                className="btn-tactile inline-flex w-full items-center justify-center gap-2 rounded-full border border-[color:var(--gold)]/70 px-8 py-4 text-sm font-medium uppercase tracking-[0.12em] text-[color:var(--cream)] hover:bg-[color:var(--cream)]/10 sm:w-auto"
               >
                 Ver la experiencia
               </a>
             </div>
-            <div className="reveal in mt-12 flex items-center gap-2 text-sm text-[color:var(--cream)]/80">
+            <div
+              className="reveal reveal-fade in mt-12 flex items-center gap-2 text-sm text-[color:var(--cream)]/80"
+              style={{ transitionDelay: "750ms" }}
+            >
               <span className="text-[color:var(--gold)]">★★★★★</span>
               <span>+1100 reseñas en Google</span>
             </div>
@@ -368,7 +399,7 @@ function Index() {
             href="#opiniones"
             id="hero-scroll-down-btn"
             aria-label="Bajar"
-            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[color:var(--cream)]/70 hover:text-[color:var(--gold)]"
+            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[color:var(--cream)]/70 transition-all duration-300 hover:text-[color:var(--gold)] hover:translate-y-1 hover:scale-110"
           >
             <svg
               width="22"
@@ -391,15 +422,15 @@ function Index() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
               <div>
-                <p className="gold-divider reveal" style={{ color: "var(--gold)" }}>
+                <p className="gold-divider reveal reveal-slide-down" style={{ color: "var(--gold)" }}>
                   Opiniones
                 </p>
-                <h2 className="reveal mt-5 font-serif text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
+                <h2 className="reveal reveal-slide-up mt-5 font-serif text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
                   Reseñas de Che Malbec: 4.8 <span className="text-[color:var(--gold)]">★</span> en
                   Google Maps
                 </h2>
               </div>
-              <p className="reveal text-base leading-relaxed text-[color:var(--cream)]/80">
+              <p className="reveal reveal-fade text-base leading-relaxed text-[color:var(--cream)]/80">
                 Lo que más destacan: la calidez del espacio, la cercanía de los sommeliers y las
                 picadas abundantes.
               </p>
@@ -425,8 +456,8 @@ function Index() {
               ].map((t, i) => (
                 <article
                   key={t.n}
-                  className="reveal flex flex-col rounded-sm border border-[color:var(--cream)]/10 bg-[color:var(--cream)]/[0.04] p-7 backdrop-blur-sm"
-                  style={{ transitionDelay: `${i * 80}ms` }}
+                  className="reveal reveal-slide-up card-premium flex flex-col rounded-sm border border-[color:var(--cream)]/10 bg-[color:var(--cream)]/[0.04] p-7 backdrop-blur-sm"
+                  style={{ transitionDelay: `${i * 150}ms` }}
                 >
                   <div className="text-lg tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
                   <p className="mt-5 flex-1 font-serif text-lg italic leading-relaxed text-[color:var(--cream)]/95">
@@ -448,16 +479,16 @@ function Index() {
           className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32"
         >
           <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-20">
-            <div className="reveal order-2 md:order-1">
+            <div className="reveal reveal-slide-right hover-zoom-container order-2 md:order-1 rounded-sm shadow-xl">
               <img
                 src={copa}
                 alt="Copa de vino Malbec servida por un sommelier en el salón boutique de Che Malbec"
-                className="aspect-[4/5] w-full rounded-sm object-cover shadow-xl"
+                className="hover-zoom-image aspect-[4/5] w-full object-cover"
               />
             </div>
-            <div className="reveal order-1 md:order-2">
+            <div className="reveal reveal-slide-left order-1 md:order-2">
               <p className="gold-divider">La Experiencia en Palacio Vera</p>
-              <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+              <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
                 Experiencia de Vinos Boutique y Guía de Sommeliers
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-[color:var(--ink)]/80">
@@ -478,8 +509,8 @@ function Index() {
         <section id="degustaciones" className="bg-[color:var(--cream)] py-24 sm:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="gold-divider reveal">Degustaciones de Vinos</p>
-              <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+              <p className="gold-divider reveal reveal-slide-down">Degustaciones de Vinos</p>
+              <h2 className="reveal reveal-slide-up mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
                 Degustación de Vinos y Catas Guiadas por Sommeliers
               </h2>
             </div>
@@ -501,25 +532,25 @@ function Index() {
               ].map((c, i) => (
                 <article
                   key={c.t}
-                  className="reveal group relative flex flex-col rounded-sm border border-[color:var(--gold)]/40 bg-[color:var(--card)] p-8 transition-all hover:-translate-y-1 hover:border-[color:var(--gold)] hover:shadow-xl"
-                  style={{ transitionDelay: `${i * 80}ms` }}
+                  className="reveal reveal-slide-up tasting-card group relative flex flex-col rounded-sm border border-[color:var(--gold)]/40 bg-[color:var(--card)] p-8"
+                  style={{ transitionDelay: `${i * 150}ms` }}
                 >
-                  <span className="font-serif text-sm italic text-[color:var(--gold)]">
+                  <span className="tasting-num font-serif text-sm italic text-[color:var(--gold)] inline-block">
                     0{i + 1}
                   </span>
-                  <h3 className="mt-3 text-2xl text-[color:var(--wine)]">{c.t}</h3>
+                  <h3 className="mt-3 text-2xl text-[color:var(--wine)] font-serif font-semibold">{c.t}</h3>
                   <p className="mt-4 flex-1 text-[color:var(--ink)]/75 leading-relaxed">{c.d}</p>
-                  <div className="mt-6 h-px w-12 bg-[color:var(--gold)] transition-all group-hover:w-20" />
+                  <div className="tasting-line mt-6 h-px w-12 bg-[color:var(--gold)]" />
                 </article>
               ))}
             </div>
 
-            <div className="reveal mt-14 text-center">
+            <div className="reveal reveal-slide-up mt-14 text-center" style={{ transitionDelay: "150ms" }}>
               <button
                 id="degustaciones-reserve-btn"
                 type="button"
                 onClick={openReserva}
-                className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] transition-all hover:bg-[color:var(--ink)] cursor-pointer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] cursor-pointer"
               >
                 <WhatsAppIcon className="h-5 w-5" /> Reservar degustación
               </button>
@@ -533,9 +564,9 @@ function Index() {
           className="relative bg-[color:var(--ink)] py-24 text-[color:var(--cream)] sm:py-32"
         >
           <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 md:grid-cols-[1.1fr_1fr]">
-            <div className="reveal">
+            <div className="reveal reveal-slide-right">
               <p className="gold-divider">La carta</p>
-              <h2 className="mt-5 font-serif text-3xl sm:text-4xl md:text-5xl">
+              <h2 className="mt-5 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold">
                 Nuestra Carta: Vinos Argentinos y Picadas Caseras
               </h2>
               <p className="mt-6 max-w-md text-[color:var(--cream)]/75 leading-relaxed">
@@ -567,28 +598,34 @@ function Index() {
                 id="carta-reserve-btn"
                 type="button"
                 onClick={openReserva}
-                className="mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--gold)] transition-colors hover:bg-[color:var(--gold)] hover:text-[color:var(--ink)] cursor-pointer"
+                className="btn-tactile mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--gold)] cursor-pointer"
               >
                 Reservar mesa
               </button>
             </div>
 
-            <div className="reveal grid grid-cols-2 gap-4">
-              <img
-                src={copaBotella}
-                alt="Botella de Malbec argentino de bodega boutique y copa servida en el wine bar Che Malbec"
-                className="col-span-2 aspect-[4/5] w-full rounded-sm object-cover shadow-2xl sm:aspect-[5/4]"
-              />
-              <img
-                src={burrata}
-                alt="Plato de burrata fresca con jamón crudo y rúcula, ideal para maridar con vinos tintos boutique en Che Malbec"
-                className="aspect-square w-full rounded-sm object-cover"
-              />
-              <img
-                src={clientes}
-                alt="Clientes compartiendo una degustación de vinos boutique y picadas caseras en la cava de Che Malbec"
-                className="aspect-square w-full rounded-sm object-cover"
-              />
+            <div className="reveal reveal-slide-left grid grid-cols-2 gap-4">
+              <div className="col-span-2 hover-zoom-container rounded-sm shadow-2xl">
+                <img
+                  src={copaBotella}
+                  alt="Botella de Malbec argentino de bodega boutique y copa servida en el wine bar Che Malbec"
+                  className="hover-zoom-image aspect-[4/5] w-full object-cover sm:aspect-[5/4]"
+                />
+              </div>
+              <div className="hover-zoom-container rounded-sm shadow-md">
+                <img
+                  src={burrata}
+                  alt="Plato de burrata fresca con jamón crudo y rúcula, ideal para maridar con vinos tintos boutique en Che Malbec"
+                  className="hover-zoom-image aspect-square w-full object-cover"
+                />
+              </div>
+              <div className="hover-zoom-container rounded-sm shadow-md">
+                <img
+                  src={clientes}
+                  alt="Clientes compartiendo una degustación de vinos boutique y picadas caseras en la cava de Che Malbec"
+                  className="hover-zoom-image aspect-square w-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -600,15 +637,15 @@ function Index() {
         >
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center md:mb-6 mb-4">
-              <p className="gold-divider reveal">Agenda de Eventos</p>
-              <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+              <p className="gold-divider reveal reveal-slide-down">Agenda de Eventos</p>
+              <h2 className="reveal reveal-slide-up mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
                 Eventos de Wine Bar: Feria de Vinos y Más
               </h2>
             </div>
 
             <div className="grid gap-12 md:grid-cols-2 md:items-center">
               {/* Detalles del Evento */}
-              <div className="reveal order-2 md:order-1 space-y-6">
+              <div className="reveal reveal-slide-right order-2 md:order-1 space-y-6">
                 <span className="inline-block rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
                   Próximo Evento 🍷
                 </span>
@@ -616,7 +653,7 @@ function Index() {
                   Feria de Vinos Boutique en CABA
                 </h3>
 
-                <div className="rounded-lg bg-[color:var(--cream)]/40 p-5 border border-[color:var(--gold)]/20 space-y-3">
+                <div className="rounded-lg bg-[color:var(--cream)]/40 p-5 border border-[color:var(--gold)]/20 space-y-3 shadow-sm">
                   <p className="flex items-center gap-2.5 text-base font-semibold text-[color:var(--wine)]">
                     <Calendar className="h-5 w-5 text-[color:var(--gold)] shrink-0" /> Próxima
                     edición: ¡Muy pronto!
@@ -677,7 +714,7 @@ function Index() {
                     href={WA_EVENT_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg transition-all hover:scale-[1.02] hover:bg-[color:var(--ink)]"
+                    className="btn-tactile inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg"
                   >
                     <WhatsAppIcon className="h-5 w-5" /> Consultar próximas fechas
                   </a>
@@ -685,8 +722,8 @@ function Index() {
               </div>
 
               {/* Video Promocional */}
-              <div className="reveal order-1 md:order-2 flex justify-center">
-                <div className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[340px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/30 bg-[color:var(--ink)]">
+              <div className="reveal reveal-slide-left order-1 md:order-2 flex justify-center">
+                <div className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[340px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/30 bg-[color:var(--ink)] transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_20px_40px_rgba(199,162,91,0.15)] hover:border-[color:var(--gold)]">
                   <video
                     src={feriaVinosVideo}
                     className="w-full h-full object-cover"
@@ -705,15 +742,21 @@ function Index() {
         {/* HISTORIA */}
         <section id="historia" className="bg-[color:var(--cream)] py-24 sm:py-32">
           <div className="mx-auto max-w-3xl px-6 text-center">
-            <p className="gold-divider reveal">Nuestra historia</p>
-            <h2 className="reveal mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+            <p className="gold-divider reveal reveal-slide-down">Nuestra historia</p>
+            <h2 className="reveal reveal-slide-up mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
               Nuestra Historia: Pasión por el Vino Boutique y las Catas
             </h2>
-            <p className="reveal mt-8 font-serif text-xl italic leading-relaxed text-[color:var(--ink)]/85 sm:text-2xl">
+            <p
+              className="reveal reveal-fade mt-8 font-serif text-xl italic leading-relaxed text-[color:var(--ink)]/85 sm:text-2xl"
+              style={{ transitionDelay: "150ms" }}
+            >
               “Che Malbec nació de la curiosidad por descubrir el mundo del vino y compartir esa
               pasión con otros.”
             </p>
-            <div className="reveal mx-auto mt-8 max-w-2xl space-y-5 text-[color:var(--ink)]/75 leading-relaxed">
+            <div
+              className="reveal reveal-slide-up mx-auto mt-8 max-w-2xl space-y-5 text-[color:var(--ink)]/75 leading-relaxed"
+              style={{ transitionDelay: "300ms" }}
+            >
               <p>
                 Empezó como un hobby —vender vinos para descubrir nuevas etiquetas boutique— y
                 creció tras un viaje a Italia, donde una enoteca de barrio nos hizo comprender la
@@ -734,9 +777,9 @@ function Index() {
           className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32"
         >
           <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-16">
-            <div className="reveal">
+            <div className="reveal reveal-slide-right">
               <p className="gold-divider">Cómo Llegar</p>
-              <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl">
+              <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
                 Visitanos en Monserrat: Palacio Vera
               </h2>
 
@@ -772,15 +815,15 @@ function Index() {
                   id="ubicacion-reserve-btn"
                   type="button"
                   onClick={openReserva}
-                  className="inline-flex items-center gap-2 rounded-full border border-[color:var(--wine)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] cursor-pointer"
+                  className="btn-tactile inline-flex items-center gap-2 rounded-full border border-[color:var(--wine)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] cursor-pointer"
                 >
                   <WhatsAppIcon className="h-4 w-4" /> Reservar
                 </button>
               </div>
             </div>
 
-            <div className="reveal">
-              <div className="overflow-hidden rounded-sm border border-[color:var(--gold)]/40 shadow-xl">
+            <div className="reveal reveal-slide-left">
+              <div className="overflow-hidden rounded-sm border border-[color:var(--gold)]/40 shadow-xl transition-all duration-500 hover:shadow-2xl hover:border-[color:var(--gold)]">
                 <iframe
                   title="Mapa de Che Malbec"
                   src="https://www.google.com/maps?q=Avenida+de+Mayo+777,+Buenos+Aires&output=embed"
@@ -796,21 +839,21 @@ function Index() {
         {/* CTA FINAL */}
         <section className="relative overflow-hidden bg-[color:var(--wine)] py-24 text-[color:var(--cream)] sm:py-32">
           <div className="mx-auto max-w-3xl px-6 text-center">
-            <p className="gold-divider reveal" style={{ color: "var(--gold)" }}>
+            <p className="gold-divider reveal reveal-slide-down" style={{ color: "var(--gold)" }}>
               Reservá tu mesa
             </p>
-            <h2 className="reveal mt-5 font-serif text-3xl leading-tight sm:text-5xl md:text-6xl">
+            <h2 className="reveal reveal-slide-up mt-5 font-serif text-3xl leading-tight sm:text-5xl md:text-6xl">
               ¿Listo para disfrutar{" "}
               <em className="not-italic text-[color:var(--gold)]">una cata de vinos única?</em>
             </h2>
-            <p className="reveal mt-6 text-lg text-[color:var(--cream)]/85">
+            <p className="reveal reveal-fade mt-6 text-lg text-[color:var(--cream)]/85">
               Escribinos y reservá tu lugar. Te esperamos en Av. de Mayo 777.
             </p>
             <button
               id="cta-reserve-btn"
               type="button"
               onClick={openReserva}
-              className="reveal mt-10 inline-flex items-center gap-3 rounded-full bg-[color:var(--gold)] px-10 py-5 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink)] shadow-2xl transition-all hover:scale-[1.03] hover:bg-[color:var(--cream)] cursor-pointer"
+              className="btn-tactile reveal reveal-scale mt-10 inline-flex items-center gap-3 rounded-full bg-[color:var(--gold)] px-10 py-5 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink)] shadow-2xl cursor-pointer"
             >
               <WhatsAppIcon className="h-5 w-5" /> Reservar tu mesa
             </button>

@@ -206,7 +206,7 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
                   type="button"
                   variant="outline"
                   className={cn(
-                    "w-full justify-start text-left font-normal",
+                    "btn-tactile w-full justify-start text-left font-normal",
                     !fecha && "text-muted-foreground",
                   )}
                 >
@@ -248,7 +248,7 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
           <Button
             id="reserva-submit-btn"
             type="submit"
-            className="w-full rounded-full bg-[color:var(--wine)] py-6 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--cream)] hover:bg-[color:var(--ink)]"
+            className="btn-tactile w-full rounded-full bg-[color:var(--wine)] py-6 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--cream)] cursor-pointer"
           >
             Confirmar por WhatsApp
           </Button>

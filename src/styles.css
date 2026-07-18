@@ -107,17 +107,168 @@
     height: 1px;
     background: var(--gold);
   }
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--cream);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--wine);
+    border: 2px solid var(--cream);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
+
+  /* Section Scroll Margin */
+  section {
+    scroll-margin-top: 5.5rem;
+  }
+
+  /* Reveal System with Premium Cubic-Bezier */
   .reveal {
     opacity: 0;
-    transform: translateY(24px);
+    will-change: opacity, transform;
     transition:
-      opacity 0.9s ease-out,
-      transform 0.9s ease-out;
+      opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1.05s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .reveal.in {
+
+  /* Default reveal slides up if no modifier is set */
+  .reveal:not([class*="reveal-slide"]):not([class*="reveal-scale"]):not([class*="reveal-fade"]) {
+    transform: translateY(35px);
+  }
+
+  .reveal-slide-up {
+    transform: translateY(35px);
+  }
+
+  .reveal-slide-down {
+    transform: translateY(-35px);
+  }
+
+  .reveal-slide-left {
+    transform: translateX(45px);
+  }
+
+  .reveal-slide-right {
+    transform: translateX(-45px);
+  }
+
+  .reveal-scale {
+    transform: scale(0.96);
+  }
+
+  .reveal-fade {
+    /* Only fade, no translation */
+  }
+
+  /* Active/In-view reveal states */
+  .reveal.in,
+  .reveal-slide-up.in,
+  .reveal-slide-down.in,
+  .reveal-slide-left.in,
+  .reveal-slide-right.in,
+  .reveal-scale.in,
+  .reveal-fade.in {
     opacity: 1;
     transform: none;
   }
+
+  /* Animated Navigation Links */
+  .nav-link-animated {
+    position: relative;
+    padding-bottom: 2px;
+  }
+  .nav-link-animated::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 1.5px;
+    background-color: var(--wine);
+    transition:
+      width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .nav-link-animated:hover::after {
+    width: 100%;
+    left: 0;
+  }
+
+  /* Hover Zoom Utilities for Images */
+  .hover-zoom-container {
+    overflow: hidden;
+    position: relative;
+  }
+  .hover-zoom-image {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .hover-zoom-container:hover .hover-zoom-image {
+    transform: scale(1.05);
+  }
+
+  /* Tactile Button Animations */
+  .btn-tactile {
+    transition:
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .btn-tactile:hover {
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 10px 20px -10px oklch(0.22 0.03 38 / 0.25);
+  }
+  .btn-tactile:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 4px 6px -4px oklch(0.22 0.03 38 / 0.15);
+  }
+
+  /* Premium Card Animations */
+  .card-premium {
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+  .card-premium:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 12px 24px -10px oklch(0.22 0.03 38 / 0.12);
+  }
+
+  /* Tasting-specific card microinteractions */
+  .tasting-card {
+    transition:
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.45s ease,
+      box-shadow 0.45s ease;
+  }
+  .tasting-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--gold);
+    box-shadow: 0 16px 32px -12px oklch(0.22 0.03 38 / 0.15);
+  }
+  .tasting-card .tasting-num {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .tasting-card:hover .tasting-num {
+    transform: translateY(-2px) scale(1.05);
+  }
+  .tasting-card .tasting-line {
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .tasting-card:hover .tasting-line {
+    width: 5rem;
+  }
+
+  /* Ken Burns background animation */
   .ken-burns {
     animation: kenBurns 18s ease-out both;
   }
@@ -129,4 +280,22 @@
       transform: scale(1);
     }
   }
+
+  /* Dialog Form Input Focus & Hover States */
+  div[role="dialog"] input,
+  div[role="dialog"] button[role="combobox"] {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+  }
+  div[role="dialog"] input:hover,
+  div[role="dialog"] button[role="combobox"]:hover {
+    border-color: oklch(0.72 0.11 78 / 0.6) !important;
+  }
+  div[role="dialog"] input:focus,
+  div[role="dialog"] button[role="combobox"]:focus,
+  div[role="dialog"] button[role="combobox"][data-state="open"] {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 3px oklch(0.72 0.11 78 / 0.15) !important;
+    outline: none !important;
+  }
+
 }
