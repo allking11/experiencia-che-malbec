@@ -345,6 +345,8 @@ function Index() {
               src={fachada}
               alt="Fachada histórica de Che Malbec en el Palacio Vera, Avenida de Mayo, Buenos Aires"
               className="h-full w-full object-cover ken-burns"
+              loading="eager"
+              {...({ fetchpriority: "high" } as Record<string, string>)}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--ink)]/70 via-[color:var(--ink)]/45 to-[color:var(--ink)]/85" />
           </div>
@@ -406,8 +408,8 @@ function Index() {
           <a
             href="#opiniones"
             id="hero-scroll-down-btn"
-            aria-label="Bajar"
-            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[color:var(--cream)]/70 transition-all duration-300 hover:text-[color:var(--gold)] hover:translate-y-1 hover:scale-110"
+            aria-label="Bajar a opiniones"
+            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[color:var(--cream)]/70 transition-all duration-300 hover:text-[color:var(--gold)] hover:translate-y-1 hover:scale-110 p-3 rounded-full flex items-center justify-center"
           >
             <svg
               width="22"
@@ -464,7 +466,7 @@ function Index() {
               ].map((t, i) => (
                 <article
                   key={t.n}
-                  className="reveal reveal-slide-up card-premium flex flex-col rounded-sm border border-[color:var(--cream)]/10 bg-[color:var(--cream)]/[0.04] p-7 backdrop-blur-sm"
+                  className="reveal reveal-slide-up card-premium flex flex-col rounded-sm border border-[color:var(--cream)]/10 bg-[color:var(--cream)]/[0.04] p-5 sm:p-7 backdrop-blur-sm"
                   style={{ transitionDelay: `${i * 150}ms` }}
                 >
                   <div className="text-lg tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
@@ -492,6 +494,7 @@ function Index() {
                 src={copa}
                 alt="Copa de vino Malbec servida por un sommelier en el salón boutique de Che Malbec"
                 className="hover-zoom-image aspect-[4/5] w-full object-cover"
+                loading="lazy"
               />
             </div>
             <div className="reveal reveal-slide-left order-1 md:order-2">
@@ -618,6 +621,7 @@ function Index() {
                   src={copaBotella}
                   alt="Botella de Malbec argentino de bodega boutique y copa servida en el wine bar Che Malbec"
                   className="hover-zoom-image aspect-[4/5] w-full object-cover sm:aspect-[5/4]"
+                  loading="lazy"
                 />
               </div>
               <div className="hover-zoom-container rounded-sm shadow-md">
@@ -625,6 +629,7 @@ function Index() {
                   src={burrata}
                   alt="Plato de burrata fresca con jamón crudo y rúcula, ideal para maridar con vinos tintos boutique en Che Malbec"
                   className="hover-zoom-image aspect-square w-full object-cover"
+                  loading="lazy"
                 />
               </div>
               <div className="hover-zoom-container rounded-sm shadow-md">
@@ -632,6 +637,7 @@ function Index() {
                   src={clientes}
                   alt="Clientes compartiendo una degustación de vinos boutique y picadas caseras en la cava de Che Malbec"
                   className="hover-zoom-image aspect-square w-full object-cover"
+                  loading="lazy"
                 />
               </div>
             </div>
@@ -828,6 +834,15 @@ function Index() {
                 >
                   <WhatsAppIcon className="h-4 w-4" /> Reservar
                 </button>
+                <a
+                  id="ubicacion-maps-link"
+                  href={MAPS_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-tactile inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--ink)] hover:bg-[color:var(--gold)]/20 cursor-pointer"
+                >
+                  <MapPin className="h-4 w-4 text-[color:var(--gold)]" /> Abrir en Google Maps
+                </a>
               </div>
             </div>
 
@@ -836,7 +851,7 @@ function Index() {
                 <iframe
                   title="Mapa de Che Malbec"
                   src="https://www.google.com/maps?q=Avenida+de+Mayo+777,+Buenos+Aires&output=embed"
-                  className="h-[420px] w-full"
+                  className="h-[320px] sm:h-[420px] w-full"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
@@ -929,6 +944,18 @@ function Index() {
           © {new Date().getFullYear()} Che Malbec Mercado & Wine Bar · Todos los derechos reservados
         </div>
       </footer>
+
+      {/* Floating WhatsApp Action for Mobile */}
+      <a
+        id="floating-whatsapp-btn"
+        href={WA_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contactar por WhatsApp"
+        className="btn-tactile fixed bottom-5 right-5 z-40 flex h-13 w-13 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 active:scale-95 md:hidden cursor-pointer"
+      >
+        <WhatsAppIcon className="h-7 w-7" />
+      </a>
 
       <ReservationDialog open={reservaOpen} onOpenChange={setReservaOpen} />
     </div>
