@@ -68,7 +68,7 @@ function useReveal() {
     const els = document.querySelectorAll<HTMLElement>(".reveal");
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
-      { threshold: 0.12 },
+      { threshold: 0.05, rootMargin: "0px 0px -30px 0px" },
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
@@ -229,8 +229,16 @@ function Index() {
             <WhatsAppIcon className="h-4 w-4" /> Reservar
           </button>
 
-          {/* Mobile hamburger menu */}
-          <div className="flex items-center md:hidden">
+          {/* Mobile navigation and quick action */}
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              id="mobile-header-reserve-btn"
+              type="button"
+              onClick={openReserva}
+              className="btn-tactile inline-flex items-center gap-1.5 rounded-full bg-[color:var(--wine)] px-3.5 py-1.5 text-xs font-semibold text-[color:var(--cream)] shadow-sm cursor-pointer"
+            >
+              <WhatsAppIcon className="h-3.5 w-3.5" /> Reservar
+            </button>
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <button
@@ -727,6 +735,7 @@ function Index() {
                   <video
                     src={feriaVinosVideo}
                     className="w-full h-full object-cover"
+                    autoPlay
                     controls
                     playsInline
                     loop

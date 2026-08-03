@@ -114,6 +114,9 @@
   .gold-divider::after {
     content: "";
     width: 2.5rem;
+    max-width: 2.5rem;
+    min-width: 0.75rem;
+    flex-shrink: 1;
     height: 1px;
     background: var(--gold);
   }

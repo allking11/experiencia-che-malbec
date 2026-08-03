@@ -214,7 +214,7 @@ export function ReservationDialog({ open, onOpenChange }: Props) {
                   {fecha ? format(fecha, "EEEE d 'de' MMMM", { locale: es }) : "Elegí una fecha"}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 pointer-events-auto" align="start">
+              <PopoverContent className="w-auto p-0 pointer-events-auto max-w-[calc(100vw-3rem)]" align="center">
                 <Calendar
                   mode="single"
                   selected={fecha}
