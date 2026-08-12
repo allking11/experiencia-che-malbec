@@ -297,7 +297,10 @@
   /* Dialog Form Input Focus & Hover States */
   div[role="dialog"] input,
   div[role="dialog"] button[role="combobox"] {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.2s ease !important;
   }
   div[role="dialog"] input:hover,
   div[role="dialog"] button[role="combobox"]:hover {
@@ -311,4 +314,32 @@
     outline: none !important;
   }
 
+  /* Wine Confirmation Keyframe Animations */
+  @keyframes wineProgress {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+
+  @keyframes winePulseGlow {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 oklch(0.38 0.08 38 / 0.4);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px 8px oklch(0.72 0.11 78 / 0.35);
+    }
+  }
+
+  .animate-wine-progress {
+    animation: wineProgress 2.7s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+
+  .animate-wine-glow {
+    animation: winePulseGlow 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  }
 }

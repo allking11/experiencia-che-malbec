@@ -348,7 +348,7 @@ function Index() {
               loading="eager"
               {...({ fetchpriority: "high" } as Record<string, string>)}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--ink)]/70 via-[color:var(--ink)]/45 to-[color:var(--ink)]/85" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--ink)]/80 via-[color:var(--ink)]/55 to-[color:var(--ink)]/90" />
           </div>
           <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-6 pt-24 pb-16 text-center text-[color:var(--cream)]">
             <span
@@ -432,7 +432,10 @@ function Index() {
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
               <div>
-                <p className="gold-divider reveal reveal-slide-down" style={{ color: "var(--gold)" }}>
+                <p
+                  className="gold-divider reveal reveal-slide-down"
+                  style={{ color: "var(--gold)" }}
+                >
                   Opiniones
                 </p>
                 <h2 className="reveal reveal-slide-up mt-5 font-serif text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
@@ -549,14 +552,19 @@ function Index() {
                   <span className="tasting-num font-serif text-sm italic text-[color:var(--gold)] inline-block">
                     0{i + 1}
                   </span>
-                  <h3 className="mt-3 text-2xl text-[color:var(--wine)] font-serif font-semibold">{c.t}</h3>
+                  <h3 className="mt-3 text-2xl text-[color:var(--wine)] font-serif font-semibold">
+                    {c.t}
+                  </h3>
                   <p className="mt-4 flex-1 text-[color:var(--ink)]/75 leading-relaxed">{c.d}</p>
                   <div className="tasting-line mt-6 h-px w-12 bg-[color:var(--gold)]" />
                 </article>
               ))}
             </div>
 
-            <div className="reveal reveal-slide-up mt-14 text-center" style={{ transitionDelay: "150ms" }}>
+            <div
+              className="reveal reveal-slide-up mt-14 text-center"
+              style={{ transitionDelay: "150ms" }}
+            >
               <button
                 id="degustaciones-reserve-btn"
                 type="button"
@@ -929,7 +937,7 @@ function Index() {
               <li>
                 <a
                   id="footer-instagram-link"
-                  href="https://instagram.com/che.malbec"
+                  href="https://www.instagram.com/che.malbec"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[color:var(--gold)]"
