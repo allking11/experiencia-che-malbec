@@ -8,7 +8,7 @@ import burrata from "@/assets/burrata.jpg";
 import clientes from "@/assets/clientes.jpg";
 import feriaVinosVideo from "@/assets/feria-vinos.mp4";
 import { ReservationDialog } from "@/components/ReservationDialog";
-import { Calendar, Clock, MapPin, Menu, Star } from "lucide-react";
+import { Calendar, Clock, MapPin, Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -187,9 +187,9 @@ function Index() {
               <a
                 href="#opiniones"
                 id="nav-link-opiniones"
-                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors inline-flex items-center gap-1 font-semibold text-[color:var(--wine)]"
+                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
               >
-                <Star className="h-3.5 w-3.5 fill-[color:var(--gold)] text-[color:var(--gold)] shrink-0" /> Reseñas
+                Reseñas
               </a>
             </li>
             <li>
@@ -296,12 +296,9 @@ function Index() {
                         href="#opiniones"
                         id="mobile-nav-opiniones"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors flex items-center justify-between py-1.5 border-b border-[color:var(--gold)]/10 font-semibold text-[color:var(--wine)]"
+                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
                       >
-                        <span>Reseñas</span>
-                        <span className="flex items-center gap-1 text-xs bg-[color:var(--gold)]/25 px-2 py-0.5 rounded-full text-[color:var(--ink)] font-normal">
-                          <Star className="h-3 w-3 fill-[color:var(--gold)] text-[color:var(--gold)] shrink-0" /> ⭐ 4.9
-                        </span>
+                        Reseñas
                       </a>
                     </li>
                     <li>
