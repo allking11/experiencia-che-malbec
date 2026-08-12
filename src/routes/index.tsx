@@ -8,7 +8,7 @@ import burrata from "@/assets/burrata.jpg";
 import clientes from "@/assets/clientes.jpg";
 import feriaVinosVideo from "@/assets/feria-vinos.mp4";
 import { ReservationDialog } from "@/components/ReservationDialog";
-import { Calendar, Clock, MapPin, Menu } from "lucide-react";
+import { Calendar, Clock, MapPin, Menu, Star } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -165,15 +165,15 @@ function Index() {
           className="absolute bottom-0 left-0 h-[2px] bg-[color:var(--gold)] transition-all duration-100 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-5">
-          <a href="#inicio" id="nav-logo-link" className="flex items-center gap-2">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
+          <a href="#inicio" id="nav-logo-link" className="flex items-center gap-2 shrink-0">
             <img
               src={logo}
               alt="Che Malbec Mercado & Wine Bar - Palacio Vera Monserrat"
-              className="h-[29px] w-auto md:h-[38px]"
+              className="h-[29px] w-auto md:h-[36px] lg:h-[40px]"
             />
           </a>
-          <ul className="hidden items-center gap-8 text-sm font-medium text-[color:var(--ink)]/80 md:flex">
+          <ul className="hidden items-center gap-3.5 lg:gap-6 text-xs lg:text-sm font-medium text-[color:var(--ink)]/80 md:flex">
             <li>
               <a
                 href="#experiencia"
@@ -181,6 +181,15 @@ function Index() {
                 className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
               >
                 Experiencia
+              </a>
+            </li>
+            <li>
+              <a
+                href="#opiniones"
+                id="nav-link-opiniones"
+                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors inline-flex items-center gap-1 font-semibold text-[color:var(--wine)]"
+              >
+                <Star className="h-3.5 w-3.5 fill-[color:var(--gold)] text-[color:var(--gold)] shrink-0" /> Reseñas
               </a>
             </li>
             <li>
@@ -199,6 +208,15 @@ function Index() {
                 className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
               >
                 Carta
+              </a>
+            </li>
+            <li>
+              <a
+                href="#novedades"
+                id="nav-link-novedades"
+                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
+              >
+                Novedades
               </a>
             </li>
             <li>
@@ -224,7 +242,7 @@ function Index() {
             id="nav-reserve-btn"
             type="button"
             onClick={openReserva}
-            className="btn-tactile hidden items-center gap-2 rounded-full bg-[color:var(--wine)] px-5 py-2.5 text-sm font-semibold tracking-wide text-[color:var(--cream)] shadow-sm md:inline-flex cursor-pointer"
+            className="btn-tactile hidden items-center gap-2 rounded-full bg-[color:var(--wine)] px-4 py-2 text-xs lg:text-sm font-semibold tracking-wide text-[color:var(--cream)] shadow-sm md:inline-flex cursor-pointer shrink-0"
           >
             <WhatsAppIcon className="h-4 w-4" /> Reservar
           </button>
@@ -252,25 +270,38 @@ function Index() {
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="bg-[color:var(--cream)] border-l border-[color:var(--gold)]/40 text-[color:var(--ink)] flex flex-col justify-between p-6"
+                className="bg-[color:var(--cream)] border-l border-[color:var(--gold)]/40 text-[color:var(--ink)] flex flex-col justify-between p-6 overflow-y-auto"
               >
                 <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
                 <SheetDescription className="sr-only">
                   Enlaces de navegación móvil para Che Malbec
                 </SheetDescription>
                 <div>
-                  <div className="flex items-center justify-between border-b border-[color:var(--gold)]/20 pb-4 mb-6">
+                  <div className="flex items-center justify-between border-b border-[color:var(--gold)]/20 pb-4 mb-4">
                     <img src={logo} alt="Che Malbec Wine Bar Boutique" className="h-6 w-auto" />
                   </div>
-                  <ul className="flex flex-col gap-6 text-lg font-medium text-[color:var(--ink)]">
+                  <ul className="flex flex-col gap-2.5 text-base font-medium text-[color:var(--ink)]">
                     <li>
                       <a
                         href="#experiencia"
                         id="mobile-nav-experiencia"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-2 border-b border-[color:var(--gold)]/10"
+                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
                       >
                         Experiencia
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#opiniones"
+                        id="mobile-nav-opiniones"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="hover:text-[color:var(--wine)] transition-colors flex items-center justify-between py-1.5 border-b border-[color:var(--gold)]/10 font-semibold text-[color:var(--wine)]"
+                      >
+                        <span>Reseñas</span>
+                        <span className="flex items-center gap-1 text-xs bg-[color:var(--gold)]/25 px-2 py-0.5 rounded-full text-[color:var(--ink)] font-normal">
+                          <Star className="h-3 w-3 fill-[color:var(--gold)] text-[color:var(--gold)] shrink-0" /> ⭐ 4.9
+                        </span>
                       </a>
                     </li>
                     <li>
@@ -278,7 +309,7 @@ function Index() {
                         href="#degustaciones"
                         id="mobile-nav-degustaciones"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-2 border-b border-[color:var(--gold)]/10"
+                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
                       >
                         Degustaciones
                       </a>
@@ -288,9 +319,19 @@ function Index() {
                         href="#carta"
                         id="mobile-nav-carta"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-2 border-b border-[color:var(--gold)]/10"
+                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
                       >
                         Carta
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#novedades"
+                        id="mobile-nav-novedades"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
+                      >
+                        Novedades
                       </a>
                     </li>
                     <li>
@@ -298,7 +339,7 @@ function Index() {
                         href="#historia"
                         id="mobile-nav-historia"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-2 border-b border-[color:var(--gold)]/10"
+                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
                       >
                         Historia
                       </a>
@@ -308,7 +349,7 @@ function Index() {
                         href="#ubicacion"
                         id="mobile-nav-ubicacion"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-2 border-b border-[color:var(--gold)]/10"
+                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
                       >
                         Ubicación
                       </a>
