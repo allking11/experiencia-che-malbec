@@ -383,7 +383,7 @@ function Index() {
                     Nuestras 2 Sucursales
                   </a>
                   <a href="#degustaciones" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
-                    Degustaciones & Flights
+                    Degustaciones & Catas
                   </a>
                   <a href="#carta" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
                     Carta Completa & Precios
@@ -788,10 +788,10 @@ function Index() {
             <div className="mx-auto max-w-2xl text-center">
               <p className="gold-divider reveal reveal-slide-down">Experiencias Sensoriales</p>
               <h2 className="reveal reveal-slide-up mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)]">
-                Menús Degustación y Vuelos de Vino
+                Menús Degustación y Catas de 4 Copas
               </h2>
               <p className="mt-4 text-sm sm:text-base text-[color:var(--ink)]/80">
-                Catas guiadas por sommelier para viajar copa a copa por las mejores regiones vitivinícolas de Argentina.
+                Experiencias guiadas por sommelier para viajar copa a copa por las mejores regiones vitivinícolas de Argentina.
               </p>
             </div>
 
@@ -801,7 +801,7 @@ function Index() {
                   Menú Degustación 4 Pasos
                 </TabsTrigger>
                 <TabsTrigger value="flights" className="rounded-full data-[state=active]:bg-[color:var(--wine)] data-[state=active]:text-[color:var(--cream)] text-xs font-semibold py-2 px-6 cursor-pointer transition-all">
-                  Flights 4 Copas
+                  Degustación 4 Copas
                 </TabsTrigger>
               </TabsList>
 
@@ -1434,11 +1434,11 @@ function Index() {
               </div>
 
               <div className="reveal reveal-slide-left grid grid-cols-2 gap-4">
-                <div className="hover-zoom-container rounded-lg shadow-xl col-span-2 aspect-[16/9] overflow-hidden border border-[color:var(--gold)]/25">
+                <div className="hover-zoom-container rounded-lg shadow-xl col-span-2 aspect-[4/3] sm:aspect-[16/10] overflow-hidden border border-[color:var(--gold)]/25">
                   <img
                     src={clientes}
                     alt="Eventos y catas privadas con Che Malbec"
-                    className="hover-zoom-image h-full w-full object-cover"
+                    className="hover-zoom-image h-full w-full object-cover object-[center_12%]"
                   />
                 </div>
                 <div className="hover-zoom-container rounded-lg shadow-md aspect-square overflow-hidden border border-[color:var(--gold)]/25">
