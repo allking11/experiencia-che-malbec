@@ -220,38 +220,99 @@ function Index() {
 
   const schemaJson = {
     "@context": "https://schema.org",
-    "@type": "BarOrPub",
+    "@type": ["Winery", "BarOrPub", "Restaurant"],
     name: "Che Malbec - Mercado & Wine Bar",
     image: `${SITE_URL}${fachada}`,
     "@id": `${SITE_URL}/#bar`,
     url: SITE_URL,
     telephone: "+5491128481233",
-    priceRange: "$$$",
-    address: [
+    priceRange: "$$",
+    servesCuisine: [
+      "Vinos de Bodegas Boutique",
+      "Degustaciones Guiadas",
+      "Picadas de Autor",
+      "Empanadas Artesanales",
+      "Sándwiches Gourmet",
+      "Pizzas Caseras",
+    ],
+    acceptsReservations: "True",
+    hasMenu: `${SITE_URL}/#carta`,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.8",
+      bestRating: "5",
+      ratingCount: "180",
+    },
+    department: [
       {
-        "@type": "PostalAddress",
-        streetAddress: "Avenida de Mayo 777 (Palacio Vera)",
-        addressLocality: "Buenos Aires",
-        addressRegion: "CABA",
-        postalCode: "C1084",
-        addressCountry: "AR",
+        "@type": ["Winery", "BarOrPub"],
+        name: "Che Malbec Monserrat (Palacio Vera)",
+        image: `${SITE_URL}${fachada}`,
+        telephone: "+5491128481233",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Avenida de Mayo 777 (Palacio Vera)",
+          addressLocality: "Buenos Aires",
+          addressRegion: "CABA",
+          postalCode: "C1084",
+          addressCountry: "AR",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: -34.6087,
+          longitude: -58.3776,
+        },
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Monday",
+            opens: "11:00",
+            closes: "19:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            opens: "11:00",
+            closes: "23:00",
+          },
+        ],
       },
       {
-        "@type": "PostalAddress",
-        streetAddress: "Estados Unidos 407 (San Telmo)",
-        addressLocality: "Buenos Aires",
-        addressRegion: "CABA",
-        postalCode: "C1101",
-        addressCountry: "AR",
+        "@type": ["Winery", "BarOrPub"],
+        name: "Che Malbec San Telmo",
+        image: `${SITE_URL}${fachada}`,
+        telephone: "+5491128481233",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Estados Unidos 407 (San Telmo)",
+          addressLocality: "Buenos Aires",
+          addressRegion: "CABA",
+          postalCode: "C1101",
+          addressCountry: "AR",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: -34.6186,
+          longitude: -58.3713,
+        },
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            opens: "18:00",
+            closes: "00:00",
+          },
+        ],
       },
     ],
     sameAs: [
       "https://www.instagram.com/che.malbec",
       "https://www.instagram.com/che.malbec.santelmo",
+      SUCURSAL_MONSERRAT.mapsUrl,
+      SUCURSAL_SANTELMO.mapsUrl,
     ],
-    servesCuisine: "Argentine, Wine, Picadas, Empanadas, Sandwiches, Pizzas",
     description:
-      "Boutique wine bar and wine tasting experience with two venues in Buenos Aires: Monserrat (Palacio Vera) and San Telmo. Guided tastings by professional sommeliers, delivery and events catering.",
+      "Wine Bar Boutique y degustación de vinos guiada en Buenos Aires con dos sedes: Monserrat (Palacio Vera) y San Telmo. Catas de vinos boutique por sommeliers, picadas caseras y delivery por PedidosYa.",
   };
 
   return (
@@ -274,7 +335,11 @@ function Index() {
           style={{ width: `${scrollProgress}%` }}
         />
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
-          <a href="#inicio" id="nav-logo-link" className="flex items-center gap-2 shrink-0 transition-opacity hover:opacity-90">
+          <a
+            href="#inicio"
+            id="nav-logo-link"
+            className="flex items-center gap-2 shrink-0 transition-opacity hover:opacity-90"
+          >
             <img
               src={logo}
               alt="Che Malbec Mercado & Wine Bar"
@@ -309,7 +374,10 @@ function Index() {
               </a>
             </li>
             <li>
-              <a href="#delivery" className="nav-link-animated hover:text-[color:var(--wine)] flex items-center gap-1.5">
+              <a
+                href="#delivery"
+                className="nav-link-animated hover:text-[color:var(--wine)] flex items-center gap-1.5"
+              >
                 <ShoppingBag className="h-3.5 w-3.5 text-red-600" /> Delivery
               </a>
             </li>
@@ -318,7 +386,8 @@ function Index() {
                 href="#fiestas"
                 className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--wine)]/20 bg-[color:var(--wine)]/10 px-3.5 py-1 text-xs font-semibold text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all"
               >
-                <PartyPopper className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Llevá Che a tu fiesta
+                <PartyPopper className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Llevá Che a tu
+                fiesta
               </a>
             </li>
             <li>
@@ -374,30 +443,63 @@ function Index() {
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-2 rounded-lg bg-[color:var(--wine)]/10 p-3 text-[color:var(--wine)] font-semibold border border-[color:var(--gold)]/20"
                   >
-                    <PartyPopper className="h-5 w-5 text-[color:var(--gold)]" /> Llevá Che a tu fiesta
+                    <PartyPopper className="h-5 w-5 text-[color:var(--gold)]" /> Llevá Che a tu
+                    fiesta
                   </a>
-                  <a href="#experiencia" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                  <a
+                    href="#experiencia"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)]"
+                  >
                     La Experiencia
                   </a>
-                  <a href="#sucursales" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                  <a
+                    href="#sucursales"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)]"
+                  >
                     Nuestras 2 Sucursales
                   </a>
-                  <a href="#degustaciones" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                  <a
+                    href="#degustaciones"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)]"
+                  >
                     Degustaciones & Catas
                   </a>
-                  <a href="#carta" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                  <a
+                    href="#carta"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)]"
+                  >
                     Carta Completa & Precios
                   </a>
-                  <a href="#novedades" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                  <a
+                    href="#novedades"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)]"
+                  >
                     Agenda de Eventos
                   </a>
-                  <a href="#delivery" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)] flex items-center gap-2">
+                  <a
+                    href="#delivery"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)] flex items-center gap-2"
+                  >
                     <ShoppingBag className="h-4 w-4 text-red-600" /> Pedir por Delivery
                   </a>
-                  <a href="#franquicias" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                  <a
+                    href="#franquicias"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)]"
+                  >
                     Franquicias
                   </a>
-                  <a href="#opiniones" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                  <a
+                    href="#opiniones"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)]"
+                  >
                     Opiniones Google (4.8★)
                   </a>
                   <div className="pt-4 border-t border-[color:var(--gold)]/20 space-y-2">
@@ -429,7 +531,10 @@ function Index() {
 
       <main className="pt-[62px]">
         {/* HERO SECTION */}
-        <section id="inicio" className="relative min-h-[92svh] w-full overflow-hidden flex items-center">
+        <section
+          id="inicio"
+          className="relative min-h-[92svh] w-full overflow-hidden flex items-center"
+        >
           <div className="absolute inset-0 z-0">
             <img
               src={fachada}
@@ -441,15 +546,18 @@ function Index() {
 
           <div className="relative z-10 mx-auto max-w-5xl px-6 py-20 text-center text-[color:var(--cream)]">
             <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)]/40 bg-[color:var(--wine)]/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[color:var(--gold)] backdrop-blur-md shadow-lg">
-              <Wine className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Wine Bar Boutique · Monserrat & San Telmo
+              <Wine className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Wine Bar Boutique ·
+              Monserrat & San Telmo
             </div>
 
             <h1 className="mt-6 font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.08] tracking-tight">
-              El Arte del Buen Vino Argentino y <span className="italic text-[color:var(--gold)]">Momentos Inolvidables</span>
+              El Arte del Buen Vino Argentino y{" "}
+              <span className="italic text-[color:var(--gold)]">Momentos Inolvidables</span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg text-[color:var(--cream)]/90 leading-relaxed font-light">
-              Descubrí etiquetas de bodegas boutique, degustaciones guiadas por sommeliers, tapeo casero y la calidez de nuestras dos cavas en el centro histórico de Buenos Aires.
+              Descubrí etiquetas de bodegas boutique, degustaciones guiadas por sommeliers, tapeo
+              casero y la calidez de nuestras dos cavas en el centro histórico de Buenos Aires.
             </p>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -479,19 +587,27 @@ function Index() {
             {/* Micro badges */}
             <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-[color:var(--cream)]/85">
               <div className="rounded-xl bg-black/40 p-3.5 backdrop-blur-md border border-[color:var(--gold)]/30 shadow-lg">
-                <span className="font-semibold text-[color:var(--gold)] block text-sm">2 Sedes en CABA</span>
+                <span className="font-semibold text-[color:var(--gold)] block text-sm">
+                  2 Sedes en CABA
+                </span>
                 Av. de Mayo & San Telmo
               </div>
               <div className="rounded-xl bg-black/40 p-3.5 backdrop-blur-md border border-[color:var(--gold)]/30 shadow-lg">
-                <span className="font-semibold text-[color:var(--gold)] block text-sm">4.8 ★ Google Maps</span>
+                <span className="font-semibold text-[color:var(--gold)] block text-sm">
+                  4.8 ★ Google Maps
+                </span>
                 Cientos de reseñas reales
               </div>
               <div className="rounded-xl bg-black/40 p-3.5 backdrop-blur-md border border-[color:var(--gold)]/30 shadow-lg">
-                <span className="font-semibold text-[color:var(--gold)] block text-sm">Catas en 4 Pasos</span>
+                <span className="font-semibold text-[color:var(--gold)] block text-sm">
+                  Catas en 4 Pasos
+                </span>
                 Guiadas por sommeliers
               </div>
               <div className="rounded-xl bg-black/40 p-3.5 backdrop-blur-md border border-[color:var(--gold)]/30 shadow-lg">
-                <span className="font-semibold text-[color:var(--gold)] block text-sm">Delivery Activo</span>
+                <span className="font-semibold text-[color:var(--gold)] block text-sm">
+                  Delivery Activo
+                </span>
                 PedidosYa & WhatsApp
               </div>
             </div>
@@ -499,7 +615,10 @@ function Index() {
         </section>
 
         {/* DEDICATED SECTION: LA EXPERIENCIA CHE MALBEC */}
-        <section id="experiencia" className="bg-[color:var(--card)] py-20 sm:py-28 border-b border-[color:var(--gold)]/25">
+        <section
+          id="experiencia"
+          className="bg-[color:var(--card)] py-20 sm:py-28 border-b border-[color:var(--gold)]/25"
+        >
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center">
               <p className="gold-divider reveal reveal-slide-down">Nuestra Esencia</p>
@@ -507,12 +626,16 @@ function Index() {
                 La Experiencia Che Malbec
               </h2>
               <p className="mt-4 text-sm sm:text-base text-[color:var(--ink)]/80 leading-relaxed">
-                Más que un wine bar, un punto de encuentro donde el vino argentino se descubre copa a copa, sin solemnidades y con la calidez de un hogar porteño.
+                Más que un wine bar, un punto de encuentro donde el vino argentino se descubre copa
+                a copa, sin solemnidades y con la calidez de un hogar porteño.
               </p>
             </div>
 
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              <div className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between" style={{ transitionDelay: "0ms" }}>
+              <div
+                className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between"
+                style={{ transitionDelay: "0ms" }}
+              >
                 <div className="space-y-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
                     <Building2 className="h-6 w-6 text-[color:var(--gold)]" />
@@ -521,7 +644,8 @@ function Index() {
                     Cavas con Historia
                   </h3>
                   <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
-                    Ubicados en el emblemático Palacio Vera (1910) y en el corazón de San Telmo, combinando arquitectura clásica con intimidad contemporánea.
+                    Ubicados en el emblemático Palacio Vera (1910) y en el corazón de San Telmo,
+                    combinando arquitectura clásica con intimidad contemporánea.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-[color:var(--gold)]/20 mt-4 text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
@@ -529,7 +653,10 @@ function Index() {
                 </div>
               </div>
 
-              <div className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between" style={{ transitionDelay: "100ms" }}>
+              <div
+                className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between"
+                style={{ transitionDelay: "100ms" }}
+              >
                 <div className="space-y-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
                     <Sparkles className="h-6 w-6 text-[color:var(--gold)]" />
@@ -538,7 +665,8 @@ function Index() {
                     Sommeliers Cercanos
                   </h3>
                   <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
-                    Catas didácticas y distendidas donde aprendés de cepas, notas aromáticas y regiones vitivinícolas sin necesidad de ser un experto.
+                    Catas didácticas y distendidas donde aprendés de cepas, notas aromáticas y
+                    regiones vitivinícolas sin necesidad de ser un experto.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-[color:var(--gold)]/20 mt-4 text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
@@ -546,7 +674,10 @@ function Index() {
                 </div>
               </div>
 
-              <div className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between" style={{ transitionDelay: "200ms" }}>
+              <div
+                className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between"
+                style={{ transitionDelay: "200ms" }}
+              >
                 <div className="space-y-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
                     <Wine className="h-6 w-6 text-[color:var(--gold)]" />
@@ -555,7 +686,8 @@ function Index() {
                     Bodegas Boutique
                   </h3>
                   <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
-                    Curaduría federal de pequeños productores de Salta, Mendoza, Patagonia y La Rioja con partidas limitadas y cosechas seleccionadas.
+                    Curaduría federal de pequeños productores de Salta, Mendoza, Patagonia y La
+                    Rioja con partidas limitadas y cosechas seleccionadas.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-[color:var(--gold)]/20 mt-4 text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
@@ -563,7 +695,10 @@ function Index() {
                 </div>
               </div>
 
-              <div className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between" style={{ transitionDelay: "300ms" }}>
+              <div
+                className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between"
+                style={{ transitionDelay: "300ms" }}
+              >
                 <div className="space-y-3">
                   <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
                     <Utensils className="h-6 w-6 text-[color:var(--gold)]" />
@@ -572,7 +707,8 @@ function Index() {
                     Gastronomía Autóctona
                   </h3>
                   <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
-                    Picadas abundantes de quesos y fiambres seleccionados, empanadas caseras de osobuco al Malbec y sándwiches gourmet recién horneados.
+                    Picadas abundantes de quesos y fiambres seleccionados, empanadas caseras de
+                    osobuco al Malbec y sándwiches gourmet recién horneados.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-[color:var(--gold)]/20 mt-4 text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
@@ -584,7 +720,8 @@ function Index() {
             {/* Sommelier quote callout */}
             <div className="mt-12 rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/60 p-6 sm:p-8 text-center max-w-3xl mx-auto shadow-sm">
               <p className="font-serif text-base sm:text-lg italic text-[color:var(--wine)] leading-relaxed">
-                “En Che Malbec desmitificamos el vino: te invitamos a explorar, maridar y disfrutar de etiquetas excepcionales en un ambiente íntimo y sin apuros.”
+                “En Che Malbec desmitificamos el vino: te invitamos a explorar, maridar y disfrutar
+                de etiquetas excepcionales en un ambiente íntimo y sin apuros.”
               </p>
               <span className="mt-3 block text-xs font-semibold uppercase tracking-widest text-[color:var(--gold)]">
                 — Equipo de Sommeliers Che Malbec
@@ -594,7 +731,10 @@ function Index() {
         </section>
 
         {/* BARRA / BANNER DE DELIVERY */}
-        <section id="delivery" className="bg-wine-velvet text-[color:var(--cream)] py-8 border-y border-[color:var(--gold)]/30 shadow-inner">
+        <section
+          id="delivery"
+          className="bg-wine-velvet text-[color:var(--cream)] py-8 border-y border-[color:var(--gold)]/30 shadow-inner"
+        >
           <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-4 text-left">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[color:var(--gold)] text-[color:var(--ink)] shadow-md">
@@ -605,7 +745,8 @@ function Index() {
                   ¿Querés Che Malbec en tu casa?
                 </h3>
                 <p className="text-xs sm:text-sm text-[color:var(--cream)]/85">
-                  Pedí nuestras empanadas de autor, picadas abundantes y vinos boutique directo a tu domicilio.
+                  Pedí nuestras empanadas de autor, picadas abundantes y vinos boutique directo a tu
+                  domicilio.
                 </p>
               </div>
             </div>
@@ -640,7 +781,8 @@ function Index() {
                 Dos Sedes en Buenos Aires
               </h2>
               <p className="mt-4 text-sm sm:text-base text-[color:var(--ink)]/80">
-                Vení a vivir la experiencia Che Malbec en el emblemático Palacio Vera de Monserrat o en nuestra sede de San Telmo.
+                Vení a vivir la experiencia Che Malbec en el emblemático Palacio Vera de Monserrat o
+                en nuestra sede de San Telmo.
               </p>
             </div>
 
@@ -783,7 +925,10 @@ function Index() {
         </section>
 
         {/* DEGUSTACIONES Y FLIGHTS DE CATA */}
-        <section id="degustaciones" className="bg-[color:var(--card)] py-20 sm:py-28 border-y border-[color:var(--gold)]/30">
+        <section
+          id="degustaciones"
+          className="bg-[color:var(--card)] py-20 sm:py-28 border-y border-[color:var(--gold)]/30"
+        >
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center">
               <p className="gold-divider reveal reveal-slide-down">Experiencias Sensoriales</p>
@@ -791,16 +936,23 @@ function Index() {
                 Menús Degustación y Catas de 4 Copas
               </h2>
               <p className="mt-4 text-sm sm:text-base text-[color:var(--ink)]/80">
-                Experiencias guiadas por sommelier para viajar copa a copa por las mejores regiones vitivinícolas de Argentina.
+                Experiencias guiadas por sommelier para viajar copa a copa por las mejores regiones
+                vitivinícolas de Argentina.
               </p>
             </div>
 
             <Tabs defaultValue="pasos" className="mt-12">
               <TabsList className="mx-auto flex max-w-md justify-center bg-[color:var(--cream)] border border-[color:var(--gold)]/40 p-1 rounded-full shadow-xs">
-                <TabsTrigger value="pasos" className="rounded-full data-[state=active]:bg-[color:var(--wine)] data-[state=active]:text-[color:var(--cream)] text-xs font-semibold py-2 px-6 cursor-pointer transition-all">
+                <TabsTrigger
+                  value="pasos"
+                  className="rounded-full data-[state=active]:bg-[color:var(--wine)] data-[state=active]:text-[color:var(--cream)] text-xs font-semibold py-2 px-6 cursor-pointer transition-all"
+                >
                   Menú Degustación 4 Pasos
                 </TabsTrigger>
-                <TabsTrigger value="flights" className="rounded-full data-[state=active]:bg-[color:var(--wine)] data-[state=active]:text-[color:var(--cream)] text-xs font-semibold py-2 px-6 cursor-pointer transition-all">
+                <TabsTrigger
+                  value="flights"
+                  className="rounded-full data-[state=active]:bg-[color:var(--wine)] data-[state=active]:text-[color:var(--cream)] text-xs font-semibold py-2 px-6 cursor-pointer transition-all"
+                >
                   Degustación 4 Copas
                 </TabsTrigger>
               </TabsList>
@@ -813,29 +965,45 @@ function Index() {
                     <span className="inline-block rounded-full bg-[color:var(--gold)]/20 px-2.5 py-0.5 text-[11px] font-serif italic text-[color:var(--wine)] font-bold">
                       1er Paso
                     </span>
-                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">Variedad de Quesos</h4>
-                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">Selección artesanal</p>
+                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">
+                      Variedad de Quesos
+                    </h4>
+                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">
+                      Selección artesanal
+                    </p>
                   </div>
                   <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/45 p-4 text-center shadow-xs">
                     <span className="inline-block rounded-full bg-[color:var(--gold)]/20 px-2.5 py-0.5 text-[11px] font-serif italic text-[color:var(--wine)] font-bold">
                       2do Paso
                     </span>
-                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">Brusqueta Serrana</h4>
-                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">Jamón crudo, tomate deshidratado y rúcula</p>
+                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">
+                      Brusqueta Serrana
+                    </h4>
+                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">
+                      Jamón crudo, tomate deshidratado y rúcula
+                    </p>
                   </div>
                   <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/45 p-4 text-center shadow-xs">
                     <span className="inline-block rounded-full bg-[color:var(--gold)]/20 px-2.5 py-0.5 text-[11px] font-serif italic text-[color:var(--wine)] font-bold">
                       3er Paso
                     </span>
-                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">Empanada Tradicional</h4>
-                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">Carne cortada a cuchillo</p>
+                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">
+                      Empanada Tradicional
+                    </h4>
+                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">
+                      Carne cortada a cuchillo
+                    </p>
                   </div>
                   <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/45 p-4 text-center shadow-xs">
                     <span className="inline-block rounded-full bg-[color:var(--gold)]/20 px-2.5 py-0.5 text-[11px] font-serif italic text-[color:var(--wine)] font-bold">
                       4to Paso
                     </span>
-                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">Choripán Gourmet</h4>
-                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">Receta tradicional argentina</p>
+                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">
+                      Choripán Gourmet
+                    </h4>
+                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">
+                      Receta tradicional argentina
+                    </p>
                   </div>
                 </div>
 
@@ -848,14 +1016,28 @@ function Index() {
                     <div className="card-boutique p-6 flex flex-col justify-between shadow-md">
                       <div>
                         <div className="flex justify-between items-baseline border-b border-[color:var(--gold)]/30 pb-3">
-                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">FEDERAL</h4>
+                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">
+                            FEDERAL
+                          </h4>
                           <span className="font-bold text-lg text-[color:var(--ink)]">$55.000</span>
                         </div>
                         <ul className="mt-4 space-y-2 text-xs text-[color:var(--ink)]/85">
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Coquena Torrontés (Salta)</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Saurus Estate Pinot Noir (Patagonia)</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Chañarmuyo Malbec (La Rioja)</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Lagarde Cabernet Sauvignon (Mendoza)</li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Coquena Torrontés (Salta)
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Saurus Estate Pinot Noir (Patagonia)
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Chañarmuyo Malbec (La Rioja)
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Lagarde Cabernet Sauvignon (Mendoza)
+                          </li>
                         </ul>
                       </div>
                       <button
@@ -873,14 +1055,28 @@ function Index() {
                       </span>
                       <div>
                         <div className="flex justify-between items-baseline border-b border-[color:var(--gold)]/30 pb-3">
-                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">SELECCIÓN CHE MALBEC</h4>
+                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">
+                            SELECCIÓN CHE MALBEC
+                          </h4>
                           <span className="font-bold text-lg text-[color:var(--ink)]">$60.000</span>
                         </div>
                         <ul className="mt-4 space-y-2 text-xs text-[color:var(--ink)]/85">
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Colomé Torrontés (Bodega Colomé)</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Domaine Bousquet Reserva Cabernet Franc</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Sottano Malbec (Bodega Sottano)</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Lagarde Cabernet Sauvignon (Lagarde)</li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Colomé Torrontés (Bodega Colomé)
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Domaine Bousquet Reserva Cabernet Franc
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Sottano Malbec (Bodega Sottano)
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Lagarde Cabernet Sauvignon (Lagarde)
+                          </li>
                         </ul>
                       </div>
                       <button
@@ -895,14 +1091,28 @@ function Index() {
                     <div className="card-boutique p-6 flex flex-col justify-between shadow-md">
                       <div>
                         <div className="flex justify-between items-baseline border-b border-[color:var(--gold)]/30 pb-3">
-                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">CATENA ZAPATA</h4>
+                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">
+                            CATENA ZAPATA
+                          </h4>
                           <span className="font-bold text-lg text-[color:var(--ink)]">$73.500</span>
                         </div>
                         <ul className="mt-4 space-y-2 text-xs text-[color:var(--ink)]/85">
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Saint Felicien Chardonnay</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Nicasia Cabernet Franc</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> DV Catena Cabernet Malbec</li>
-                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> DV Catena Syrah Syrah</li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Saint Felicien Chardonnay
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" />{" "}
+                            Nicasia Cabernet Franc
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> DV
+                            Catena Cabernet Malbec
+                          </li>
+                          <li className="flex items-center gap-2">
+                            <Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> DV
+                            Catena Syrah Syrah
+                          </li>
                         </ul>
                       </div>
                       <button
@@ -923,8 +1133,12 @@ function Index() {
                   <div className="card-boutique p-5 flex flex-col justify-between shadow-md">
                     <div>
                       <div className="border-b border-[color:var(--gold)]/30 pb-2.5">
-                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">No Somos Solo Malbec</h4>
-                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">$34.500</p>
+                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">
+                          No Somos Solo Malbec
+                        </h4>
+                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">
+                          $34.500
+                        </p>
                       </div>
                       <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
                         <li>• Saurus Pinot Noir</li>
@@ -945,8 +1159,12 @@ function Index() {
                   <div className="card-boutique p-5 flex flex-col justify-between shadow-md">
                     <div>
                       <div className="border-b border-[color:var(--gold)]/30 pb-2.5">
-                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">Fly Salta</h4>
-                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">$39.000</p>
+                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">
+                          Fly Salta
+                        </h4>
+                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">
+                          $39.000
+                        </p>
                       </div>
                       <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
                         <li>• Don David Torrontés</li>
@@ -967,8 +1185,12 @@ function Index() {
                   <div className="card-boutique p-5 flex flex-col justify-between shadow-md">
                     <div>
                       <div className="border-b border-[color:var(--gold)]/30 pb-2.5">
-                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">Fly Malbec Federal</h4>
-                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">$42.500</p>
+                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">
+                          Fly Malbec Federal
+                        </h4>
+                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">
+                          $42.500
+                        </p>
                       </div>
                       <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
                         <li>• Saurus Selec Malbec (Patagonia)</li>
@@ -989,8 +1211,12 @@ function Index() {
                   <div className="card-boutique p-5 flex flex-col justify-between shadow-md">
                     <div>
                       <div className="border-b border-[color:var(--gold)]/30 pb-2.5">
-                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">Fly Catena Zapata</h4>
-                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">$49.000</p>
+                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">
+                          Fly Catena Zapata
+                        </h4>
+                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">
+                          $49.000
+                        </p>
                       </div>
                       <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
                         <li>• Saint Felicien Chardonnay</li>
@@ -1017,36 +1243,53 @@ function Index() {
         <section id="carta" className="bg-ink-atmosphere text-[color:var(--cream)] py-20 sm:py-28">
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="gold-divider">
-                Propuesta Gastronómica & Vinos
-              </p>
+              <p className="gold-divider">Propuesta Gastronómica & Vinos</p>
               <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--cream)]">
                 Nuestra Carta
               </h2>
               <p className="mt-3 text-sm sm:text-base text-[color:var(--cream)]/75">
-                Platos caseros, picadas de autor, empanadas premium y vinos por copa con precios actualizados.
+                Platos caseros, picadas de autor, empanadas premium y vinos por copa con precios
+                actualizados.
               </p>
             </div>
 
             <Tabs defaultValue="picadas" className="mt-12">
               <div className="overflow-x-auto pb-2">
                 <TabsList className="mx-auto flex w-max justify-center bg-white/5 border border-[color:var(--gold)]/35 p-1 rounded-full backdrop-blur-md">
-                  <TabsTrigger value="picadas" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                  <TabsTrigger
+                    value="picadas"
+                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                  >
                     Picadas de Autor
                   </TabsTrigger>
-                  <TabsTrigger value="empanadas" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                  <TabsTrigger
+                    value="empanadas"
+                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                  >
                     Empanadas ($4.400)
                   </TabsTrigger>
-                  <TabsTrigger value="sandwiches" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                  <TabsTrigger
+                    value="sandwiches"
+                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                  >
                     Sándwiches & Tapeo
                   </TabsTrigger>
-                  <TabsTrigger value="pizzas" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                  <TabsTrigger
+                    value="pizzas"
+                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                  >
                     Pizzas & Postres
                   </TabsTrigger>
-                  <TabsTrigger value="vinos" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                  <TabsTrigger
+                    value="vinos"
+                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                  >
                     Vinos por Copa
                   </TabsTrigger>
-                  <TabsTrigger value="tragos" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                  <TabsTrigger
+                    value="tragos"
+                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                  >
                     Tragos & Cervezas
                   </TabsTrigger>
                 </TabsList>
@@ -1056,48 +1299,69 @@ function Index() {
               <TabsContent value="picadas" className="mt-8 space-y-6">
                 <div className="grid gap-3 sm:grid-cols-3 text-center bg-white/5 p-4 rounded-xl border border-[color:var(--gold)]/30 backdrop-blur-sm">
                   <div>
-                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">Chica (2/3 personas)</span>
+                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">
+                      Chica (2/3 personas)
+                    </span>
                     <p className="font-serif text-2xl font-bold mt-0.5">$35.000</p>
                   </div>
                   <div>
-                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">Mediana (4/5 personas)</span>
+                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">
+                      Mediana (4/5 personas)
+                    </span>
                     <p className="font-serif text-2xl font-bold mt-0.5">$48.000</p>
                   </div>
                   <div>
-                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">Grande (6/7 personas)</span>
+                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">
+                      Grande (6/7 personas)
+                    </span>
                     <p className="font-serif text-2xl font-bold mt-0.5">$64.000</p>
                   </div>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   <div className="card-boutique-dark p-5">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">PICARONA</h4>
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                      PICARONA
+                    </h4>
                     <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Jamón cocido, salame criollo, mortadela, queso fynbo, parmesano, queso azul, olivas verdes, pepinos, leber y brusquetas.
+                      Jamón cocido, salame criollo, mortadela, queso fynbo, parmesano, queso azul,
+                      olivas verdes, pepinos, leber y brusquetas.
                     </p>
                   </div>
                   <div className="card-boutique-dark p-5">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">MALEVO</h4>
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                      MALEVO
+                    </h4>
                     <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Jamón crudo, salame criollo, salchichón, fontina, sardo, brie, olivas negras, ajíes en vinagre, berenjenas en escabeche y brusquetas.
+                      Jamón crudo, salame criollo, salchichón, fontina, sardo, brie, olivas negras,
+                      ajíes en vinagre, berenjenas en escabeche y brusquetas.
                     </p>
                   </div>
                   <div className="card-boutique-dark p-5">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">AVENIDA</h4>
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                      AVENIDA
+                    </h4>
                     <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Bondiola, longaniza, salchichón, gruyere, provolone, queso azul, olivas negras, ajíes en vinagre, berenjenas en escabeche y brusqueta.
+                      Bondiola, longaniza, salchichón, gruyere, provolone, queso azul, olivas
+                      negras, ajíes en vinagre, berenjenas en escabeche y brusqueta.
                     </p>
                   </div>
                   <div className="card-boutique-dark p-5">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">TOSCANA</h4>
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                      TOSCANA
+                    </h4>
                     <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Lomo horneado, spianatta, mortadela, fynbo, canestrato, gouda saborizado, olivas verdes, pepinos, leber y brusquetas.
+                      Lomo horneado, spianatta, mortadela, fynbo, canestrato, gouda saborizado,
+                      olivas verdes, pepinos, leber y brusquetas.
                     </p>
                   </div>
                   <div className="card-boutique-dark p-5 sm:col-span-2 lg:col-span-2">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">QUESO QUESO</h4>
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                      QUESO QUESO
+                    </h4>
                     <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Fynbo, parmesano, cheddar, gouda saborizado, gruyere, queso azul, canestrato, brie, olivas verdes, olivas negras y brusquetas.
+                      Fynbo, parmesano, cheddar, gouda saborizado, gruyere, queso azul, canestrato,
+                      brie, olivas verdes, olivas negras y brusquetas.
                     </p>
                   </div>
                 </div>
@@ -1108,7 +1372,9 @@ function Index() {
                 <div className="rounded-xl border border-[color:var(--gold)]/35 bg-white/5 p-6 backdrop-blur-sm">
                   <div className="flex justify-between items-center pb-4 border-b border-white/10">
                     <div>
-                      <span className="text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">Receta Casera</span>
+                      <span className="text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
+                        Receta Casera
+                      </span>
                       <h3 className="font-serif text-xl font-bold text-[color:var(--cream)]">
                         Empanadas Artesanales Che Malbec
                       </h3>
@@ -1119,40 +1385,77 @@ function Index() {
                   </div>
                   <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 text-xs">
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Osobuco al Malbec (O)</span>
-                      <span className="text-[color:var(--cream)]/80">Osobuco braseado, cebolla, zanahoria, romero, condimentos y Malbec argentino.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Osobuco al Malbec (O)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Osobuco braseado, cebolla, zanahoria, romero, condimentos y Malbec
+                        argentino.
+                      </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Bondiola a la Cerveza Negra (B)</span>
-                      <span className="text-[color:var(--cream)]/80">Bondiola, cebolla colorada, verdeo, ají verde, condimentos y cerveza stout.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Bondiola a la Cerveza Negra (B)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Bondiola, cebolla colorada, verdeo, ají verde, condimentos y cerveza stout.
+                      </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Salteña (S)</span>
-                      <span className="text-[color:var(--cream)]/80">Carne cortada a cuchillo, cebolla, ají, verdeo, papa y huevo.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Salteña (S)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Carne cortada a cuchillo, cebolla, ají, verdeo, papa y huevo.
+                      </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Tucumana (T)</span>
-                      <span className="text-[color:var(--cream)]/80">Carne cortada a cuchillo (matambre), cebolla, ají, verdeo y huevo.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Tucumana (T)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Carne cortada a cuchillo (matambre), cebolla, ají, verdeo y huevo.
+                      </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Carne Tradicional (CT)</span>
-                      <span className="text-[color:var(--cream)]/80">Carne molida, cebolla, ají, condimentos y aceitunas verdes.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Carne Tradicional (CT)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Carne molida, cebolla, ají, condimentos y aceitunas verdes.
+                      </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Carne Dulce (CTD)</span>
-                      <span className="text-[color:var(--cream)]/80">Carne molida, cebolla, ají, aceitunas, huevo, pasas de uva y azúcar.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Carne Dulce (CTD)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Carne molida, cebolla, ají, aceitunas, huevo, pasas de uva y azúcar.
+                      </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Pollo al Disco (P)</span>
-                      <span className="text-[color:var(--cream)]/80">Pollo tierno, cebolla, ají, condimentos y huevo duro.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Pollo al Disco (P)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Pollo tierno, cebolla, ají, condimentos y huevo duro.
+                      </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Caprese (CSE)</span>
-                      <span className="text-[color:var(--cream)]/80">Muzzarella seleccionada, tomate fresco y albahaca aromática.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Caprese (CSE)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Muzzarella seleccionada, tomate fresco y albahaca aromática.
+                      </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
-                      <span className="font-bold text-[color:var(--gold)] block text-sm">Jamón & Queso / Verdura</span>
-                      <span className="text-[color:var(--cream)]/80">Jamón cocido y muzzarella / Espinaca, cebolla y queso sardo.</span>
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Jamón & Queso / Verdura
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Jamón cocido y muzzarella / Espinaca, cebolla y queso sardo.
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -1168,43 +1471,67 @@ function Index() {
                     <ul className="space-y-3 text-xs divide-y divide-white/10">
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Burrata</span>
-                          <span className="text-[color:var(--cream)]/70">Mortadela con pistacho, burrata y pesto</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Burrata
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Mortadela con pistacho, burrata y pesto
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$15.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Palacio Vera</span>
-                          <span className="text-[color:var(--cream)]/70">Lomo horneado, queso azul, pera y rúcula</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Palacio Vera
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Lomo horneado, queso azul, pera y rúcula
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$12.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Gringo</span>
-                          <span className="text-[color:var(--cream)]/70">Jamón crudo, queso fynbo, tomate, rúcula y salsa serrana</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Gringo
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Jamón crudo, queso fynbo, tomate, rúcula y salsa serrana
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Mafia</span>
-                          <span className="text-[color:var(--cream)]/70">Bondiola, queso sardo, ajíes en vinagre y mostaneza</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Mafia
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Bondiola, queso sardo, ajíes en vinagre y mostaneza
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Presidente / Pelusa</span>
-                          <span className="text-[color:var(--cream)]/70">Lomo o Mortadela con quesos especiales y aderezos</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Presidente / Pelusa
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Lomo o Mortadela con quesos especiales y aderezos
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$12.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Porteño / Tango / Latino</span>
-                          <span className="text-[color:var(--cream)]/70">Clásicos con jamón, salame milán o verduras frescas</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Porteño / Tango / Latino
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Clásicos con jamón, salame milán o verduras frescas
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$10.000</span>
                       </li>
@@ -1218,36 +1545,56 @@ function Index() {
                     <ul className="space-y-3 text-xs divide-y divide-white/10">
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Burrata (Sin TACC)</span>
-                          <span className="text-[color:var(--cream)]/70">Jamón crudo, burrata fresca, rúcula, tomates y oliva</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Burrata (Sin TACC)
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Jamón crudo, burrata fresca, rúcula, tomates y oliva
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$28.500</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Bocconcino (Sin TACC)</span>
-                          <span className="text-[color:var(--cream)]/70">Bocconcino, cherry, albahaca, olivas negras y oliva</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Bocconcino (Sin TACC)
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Bocconcino, cherry, albahaca, olivas negras y oliva
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$17.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Tortilla de Papas Entera (Sin TACC)</span>
-                          <span className="text-[color:var(--cream)]/70">Receta tradicional bien jugosa</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Tortilla de Papas Entera (Sin TACC)
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Receta tradicional bien jugosa
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$16.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Pan con Tomate y Jamón Crudo</span>
-                          <span className="text-[color:var(--cream)]/70">Pan de campo con emulsión de tomate y jamón crudo</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Pan con Tomate y Jamón Crudo
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Pan de campo con emulsión de tomate y jamón crudo
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
-                          <span className="font-bold text-[color:var(--cream)] block text-sm">Pan de Campo Artesanal</span>
-                          <span className="text-[color:var(--cream)]/70">Porción recién horneada</span>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Pan de Campo Artesanal
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Porción recién horneada
+                          </span>
                         </div>
                         <span className="font-bold text-[color:var(--gold)] text-sm">$3.000</span>
                       </li>
@@ -1320,26 +1667,68 @@ function Index() {
                     <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
                       Tintos por Copa
                     </h3>
-                    <div className="flex justify-between"><span>Alto Las Hormigas Terroir Luján de Cuyo</span><span className="font-bold text-[color:var(--gold)]">$10.000</span></div>
-                    <div className="flex justify-between"><span>Sarapura Blend / Alpataco Merlot</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
-                    <div className="flex justify-between"><span>Trivento Gold Cabernet Franc</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
-                    <div className="flex justify-between"><span>Alta Vista Los Escasos Syrah</span><span className="font-bold text-[color:var(--gold)]">$8.500</span></div>
-                    <div className="flex justify-between"><span>El Turco / Padrillos Pinot / Crux Tempranillo</span><span className="font-bold text-[color:var(--gold)]">$8.000</span></div>
-                    <div className="flex justify-between"><span>Trivento Red Blend / Saurus Pinot / Ábside</span><span className="font-bold text-[color:var(--gold)]">$7.500</span></div>
-                    <div className="flex justify-between"><span>Trapiche Reserva Cabernet Sauvignon</span><span className="font-bold text-[color:var(--gold)]">$7.000</span></div>
-                    <div className="flex justify-between"><span>Domiciano Estelar Malbec / Manos Negras Criolla</span><span className="font-bold text-[color:var(--gold)]">$6.500</span></div>
+                    <div className="flex justify-between">
+                      <span>Alto Las Hormigas Terroir Luján de Cuyo</span>
+                      <span className="font-bold text-[color:var(--gold)]">$10.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Sarapura Blend / Alpataco Merlot</span>
+                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Trivento Gold Cabernet Franc</span>
+                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Alta Vista Los Escasos Syrah</span>
+                      <span className="font-bold text-[color:var(--gold)]">$8.500</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>El Turco / Padrillos Pinot / Crux Tempranillo</span>
+                      <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Trivento Red Blend / Saurus Pinot / Ábside</span>
+                      <span className="font-bold text-[color:var(--gold)]">$7.500</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Trapiche Reserva Cabernet Sauvignon</span>
+                      <span className="font-bold text-[color:var(--gold)]">$7.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Domiciano Estelar Malbec / Manos Negras Criolla</span>
+                      <span className="font-bold text-[color:var(--gold)]">$6.500</span>
+                    </div>
                   </div>
 
                   <div className="card-boutique-dark p-6 space-y-3 text-xs">
                     <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
                       Blancos y Rosados por Copa
                     </h3>
-                    <div className="flex justify-between"><span>Las Perdices Riesling</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
-                    <div className="flex justify-between"><span>Correntoso Pinot Noir Rosé / Trivento Rosé</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
-                    <div className="flex justify-between"><span>La Linda Sweet Viognier</span><span className="font-bold text-[color:var(--gold)]">$8.000</span></div>
-                    <div className="flex justify-between"><span>Alta Vista Chardonnay / Crux Sauvignon Blanc</span><span className="font-bold text-[color:var(--gold)]">$7.500</span></div>
-                    <div className="flex justify-between"><span>Fond de Cave Chardonnay / Palo Santo Sauvignon</span><span className="font-bold text-[color:var(--gold)]">$7.000</span></div>
-                    <div className="flex justify-between"><span>Coquena Torrontés (Salta)</span><span className="font-bold text-[color:var(--gold)]">$6.500</span></div>
+                    <div className="flex justify-between">
+                      <span>Las Perdices Riesling</span>
+                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Correntoso Pinot Noir Rosé / Trivento Rosé</span>
+                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>La Linda Sweet Viognier</span>
+                      <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Alta Vista Chardonnay / Crux Sauvignon Blanc</span>
+                      <span className="font-bold text-[color:var(--gold)]">$7.500</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Fond de Cave Chardonnay / Palo Santo Sauvignon</span>
+                      <span className="font-bold text-[color:var(--gold)]">$7.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Coquena Torrontés (Salta)</span>
+                      <span className="font-bold text-[color:var(--gold)]">$6.500</span>
+                    </div>
                   </div>
                 </div>
               </TabsContent>
@@ -1348,21 +1737,51 @@ function Index() {
               <TabsContent value="tragos" className="mt-8 space-y-6">
                 <div className="grid gap-6 sm:grid-cols-3 text-xs">
                   <div className="card-boutique-dark p-5 space-y-2">
-                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">Tragos / Aperitivos</h4>
-                    <div className="flex justify-between"><span>Aperol Spritz / Gin Tonic / Negroni</span><span className="font-bold text-[color:var(--gold)]">$12.000</span></div>
-                    <div className="flex justify-between"><span>Fernet Cola / Campari Tonic</span><span className="font-bold text-[color:var(--gold)]">$10.000</span></div>
-                    <div className="flex justify-between"><span>Vermut</span><span className="font-bold text-[color:var(--gold)]">$8.000</span></div>
+                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Tragos / Aperitivos
+                    </h4>
+                    <div className="flex justify-between">
+                      <span>Aperol Spritz / Gin Tonic / Negroni</span>
+                      <span className="font-bold text-[color:var(--gold)]">$12.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Fernet Cola / Campari Tonic</span>
+                      <span className="font-bold text-[color:var(--gold)]">$10.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Vermut</span>
+                      <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                    </div>
                   </div>
                   <div className="card-boutique-dark p-5 space-y-2">
-                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">Cervezas</h4>
-                    <div className="flex justify-between"><span>Rabieta / Blue Moon</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
-                    <div className="flex justify-between"><span>Antares (IPA, Kölsch, Scotch, Honey)</span><span className="font-bold text-[color:var(--gold)]">$8.000</span></div>
-                    <div className="flex justify-between"><span>Heineken / Warsteiner / Grolsch / Imperial</span><span className="font-bold text-[color:var(--gold)]">$7.000</span></div>
+                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Cervezas
+                    </h4>
+                    <div className="flex justify-between">
+                      <span>Rabieta / Blue Moon</span>
+                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Antares (IPA, Kölsch, Scotch, Honey)</span>
+                      <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Heineken / Warsteiner / Grolsch / Imperial</span>
+                      <span className="font-bold text-[color:var(--gold)]">$7.000</span>
+                    </div>
                   </div>
                   <div className="card-boutique-dark p-5 space-y-2">
-                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">Sin Alcohol</h4>
-                    <div className="flex justify-between"><span>Agua / Saborizada / Gaseosas</span><span className="font-bold text-[color:var(--gold)]">$4.000</span></div>
-                    <div className="flex justify-between"><span>Soda</span><span className="font-bold text-[color:var(--gold)]">$3.600</span></div>
+                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Sin Alcohol
+                    </h4>
+                    <div className="flex justify-between">
+                      <span>Agua / Saborizada / Gaseosas</span>
+                      <span className="font-bold text-[color:var(--gold)]">$4.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Soda</span>
+                      <span className="font-bold text-[color:var(--gold)]">$3.600</span>
+                    </div>
                   </div>
                 </div>
               </TabsContent>
@@ -1381,42 +1800,62 @@ function Index() {
         </section>
 
         {/* SECCIÓN: LLEVÁ CHE MALBEC A TU FIESTA */}
-        <section id="fiestas" className="bg-[color:var(--card)] py-20 sm:py-28 border-b border-[color:var(--gold)]/20">
+        <section
+          id="fiestas"
+          className="bg-[color:var(--card)] py-20 sm:py-28 border-b border-[color:var(--gold)]/20"
+        >
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-12 md:grid-cols-2 items-center">
               <div className="reveal reveal-slide-right space-y-6">
                 <div className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
-                  <PartyPopper className="h-4 w-4 text-[color:var(--gold)]" /> Catering de Vinos & Eventos Privados
+                  <PartyPopper className="h-4 w-4 text-[color:var(--gold)]" /> Catering de Vinos &
+                  Eventos Privados
                 </div>
                 <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)] leading-tight">
                   Llevá Che Malbec a tu Fiesta o Celebración
                 </h2>
                 <p className="text-base sm:text-lg text-[color:var(--ink)]/80 leading-relaxed">
-                  Transformá tu cumpleaños, casamiento, reunión corporativa o fiesta privada con el sello de Che Malbec. Llevamos nuestra cava móvil, copas de cristal, sommeliers expertos y gastronomía casera a donde vos quieras.
+                  Transformá tu cumpleaños, casamiento, reunión corporativa o fiesta privada con el
+                  sello de Che Malbec. Llevamos nuestra cava móvil, copas de cristal, sommeliers
+                  expertos y gastronomía casera a donde vos quieras.
                 </p>
 
                 <div className="space-y-3.5 pt-2">
                   <div className="flex items-start gap-3 rounded-lg bg-[color:var(--cream)]/40 p-3.5 border border-[color:var(--gold)]/20">
                     <Wine className="h-5 w-5 text-[color:var(--wine)] shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">Barras Móviles de Vinos Boutique</h4>
-                      <p className="text-xs text-[color:var(--ink)]/75">Etiquetas seleccionadas de pequeñas bodegas argentinas servidas por profesionales.</p>
+                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">
+                        Barras Móviles de Vinos Boutique
+                      </h4>
+                      <p className="text-xs text-[color:var(--ink)]/75">
+                        Etiquetas seleccionadas de pequeñas bodegas argentinas servidas por
+                        profesionales.
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3 rounded-lg bg-[color:var(--cream)]/40 p-3.5 border border-[color:var(--gold)]/20">
                     <Sparkles className="h-5 w-5 text-[color:var(--wine)] shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">Catas Guiadas Privadas</h4>
-                      <p className="text-xs text-[color:var(--ink)]/75">Dinámicas de degustación por pasos exclusivas para agasajar a tus invitados.</p>
+                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">
+                        Catas Guiadas Privadas
+                      </h4>
+                      <p className="text-xs text-[color:var(--ink)]/75">
+                        Dinámicas de degustación por pasos exclusivas para agasajar a tus invitados.
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3 rounded-lg bg-[color:var(--cream)]/40 p-3.5 border border-[color:var(--gold)]/20">
                     <Utensils className="h-5 w-5 text-[color:var(--wine)] shrink-0 mt-0.5" />
                     <div>
-                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">Tapeo y Picadas Gourmet</h4>
-                      <p className="text-xs text-[color:var(--ink)]/75">Tablas de quesos y fiambres seleccionados, empanadas de osobuco y brusquetas.</p>
+                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">
+                        Tapeo y Picadas Gourmet
+                      </h4>
+                      <p className="text-xs text-[color:var(--ink)]/75">
+                        Tablas de quesos y fiambres seleccionados, empanadas de osobuco y
+                        brusquetas.
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1461,7 +1900,10 @@ function Index() {
         </section>
 
         {/* AGENDA DE EVENTOS */}
-        <section id="novedades" className="bg-[color:var(--card)] py-20 sm:py-28 border-t border-[color:var(--gold)]/20">
+        <section
+          id="novedades"
+          className="bg-[color:var(--card)] py-20 sm:py-28 border-t border-[color:var(--gold)]/20"
+        >
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center">
               <p className="gold-divider reveal reveal-slide-down">Cartelera del Mes</p>
@@ -1469,7 +1911,8 @@ function Index() {
                 Próximos Eventos en Che Malbec
               </h2>
               <p className="mt-3 text-sm sm:text-base text-[color:var(--ink)]/80">
-                Noches especiales, catas maridadas y canilla libre con música en vivo. Cupos limitados.
+                Noches especiales, catas maridadas y canilla libre con música en vivo. Cupos
+                limitados.
               </p>
             </div>
 
@@ -1519,7 +1962,8 @@ function Index() {
                   Feria de Vinos Boutique en CABA
                 </h3>
                 <p className="text-sm text-[color:var(--cream)]/80 leading-relaxed">
-                  Más de 15 etiquetas boutique en degustación libre, banda en vivo, charlas con sommeliers y copa de cristal de regalo. ¡Sumate a las próximas ediciones!
+                  Más de 15 etiquetas boutique en degustación libre, banda en vivo, charlas con
+                  sommeliers y copa de cristal de regalo. ¡Sumate a las próximas ediciones!
                 </p>
                 <div className="pt-2">
                   <a
@@ -1536,13 +1980,13 @@ function Index() {
                 <div className="w-full max-w-[260px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/40 bg-black">
                   <video
                     src={feriaVinosVideo}
+                    poster={clientes}
                     className="h-full w-full object-cover"
-                    autoPlay
                     controls
                     playsInline
                     loop
                     muted
-                    preload="auto"
+                    preload="metadata"
                   />
                 </div>
               </div>
@@ -1557,31 +2001,46 @@ function Index() {
               <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] items-center">
                 <div className="space-y-6">
                   <div className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
-                    <Building2 className="h-4 w-4 text-[color:var(--gold)]" /> Modelo de Negocio & Expansión
+                    <Building2 className="h-4 w-4 text-[color:var(--gold)]" /> Modelo de Negocio &
+                    Expansión
                   </div>
                   <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)] leading-tight">
                     Franquicias Che Malbec
                   </h2>
                   <p className="text-base text-[color:var(--ink)]/80 leading-relaxed">
-                    Sumate a una marca consolidada con alto ticket promedio, excelente reputación (4.8★ en Google) y un concepto probado que une wine bar boutique, mercado de vinos y gastronomía de autor.
+                    Sumate a una marca consolidada con alto ticket promedio, excelente reputación
+                    (4.8★ en Google) y un concepto probado que une wine bar boutique, mercado de
+                    vinos y gastronomía de autor.
                   </p>
 
                   <div className="grid gap-4 sm:grid-cols-2 text-xs text-[color:var(--ink)]/85 pt-2">
                     <div className="flex items-start gap-2.5">
                       <Check className="h-4 w-4 text-[color:var(--gold)] shrink-0 mt-0.5" />
-                      <span><strong>2 Formatos Disponibles:</strong> Completo (~300m²) o Express Wine Bar.</span>
+                      <span>
+                        <strong>2 Formatos Disponibles:</strong> Completo (~300m²) o Express Wine
+                        Bar.
+                      </span>
                     </div>
                     <div className="flex items-start gap-2.5">
                       <Check className="h-4 w-4 text-[color:var(--gold)] shrink-0 mt-0.5" />
-                      <span><strong>Acuerdos Directos con Bodegas:</strong> Márgenes preferenciales en etiquetas boutique.</span>
+                      <span>
+                        <strong>Acuerdos Directos con Bodegas:</strong> Márgenes preferenciales en
+                        etiquetas boutique.
+                      </span>
                     </div>
                     <div className="flex items-start gap-2.5">
                       <Check className="h-4 w-4 text-[color:var(--gold)] shrink-0 mt-0.5" />
-                      <span><strong>Capacitación Integral:</strong> Formación en servicio, sommellerie y gestión.</span>
+                      <span>
+                        <strong>Capacitación Integral:</strong> Formación en servicio, sommellerie y
+                        gestión.
+                      </span>
                     </div>
                     <div className="flex items-start gap-2.5">
                       <Check className="h-4 w-4 text-[color:var(--gold)] shrink-0 mt-0.5" />
-                      <span><strong>Soporte Continuo:</strong> Marketing, carta centralizada y acompañamiento comercial.</span>
+                      <span>
+                        <strong>Soporte Continuo:</strong> Marketing, carta centralizada y
+                        acompañamiento comercial.
+                      </span>
                     </div>
                   </div>
 
@@ -1591,7 +2050,8 @@ function Index() {
                       onClick={() => setFranquiciaOpen(true)}
                       className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[color:var(--cream)] shadow-xl hover:bg-[color:var(--wine)]/90 cursor-pointer"
                     >
-                      <Building2 className="h-4 w-4 text-[color:var(--gold)]" /> Postular mi Franquicia
+                      <Building2 className="h-4 w-4 text-[color:var(--gold)]" /> Postular mi
+                      Franquicia
                     </button>
                     <a
                       href={WA_FRANQUICIAS_URL}
@@ -1599,7 +2059,8 @@ function Index() {
                       rel="noopener noreferrer"
                       className="btn-tactile inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-6 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] hover:bg-[color:var(--gold)]/20 transition-all cursor-pointer"
                     >
-                      <WhatsAppIcon className="h-4 w-4 text-[color:var(--gold)]" /> Consultar por WhatsApp
+                      <WhatsAppIcon className="h-4 w-4 text-[color:var(--gold)]" /> Consultar por
+                      WhatsApp
                     </a>
                   </div>
                 </div>
@@ -1610,13 +2071,16 @@ function Index() {
                   </h3>
                   <div className="space-y-3 text-xs text-[color:var(--ink)]/80">
                     <p className="border-b border-[color:var(--gold)]/20 pb-2.5">
-                      🍷 <strong>Negocio de Experiencias:</strong> El público no busca solo beber un vino, sino aprender, compartir maridajes y disfrutar un ambiente cálido.
+                      🍷 <strong>Negocio de Experiencias:</strong> El público no busca solo beber un
+                      vino, sino aprender, compartir maridajes y disfrutar un ambiente cálido.
                     </p>
                     <p className="border-b border-[color:var(--gold)]/20 pb-2.5">
-                      📈 <strong>Múltiples Vías de Ingreso:</strong> Consumo en salón, eventos corporativos, catering de fiestas, delivery y venta de botellas para llevar.
+                      📈 <strong>Múltiples Vías de Ingreso:</strong> Consumo en salón, eventos
+                      corporativos, catering de fiestas, delivery y venta de botellas para llevar.
                     </p>
                     <p>
-                      ⭐ <strong>Material Abierto:</strong> Ponemos a tu disposición toda la información del modelo para evaluar la inversión de forma transparente.
+                      ⭐ <strong>Material Abierto:</strong> Ponemos a tu disposición toda la
+                      información del modelo para evaluar la inversión de forma transparente.
                     </p>
                   </div>
                 </div>
@@ -1626,19 +2090,22 @@ function Index() {
         </section>
 
         {/* OPINIONES */}
-        <section id="opiniones" className="bg-wine-velvet text-[color:var(--cream)] py-20 sm:py-28 shadow-inner">
+        <section
+          id="opiniones"
+          className="bg-wine-velvet text-[color:var(--cream)] py-20 sm:py-28 shadow-inner"
+        >
           <div className="mx-auto max-w-6xl px-6">
             <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
               <div>
-                <p className="gold-divider">
-                  Opiniones Reales
-                </p>
+                <p className="gold-divider">Opiniones Reales</p>
                 <h2 className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl leading-tight">
-                  Calificación 4.8 <span className="text-[color:var(--gold)]">★</span> en Google Maps
+                  Calificación 4.8 <span className="text-[color:var(--gold)]">★</span> en Google
+                  Maps
                 </h2>
               </div>
               <p className="text-sm sm:text-base leading-relaxed text-[color:var(--cream)]/80">
-                La calidez del espacio, la cercanía de nuestros sommeliers y la abundancia de las picadas caseras nos convirtieron en un clásico indiscutido.
+                La calidez del espacio, la cercanía de nuestros sommeliers y la abundancia de las
+                picadas caseras nos convirtieron en un clásico indiscutido.
               </p>
             </div>
 
@@ -1693,15 +2160,14 @@ function Index() {
         {/* CTA FINAL */}
         <section className="bg-ink-atmosphere text-[color:var(--cream)] py-20 sm:py-28 text-center border-t border-[color:var(--gold)]/20">
           <div className="mx-auto max-w-3xl px-6">
-            <p className="gold-divider">
-              Tu Próxima Copa Te Espera
-            </p>
+            <p className="gold-divider">Tu Próxima Copa Te Espera</p>
             <h2 className="mt-4 font-serif text-3xl sm:text-5xl md:text-6xl font-semibold">
               Vení a descubrir el mundo de los{" "}
               <span className="italic text-[color:var(--gold)]">vinos boutique</span>
             </h2>
             <p className="mt-4 text-sm sm:text-base text-[color:var(--cream)]/80">
-              Escribinos para asegurar tu mesa en Monserrat o San Telmo. Te esperamos con la copa servida.
+              Escribinos para asegurar tu mesa en Monserrat o San Telmo. Te esperamos con la copa
+              servida.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <button
@@ -1730,7 +2196,8 @@ function Index() {
           <div>
             <img src={logo} alt="Che Malbec" className="h-8 w-auto" />
             <p className="mt-4 leading-relaxed text-[color:var(--cream)]/65">
-              Wine bar boutique en Buenos Aires. Vinos argentinos de bodegas seleccionadas, catas guiadas, picadas abundantes y eventos.
+              Wine bar boutique en Buenos Aires. Vinos argentinos de bodegas seleccionadas, catas
+              guiadas, picadas abundantes y eventos.
             </p>
             <span className="mt-4 inline-block rounded-full bg-white/10 px-3 py-1 text-[10px] text-[color:var(--gold)] font-medium border border-[color:var(--gold)]/20">
               Club de Vinos (Próximamente)
@@ -1791,22 +2258,42 @@ function Index() {
             </h4>
             <ul className="mt-3 space-y-2">
               <li>
-                <a href={WA_GENERAL_URL} target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">
+                <a
+                  href={WA_GENERAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[color:var(--gold)] transition-colors"
+                >
                   WhatsApp: +54 9 11 2848-1233
                 </a>
               </li>
               <li>
-                <a href={SUCURSAL_MONSERRAT.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">
+                <a
+                  href={SUCURSAL_MONSERRAT.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[color:var(--gold)] transition-colors"
+                >
                   IG Monserrat: @che.malbec
                 </a>
               </li>
               <li>
-                <a href={SUCURSAL_SANTELMO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">
+                <a
+                  href={SUCURSAL_SANTELMO.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[color:var(--gold)] transition-colors"
+                >
                   IG San Telmo: @che.malbec.santelmo
                 </a>
               </li>
               <li>
-                <a href={PEDIDOSYA_URL} target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">
+                <a
+                  href={PEDIDOSYA_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[color:var(--gold)] transition-colors"
+                >
                   Delivery: PedidosYa
                 </a>
               </li>
@@ -1824,7 +2311,8 @@ function Index() {
         </div>
 
         <div className="mx-auto mt-10 max-w-6xl border-t border-white/10 px-6 pt-6 text-center text-[11px] text-[color:var(--cream)]/50">
-          © {new Date().getFullYear()} Che Malbec Mercado & Wine Bar · Todos los derechos reservados · Buenos Aires, Argentina
+          © {new Date().getFullYear()} Che Malbec Mercado & Wine Bar · Todos los derechos reservados
+          · Buenos Aires, Argentina
         </div>
       </footer>
 

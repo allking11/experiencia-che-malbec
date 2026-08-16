@@ -154,7 +154,12 @@
   }
 
   .bg-ink-atmosphere {
-    background: radial-gradient(circle at 50% 15%, oklch(0.26 0.04 42) 0%, oklch(0.18 0.03 36) 75%, oklch(0.15 0.02 36) 100%);
+    background: radial-gradient(
+      circle at 50% 15%,
+      oklch(0.26 0.04 42) 0%,
+      oklch(0.18 0.03 36) 75%,
+      oklch(0.15 0.02 36) 100%
+    );
   }
 
   /* Luxury Card Utilities */
@@ -247,6 +252,21 @@
   .reveal-fade.in {
     opacity: 1;
     transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-slide-up,
+    .reveal-slide-down,
+    .reveal-slide-left,
+    .reveal-slide-right,
+    .reveal-scale,
+    .reveal-fade {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      animation: none !important;
+    }
   }
 
   /* Animated Navigation Links */
@@ -382,7 +402,8 @@
   }
 
   @keyframes winePulseGlow {
-    0%, 100% {
+    0%,
+    100% {
       transform: scale(1);
       box-shadow: 0 0 0 0 oklch(0.38 0.08 38 / 0.4);
     }
@@ -429,4 +450,3 @@
     display: none;
   }
 }
-

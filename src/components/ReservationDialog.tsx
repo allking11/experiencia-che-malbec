@@ -110,7 +110,9 @@ interface Props {
 }
 
 export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props) {
-  const [sucursal, setSucursal] = useState(defaultSucursal || "Monserrat (Palacio Vera - Av. de Mayo 777)");
+  const [sucursal, setSucursal] = useState(
+    defaultSucursal || "Monserrat (Palacio Vera - Av. de Mayo 777)",
+  );
   const [nombre, setNombre] = useState("");
   const [comensales, setComensales] = useState<string>("2");
   const [fecha, setFecha] = useState<Date | undefined>();
@@ -309,14 +311,18 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
                   <span className="text-[color:var(--ink)]/60 block text-[10px] uppercase tracking-wider">
                     Sucursal
                   </span>
-                  <span className="font-semibold text-[color:var(--wine)] block text-xs sm:text-sm">{reservationSummary.sucursal}</span>
+                  <span className="font-semibold text-[color:var(--wine)] block text-xs sm:text-sm">
+                    {reservationSummary.sucursal}
+                  </span>
                 </div>
                 <div className="grid grid-cols-2 gap-2 pt-0.5">
                   <div>
                     <span className="text-[color:var(--ink)]/60 block text-[10px] uppercase tracking-wider">
                       Nombre
                     </span>
-                    <span className="font-semibold truncate block">{reservationSummary.nombre}</span>
+                    <span className="font-semibold truncate block">
+                      {reservationSummary.nombre}
+                    </span>
                   </div>
                   <div>
                     <span className="text-[color:var(--ink)]/60 block text-[10px] uppercase tracking-wider">
@@ -380,11 +386,17 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
             <form onSubmit={handleSubmit} className="space-y-4 pt-1">
               {/* Selector de Sucursal */}
               <div className="space-y-1.5">
-                <Label htmlFor="reserva-sucursal-trigger" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)] flex items-center gap-1.5">
+                <Label
+                  htmlFor="reserva-sucursal-trigger"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)] flex items-center gap-1.5"
+                >
                   <MapPin className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Elegí la Sucursal *
                 </Label>
                 <Select value={sucursal} onValueChange={handleSucursalChange}>
-                  <SelectTrigger id="reserva-sucursal-trigger" className="min-h-[44px] border-[color:var(--gold)]/40 bg-[color:var(--card)] focus:ring-[color:var(--wine)] text-xs sm:text-sm">
+                  <SelectTrigger
+                    id="reserva-sucursal-trigger"
+                    className="min-h-[44px] border-[color:var(--gold)]/40 bg-[color:var(--card)] focus:ring-[color:var(--wine)] text-xs sm:text-sm"
+                  >
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent className="bg-[color:var(--card)] border-[color:var(--gold)]/30">
@@ -399,7 +411,10 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="reserva-nombre" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="reserva-nombre"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Tu nombre *
                 </Label>
                 <Input
@@ -418,11 +433,17 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">
-                  <Label htmlFor="reserva-comensales-trigger" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                  <Label
+                    htmlFor="reserva-comensales-trigger"
+                    className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                  >
                     Comensales *
                   </Label>
                   <Select value={comensales} onValueChange={setComensales}>
-                    <SelectTrigger id="reserva-comensales-trigger" className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--card)]">
+                    <SelectTrigger
+                      id="reserva-comensales-trigger"
+                      className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--card)]"
+                    >
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-[color:var(--card)] border-[color:var(--gold)]/30">
@@ -436,7 +457,10 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="reserva-hora-trigger" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                  <Label
+                    htmlFor="reserva-hora-trigger"
+                    className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                  >
                     Horario *
                   </Label>
                   <Select
@@ -444,7 +468,10 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
                     onValueChange={setHora}
                     disabled={!fecha || filteredTimeSlots.length === 0}
                   >
-                    <SelectTrigger id="reserva-hora-trigger" className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--card)]">
+                    <SelectTrigger
+                      id="reserva-hora-trigger"
+                      className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--card)]"
+                    >
                       <SelectValue
                         placeholder={
                           !fecha
@@ -467,7 +494,10 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="reserva-fecha-btn" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="reserva-fecha-btn"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Fecha *
                 </Label>
                 <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
@@ -526,7 +556,10 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
               </div>
 
               <div className="space-y-1.5">
-                <Label htmlFor="reserva-notas" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="reserva-notas"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Notas (opcional)
                 </Label>
                 <Input

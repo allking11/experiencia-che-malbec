@@ -1,10 +1,22 @@
 import { useState } from "react";
 import { z } from "zod";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
 import { CheckCircle2, Building2, Send } from "lucide-react";
@@ -150,20 +162,26 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
             <DialogHeader className="space-y-1.5 text-left">
               <div className="flex items-center gap-2 text-[color:var(--gold)]">
                 <Building2 className="h-4 w-4 sm:h-5 sm:w-5" />
-                <span className="text-[11px] uppercase tracking-widest font-semibold">Franquicias Che Malbec</span>
+                <span className="text-[11px] uppercase tracking-widest font-semibold">
+                  Franquicias Che Malbec
+                </span>
               </div>
               <DialogTitle className="font-serif text-2xl sm:text-3xl text-[color:var(--wine)] font-semibold">
                 Sumate a Nuestra Red de Wine Bars
               </DialogTitle>
               <DialogDescription className="text-xs sm:text-sm text-[color:var(--ink)]/75 leading-relaxed">
-                Completá este breve formulario para coordinar una reunión de negocio y recibir información detallada sobre el modelo de franquicia.
+                Completá este breve formulario para coordinar una reunión de negocio y recibir
+                información detallada sobre el modelo de franquicia.
               </DialogDescription>
             </DialogHeader>
 
             <form onSubmit={handleSubmit} className="mt-3 space-y-4">
               {/* 1. Nombre */}
               <div className="space-y-1.5">
-                <Label htmlFor="fran-nombre" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="fran-nombre"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Nombre y Apellido *
                 </Label>
                 <Input
@@ -176,12 +194,19 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                   onChange={(e) => setNombre(e.target.value)}
                   className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus-visible:ring-[color:var(--wine)]"
                 />
-                {errors.nombre && <p className="text-xs text-red-600 font-medium">{errors.nombre}</p>}
+                {errors.nombre && (
+                  <p role="alert" className="text-xs text-red-600 font-medium">
+                    {errors.nombre}
+                  </p>
+                )}
               </div>
 
               {/* 2. Teléfono */}
               <div className="space-y-1.5">
-                <Label htmlFor="fran-telefono" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="fran-telefono"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Teléfono / WhatsApp *
                 </Label>
                 <Input
@@ -194,26 +219,48 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                   onChange={(e) => setTelefono(e.target.value)}
                   className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus-visible:ring-[color:var(--wine)]"
                 />
-                {errors.telefono && <p className="text-xs text-red-600 font-medium">{errors.telefono}</p>}
+                {errors.telefono && (
+                  <p role="alert" className="text-xs text-red-600 font-medium">
+                    {errors.telefono}
+                  </p>
+                )}
               </div>
 
               {/* 3. Ciudad / Zona */}
               <div className="space-y-1.5">
-                <Label htmlFor="fran-zona-trigger" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="fran-zona-trigger"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Ciudad o Zona de Interés *
                 </Label>
                 <Select value={zona} onValueChange={setZona}>
-                  <SelectTrigger id="fran-zona-trigger" className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus:ring-[color:var(--wine)]">
+                  <SelectTrigger
+                    id="fran-zona-trigger"
+                    className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus:ring-[color:var(--wine)]"
+                  >
                     <SelectValue placeholder="Seleccioná una zona" />
                   </SelectTrigger>
                   <SelectContent className="bg-[color:var(--card)] border-[color:var(--gold)]/30">
-                    <SelectItem value="AMBA (CABA y Gran Buenos Aires)">AMBA (CABA y Gran Buenos Aires)</SelectItem>
-                    <SelectItem value="Interior de Buenos Aires">Interior de Buenos Aires</SelectItem>
-                    <SelectItem value="Otras provincias de Argentina">Otras provincias de Argentina</SelectItem>
-                    <SelectItem value="Exterior / Internacional">Exterior / Internacional</SelectItem>
+                    <SelectItem value="AMBA (CABA y Gran Buenos Aires)">
+                      AMBA (CABA y Gran Buenos Aires)
+                    </SelectItem>
+                    <SelectItem value="Interior de Buenos Aires">
+                      Interior de Buenos Aires
+                    </SelectItem>
+                    <SelectItem value="Otras provincias de Argentina">
+                      Otras provincias de Argentina
+                    </SelectItem>
+                    <SelectItem value="Exterior / Internacional">
+                      Exterior / Internacional
+                    </SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.zona && <p className="text-xs text-red-600 font-medium">{errors.zona}</p>}
+                {errors.zona && (
+                  <p role="alert" className="text-xs text-red-600 font-medium">
+                    {errors.zona}
+                  </p>
+                )}
               </div>
 
               {/* 4. Modelo de Interés */}
@@ -221,7 +268,11 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                 <Label className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
                   Modelo de Interés *
                 </Label>
-                <RadioGroup value={modelo} onValueChange={setModelo} className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <RadioGroup
+                  value={modelo}
+                  onValueChange={setModelo}
+                  className="grid grid-cols-1 sm:grid-cols-2 gap-2.5"
+                >
                   <div
                     onClick={() => setModelo("Formato completo ~300m²")}
                     className={`flex items-center space-x-2.5 rounded-lg border p-3 cursor-pointer transition-all min-h-[44px] ${
@@ -231,8 +282,13 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                     }`}
                   >
                     <RadioGroupItem value="Formato completo ~300m²" id="mod-completo" />
-                    <Label htmlFor="mod-completo" className="cursor-pointer text-xs font-medium leading-tight">
-                      <span className="font-semibold block text-[color:var(--wine)]">Formato Completo (~300m²)</span>
+                    <Label
+                      htmlFor="mod-completo"
+                      className="cursor-pointer text-xs font-medium leading-tight"
+                    >
+                      <span className="font-semibold block text-[color:var(--wine)]">
+                        Formato Completo (~300m²)
+                      </span>
                       Salón boutique, cava & gastronomía
                     </Label>
                   </div>
@@ -245,8 +301,13 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                     }`}
                   >
                     <RadioGroupItem value="Formato Express / Wine Bar" id="mod-express" />
-                    <Label htmlFor="mod-express" className="cursor-pointer text-xs font-medium leading-tight">
-                      <span className="font-semibold block text-[color:var(--wine)]">Formato Express</span>
+                    <Label
+                      htmlFor="mod-express"
+                      className="cursor-pointer text-xs font-medium leading-tight"
+                    >
+                      <span className="font-semibold block text-[color:var(--wine)]">
+                        Formato Express
+                      </span>
                       Wine Bar ágil & copas al paso
                     </Label>
                   </div>
@@ -255,21 +316,33 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
 
               {/* 5. Rango de Inversión */}
               <div className="space-y-1.5">
-                <Label htmlFor="fran-inversion-trigger" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="fran-inversion-trigger"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Rango de Inversión Disponible *
                 </Label>
                 <Select value={inversion} onValueChange={setInversion}>
-                  <SelectTrigger id="fran-inversion-trigger" className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus:ring-[color:var(--wine)]">
+                  <SelectTrigger
+                    id="fran-inversion-trigger"
+                    className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus:ring-[color:var(--wine)]"
+                  >
                     <SelectValue placeholder="Seleccioná un rango estimado" />
                   </SelectTrigger>
                   <SelectContent className="bg-[color:var(--card)] border-[color:var(--gold)]/30">
                     <SelectItem value="USD 30.000 a USD 50.000">USD 30.000 a USD 50.000</SelectItem>
                     <SelectItem value="USD 50.000 a USD 80.000">USD 50.000 a USD 80.000</SelectItem>
                     <SelectItem value="Más de USD 80.000">Más de USD 80.000</SelectItem>
-                    <SelectItem value="A consultar en reunión de franquicia">A consultar en reunión de franquicia</SelectItem>
+                    <SelectItem value="A consultar en reunión de franquicia">
+                      A consultar en reunión de franquicia
+                    </SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.inversion && <p className="text-xs text-red-600 font-medium">{errors.inversion}</p>}
+                {errors.inversion && (
+                  <p role="alert" className="text-xs text-red-600 font-medium">
+                    {errors.inversion}
+                  </p>
+                )}
               </div>
 
               {/* 6. Experiencia */}
@@ -280,6 +353,7 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                 <div className="grid grid-cols-2 gap-2.5">
                   <button
                     type="button"
+                    aria-pressed={experiencia === "si"}
                     onClick={() => setExperiencia("si")}
                     className={`min-h-[44px] flex items-center justify-center gap-2 rounded-lg border p-2.5 text-xs font-semibold cursor-pointer transition-all ${
                       experiencia === "si"
@@ -291,6 +365,7 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                   </button>
                   <button
                     type="button"
+                    aria-pressed={experiencia === "no"}
                     onClick={() => {
                       setExperiencia("no");
                       setExperienciaDetalle("");
@@ -318,17 +393,27 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
 
               {/* 7. Disponibilidad para operar */}
               <div className="space-y-1.5">
-                <Label htmlFor="fran-operacion-trigger" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="fran-operacion-trigger"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Disponibilidad para Operar *
                 </Label>
                 <Select value={operacion} onValueChange={setOperacion}>
-                  <SelectTrigger id="fran-operacion-trigger" className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus:ring-[color:var(--wine)]">
+                  <SelectTrigger
+                    id="fran-operacion-trigger"
+                    className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus:ring-[color:var(--wine)]"
+                  >
                     <SelectValue placeholder="Seleccioná una opción" />
                   </SelectTrigger>
                   <SelectContent className="bg-[color:var(--card)] border-[color:var(--gold)]/30">
                     <SelectItem value="Opero yo mismo">Opero yo mismo (Gestión activa)</SelectItem>
-                    <SelectItem value="Contrato encargado y superviso">Contrato encargado y superviso</SelectItem>
-                    <SelectItem value="Inversión pasiva / Socios">Inversión pasiva / Con socios gestores</SelectItem>
+                    <SelectItem value="Contrato encargado y superviso">
+                      Contrato encargado y superviso
+                    </SelectItem>
+                    <SelectItem value="Inversión pasiva / Socios">
+                      Inversión pasiva / Con socios gestores
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -341,6 +426,7 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                 <div className="grid grid-cols-2 gap-2.5">
                   <button
                     type="button"
+                    aria-pressed={socios === "si"}
                     onClick={() => setSocios("si")}
                     className={`min-h-[44px] flex items-center justify-center gap-2 rounded-lg border p-2.5 text-xs font-semibold cursor-pointer transition-all ${
                       socios === "si"
@@ -352,6 +438,7 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                   </button>
                   <button
                     type="button"
+                    aria-pressed={socios === "no"}
                     onClick={() => {
                       setSocios("no");
                       setSociosCantidad("");
@@ -379,20 +466,34 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
 
               {/* 9. Plazo */}
               <div className="space-y-1.5">
-                <Label htmlFor="fran-plazo-trigger" className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                <Label
+                  htmlFor="fran-plazo-trigger"
+                  className="text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]"
+                >
                   Plazo Estimado para Arrancar *
                 </Label>
                 <Select value={plazo} onValueChange={setPlazo}>
-                  <SelectTrigger id="fran-plazo-trigger" className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus:ring-[color:var(--wine)]">
+                  <SelectTrigger
+                    id="fran-plazo-trigger"
+                    className="min-h-[44px] text-xs sm:text-sm border-[color:var(--gold)]/40 bg-[color:var(--cream)]/30 focus:ring-[color:var(--wine)]"
+                  >
                     <SelectValue placeholder="Seleccioná el plazo estimado" />
                   </SelectTrigger>
                   <SelectContent className="bg-[color:var(--card)] border-[color:var(--gold)]/30">
                     <SelectItem value="Inmediato (0 a 3 meses)">Inmediato (0 a 3 meses)</SelectItem>
-                    <SelectItem value="Corto plazo (3 a 6 meses)">Corto plazo (3 a 6 meses)</SelectItem>
-                    <SelectItem value="Explorando oportunidades (6+ meses)">Explorando oportunidades (6+ meses)</SelectItem>
+                    <SelectItem value="Corto plazo (3 a 6 meses)">
+                      Corto plazo (3 a 6 meses)
+                    </SelectItem>
+                    <SelectItem value="Explorando oportunidades (6+ meses)">
+                      Explorando oportunidades (6+ meses)
+                    </SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.plazo && <p className="text-xs text-red-600 font-medium">{errors.plazo}</p>}
+                {errors.plazo && (
+                  <p role="alert" className="text-xs text-red-600 font-medium">
+                    {errors.plazo}
+                  </p>
+                )}
               </div>
 
               <div className="pt-2">
@@ -416,17 +517,30 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                 ¡Solicitud Lista para Enviar!
               </h3>
               <p className="text-xs sm:text-sm text-[color:var(--ink)]/80 max-w-md mx-auto leading-relaxed">
-                Tus datos fueron procesados. Hacé clic abajo para abrir WhatsApp con el mensaje estructurado de franquicia y coordinar una llamada con nuestro equipo comercial.
+                Tus datos fueron procesados. Hacé clic abajo para abrir WhatsApp con el mensaje
+                estructurado de franquicia y coordinar una llamada con nuestro equipo comercial.
               </p>
             </div>
 
             <div className="rounded-lg border border-[color:var(--gold)]/30 bg-[color:var(--cream)]/40 p-3.5 sm:p-4 text-left text-xs space-y-1.5 text-[color:var(--ink)]/80">
-              <p><strong>Postulante:</strong> {nombre}</p>
-              <p><strong>Teléfono:</strong> {telefono}</p>
-              <p><strong>Zona:</strong> {zona}</p>
-              <p><strong>Modelo:</strong> {modelo}</p>
-              <p><strong>Inversión estimada:</strong> {inversion}</p>
-              <p><strong>Plazo:</strong> {plazo}</p>
+              <p>
+                <strong>Postulante:</strong> {nombre}
+              </p>
+              <p>
+                <strong>Teléfono:</strong> {telefono}
+              </p>
+              <p>
+                <strong>Zona:</strong> {zona}
+              </p>
+              <p>
+                <strong>Modelo:</strong> {modelo}
+              </p>
+              <p>
+                <strong>Inversión estimada:</strong> {inversion}
+              </p>
+              <p>
+                <strong>Plazo:</strong> {plazo}
+              </p>
             </div>
 
             <div className="space-y-2.5 pt-1">
