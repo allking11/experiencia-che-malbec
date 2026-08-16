@@ -8,7 +8,32 @@ import burrata from "@/assets/burrata.jpg";
 import clientes from "@/assets/clientes.jpg";
 import feriaVinosVideo from "@/assets/feria-vinos.mp4";
 import { ReservationDialog } from "@/components/ReservationDialog";
-import { Calendar, Clock, MapPin, Menu } from "lucide-react";
+import { FranchiseDialog } from "@/components/FranchiseDialog";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Menu,
+  Wine,
+  Sparkles,
+  Phone,
+  ShoppingBag,
+  PartyPopper,
+  ExternalLink,
+  Check,
+  ChevronRight,
+  Download,
+  Building2,
+  Star,
+  Flame,
+  Utensils,
+  GlassWater,
+  Layers,
+  Heart,
+  Award,
+  Compass,
+  BookOpen,
+} from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -16,28 +41,31 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const SITE_URL = "https://che-malbec.vercel.app"; // Reemplazar por tu dominio final una vez adquirido
+const SITE_URL = "https://che-malbec.vercel.app";
 
 export const Route = createFileRoute("/")({
   head: () => {
     const ogImageUrl = `${SITE_URL}${fachada}`;
     return {
       meta: [
-        { title: "Che Malbec — Boutique Wine Bar & Degustación de Vinos en Buenos Aires" },
+        {
+          title: "Che Malbec — Boutique Wine Bar & Degustación de Vinos en Buenos Aires",
+        },
         {
           name: "description",
           content:
-            "Disfrutá de catas de vino y degustaciones guiadas por sommeliers en nuestro wine bar boutique. Ubicado en el Palacio Vera, Av. de Mayo 777, Montserrat.",
+            "Disfrutá de catas de vino, picadas caseras y degustaciones guiadas en nuestras dos sedes: Monserrat (Palacio Vera) y San Telmo. Delivery por PedidosYa y franquicias disponibles.",
         },
         {
           property: "og:title",
-          content: "Che Malbec — Boutique Wine Bar & Degustación de Vinos en Buenos Aires",
+          content: "Che Malbec — Wine Bar Boutique en Monserrat y San Telmo",
         },
         {
           property: "og:description",
           content:
-            "Degustaciones de vinos boutique, etiquetas exclusivas y gastronomía casera en un local histórico en Buenos Aires.",
+            "Degustaciones de vinos boutique, 4 pasos guiados, tablas de quesos y empanadas artesanales en Buenos Aires.",
         },
         { property: "og:image", content: ogImageUrl },
         { name: "twitter:image", content: ogImageUrl },
@@ -52,22 +80,102 @@ export const Route = createFileRoute("/")({
 });
 
 const WA_NUMBER = "5491128481233";
-const WA_MSG = encodeURIComponent(
-  "Hola Che Malbec 👋 Quiero consultar por una degustación / reserva.",
-);
-const WA_URL = `https://wa.me/${WA_NUMBER}?text=${WA_MSG}`;
-const WA_EVENT_MSG = encodeURIComponent(
-  "Hola Che Malbec 👋 Quiero consultar por la fecha de la próxima Feria de Vinos.",
-);
-const WA_EVENT_URL = `https://wa.me/${WA_NUMBER}?text=${WA_EVENT_MSG}`;
-const MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=Che+Malbec+Av+de+Mayo+777+Buenos+Aires";
+const WA_GENERAL_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+  "Hola Che Malbec 👋 Quiero consultar por una reserva o degustación.",
+)}`;
+const WA_DELIVERY_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+  "Hola Che Malbec 👋 Quiero hacer un pedido por delivery.",
+)}`;
+const WA_FIESTAS_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+  "Hola Che Malbec 👋 Quiero consultar por el servicio de 'Llevá Che Malbec a tu fiesta' para un evento privado.",
+)}`;
+const WA_FRANQUICIAS_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+  "📌 *[NUEVA CONSULTA DE FRANQUICIAS]*\nHola Che Malbec 👋 Me gustaría recibir más información y el brochure de franquicias.",
+)}`;
+
+const PEDIDOSYA_URL =
+  "https://www.pedidosya.com.ar/restaurantes/buenos-aires/che-malbec-c6e204a0-e0f9-4321-8150-4e0bc6828b44-menu";
+
+const SUCURSAL_MONSERRAT = {
+  nombre: "Monserrat · Histórico Palacio Vera",
+  direccion: "Avenida de Mayo 777",
+  detalle: "Histórico Palacio Vera · Monserrat · CABA",
+  horarios: [
+    { dia: "Lunes", hora: "11:00 — 19:00" },
+    { dia: "Martes a sábado", hora: "11:00 — 23:00" },
+    { dia: "Domingo", hora: "Cerrado" },
+  ],
+  mapsUrl: "https://share.google/IbQUx1agvvLy1xC0I",
+  mapsEmbed: "https://www.google.com/maps?q=Avenida+de+Mayo+777,+Buenos+Aires&output=embed",
+  instagram: "https://www.instagram.com/che.malbec/",
+  instagramTag: "@che.malbec",
+};
+
+const SUCURSAL_SANTELMO = {
+  nombre: "San Telmo · Casco Histórico",
+  direccion: "Estados Unidos 407",
+  detalle: "San Telmo · CABA",
+  horarios: [
+    { dia: "Martes a sábado", hora: "18:00 — 00:00" },
+    { dia: "Domingo y lunes", hora: "Cerrado" },
+  ],
+  mapsUrl: "https://share.google/zNkhEINs1aQGM3ulQ",
+  mapsEmbed: "https://www.google.com/maps?q=Estados+Unidos+407,+Buenos+Aires&output=embed",
+  instagram: "https://www.instagram.com/che.malbec.santelmo/",
+  instagramTag: "@che.malbec.santelmo",
+};
+
+const EVENTOS_AGOSTO = [
+  {
+    fechaBadge: "14 de Agosto",
+    titulo: "Lentos en Che Malbec",
+    descripcion:
+      "Una noche nostálgica y distendida con clásicos románticos, copas de vino boutique y tablas especiales para viajar en el tiempo.",
+    tag: "Noche Temática 🎶",
+    ctaWa: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+      "Hola Che Malbec 👋 Quiero consultar cupos para el evento 'Lentos en Che Malbec' (14/8).",
+    )}`,
+  },
+  {
+    fechaBadge: "20 de Agosto",
+    titulo: "Degustación Maridada Bodega A16",
+    descripcion:
+      "Experiencia sensorial exclusiva guiada por sommelier. Maridaje de etiquetas premiadas de Bodega A16 con gastronomía en 4 pasos.",
+    tag: "Cata Guiada & Bodega 🍷",
+    ctaWa: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+      "Hola Che Malbec 👋 Quiero reservar para la Degustación Maridada Bodega A16 (20/8).",
+    )}`,
+  },
+  {
+    fechaBadge: "21 de Agosto",
+    titulo: "Viernes Che de Solos y Solas",
+    descripcion:
+      "El punto de encuentro para amantes del buen vino, charlas amenas, picadas de autor y música en un ambiente íntimo y seguro.",
+    tag: "Encuentro & Vinos ✨",
+    ctaWa: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+      "Hola Che Malbec 👋 Quiero consultar por el 'Viernes Che de Solos y Solas' (21/8).",
+    )}`,
+  },
+  {
+    fechaBadge: "29 de Agosto",
+    titulo: "Sábado Che con Canilla Libre",
+    descripcion:
+      "Más de 15 etiquetas boutique con canilla libre por 3 horas, banda de rock de los 80's en vivo y la copa del evento de regalo.",
+    tag: "Feria & Rock en Vivo 🎸",
+    ctaWa: `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+      "Hola Che Malbec 👋 Quiero reservar para el 'Sábado Che con Canilla Libre' (29/8).",
+    )}`,
+  },
+];
 
 function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>(".reveal");
     const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add("in");
+        }),
       { threshold: 0.05, rootMargin: "0px 0px -30px 0px" },
     );
     els.forEach((el) => io.observe(el));
@@ -86,10 +194,16 @@ function WhatsAppIcon({ className = "" }: { className?: string }) {
 function Index() {
   useReveal();
   const [reservaOpen, setReservaOpen] = useState(false);
-  const openReserva = () => setReservaOpen(true);
+  const [reservaSucursal, setReservaSucursal] = useState<string | undefined>();
+  const [franquiciaOpen, setFranquiciaOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+
+  const openReservaWith = (sucursal?: string) => {
+    setReservaSucursal(sucursal);
+    setReservaOpen(true);
+  };
 
   useEffect(() => {
     const onScroll = () => {
@@ -107,267 +221,205 @@ function Index() {
   const schemaJson = {
     "@context": "https://schema.org",
     "@type": "BarOrPub",
-    name: "Che Malbec - Boutique Wine Bar & Degustaciones",
+    name: "Che Malbec - Mercado & Wine Bar",
     image: `${SITE_URL}${fachada}`,
     "@id": `${SITE_URL}/#bar`,
     url: SITE_URL,
     telephone: "+5491128481233",
     priceRange: "$$$",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Avenida de Mayo 777 (Palacio Vera)",
-      addressLocality: "Buenos Aires",
-      addressRegion: "CABA",
-      postalCode: "C1084",
-      addressCountry: "AR",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: -34.608552,
-      longitude: -58.379768,
-    },
-    openingHoursSpecification: [
+    address: [
       {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: "Monday",
-        opens: "11:00",
-        closes: "19:00",
+        "@type": "PostalAddress",
+        streetAddress: "Avenida de Mayo 777 (Palacio Vera)",
+        addressLocality: "Buenos Aires",
+        addressRegion: "CABA",
+        postalCode: "C1084",
+        addressCountry: "AR",
       },
       {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        opens: "11:00",
-        closes: "23:00",
+        "@type": "PostalAddress",
+        streetAddress: "Estados Unidos 407 (San Telmo)",
+        addressLocality: "Buenos Aires",
+        addressRegion: "CABA",
+        postalCode: "C1101",
+        addressCountry: "AR",
       },
     ],
-    sameAs: ["https://www.instagram.com/che.malbec"],
-    servesCuisine: "Argentine, Wine, Picadas, Empanadas",
+    sameAs: [
+      "https://www.instagram.com/che.malbec",
+      "https://www.instagram.com/che.malbec.santelmo",
+    ],
+    servesCuisine: "Argentine, Wine, Picadas, Empanadas, Sandwiches, Pizzas",
     description:
-      "Boutique wine bar and wine tasting experience located in the historic Palacio Vera building in Montserrat, Buenos Aires. Featuring guided tastings by professional sommeliers.",
+      "Boutique wine bar and wine tasting experience with two venues in Buenos Aires: Monserrat (Palacio Vera) and San Telmo. Guided tastings by professional sommeliers, delivery and events catering.",
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground selection:bg-[color:var(--wine)] selection:text-[color:var(--cream)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaJson) }}
       />
-      {/* NAV */}
+
+      {/* HEADER / NAVIGATION */}
       <header
-        className={`fixed inset-x-0 top-0 z-40 border-b border-[color:var(--gold)]/20 transition-all duration-500 ${
+        className={`fixed inset-x-0 top-0 z-40 border-b border-[color:var(--gold)]/25 transition-all duration-500 ${
           scrolled
-            ? "py-[9px] bg-[color:var(--cream)]/85 backdrop-blur-md shadow-md"
-            : "py-[17px] bg-[color:var(--cream)]"
+            ? "py-2 bg-[color:var(--cream)]/92 backdrop-blur-md shadow-md"
+            : "py-3.5 bg-[color:var(--cream)]"
         }`}
       >
-        {/* Scroll Progress Bar */}
         <div
-          className="absolute bottom-0 left-0 h-[2px] bg-[color:var(--gold)] transition-all duration-100 ease-out"
+          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-[color:var(--gold)]/40 via-[color:var(--gold)] to-[color:var(--gold)]/40 transition-all duration-100 ease-out"
           style={{ width: `${scrollProgress}%` }}
         />
         <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
-          <a href="#inicio" id="nav-logo-link" className="flex items-center gap-2 shrink-0">
+          <a href="#inicio" id="nav-logo-link" className="flex items-center gap-2 shrink-0 transition-opacity hover:opacity-90">
             <img
               src={logo}
-              alt="Che Malbec Mercado & Wine Bar - Palacio Vera Monserrat"
-              className="h-[29px] w-auto md:h-[36px] lg:h-[40px]"
+              alt="Che Malbec Mercado & Wine Bar"
+              className="h-[32px] w-auto md:h-[40px]"
             />
           </a>
-          <ul className="hidden items-center gap-3.5 lg:gap-6 text-xs lg:text-sm font-medium text-[color:var(--ink)]/80 md:flex">
+
+          <ul className="hidden items-center gap-3.5 lg:gap-6 text-xs lg:text-sm font-medium text-[color:var(--ink)]/85 xl:flex">
             <li>
-              <a
-                href="#experiencia"
-                id="nav-link-experiencia"
-                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
-              >
+              <a href="#experiencia" className="nav-link-animated hover:text-[color:var(--wine)]">
                 Experiencia
               </a>
             </li>
             <li>
-              <a
-                href="#opiniones"
-                id="nav-link-opiniones"
-                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
-              >
-                Reseñas
+              <a href="#sucursales" className="nav-link-animated hover:text-[color:var(--wine)]">
+                Sucursales
               </a>
             </li>
             <li>
-              <a
-                href="#degustaciones"
-                id="nav-link-degustaciones"
-                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
-              >
+              <a href="#degustaciones" className="nav-link-animated hover:text-[color:var(--wine)]">
                 Degustaciones
               </a>
             </li>
             <li>
-              <a
-                href="#carta"
-                id="nav-link-carta"
-                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
-              >
+              <a href="#carta" className="nav-link-animated hover:text-[color:var(--wine)]">
                 Carta
               </a>
             </li>
             <li>
-              <a
-                href="#novedades"
-                id="nav-link-novedades"
-                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
-              >
-                Novedades
+              <a href="#novedades" className="nav-link-animated hover:text-[color:var(--wine)]">
+                Eventos
+              </a>
+            </li>
+            <li>
+              <a href="#delivery" className="nav-link-animated hover:text-[color:var(--wine)] flex items-center gap-1.5">
+                <ShoppingBag className="h-3.5 w-3.5 text-red-600" /> Delivery
               </a>
             </li>
             <li>
               <a
-                href="#historia"
-                id="nav-link-historia"
-                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
+                href="#fiestas"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--wine)]/20 bg-[color:var(--wine)]/10 px-3.5 py-1 text-xs font-semibold text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all"
               >
-                Historia
+                <PartyPopper className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Llevá Che a tu fiesta
               </a>
             </li>
             <li>
-              <a
-                href="#ubicacion"
-                id="nav-link-ubicacion"
-                className="nav-link-animated hover:text-[color:var(--wine)] transition-colors"
-              >
-                Ubicación
+              <a href="#franquicias" className="nav-link-animated hover:text-[color:var(--wine)]">
+                Franquicias
               </a>
             </li>
           </ul>
-          <button
-            id="nav-reserve-btn"
-            type="button"
-            onClick={openReserva}
-            className="btn-tactile hidden items-center gap-2 rounded-full bg-[color:var(--wine)] px-4 py-2 text-xs lg:text-sm font-semibold tracking-wide text-[color:var(--cream)] shadow-sm md:inline-flex cursor-pointer shrink-0"
-          >
-            <WhatsAppIcon className="h-4 w-4" /> Reservar
-          </button>
 
-          {/* Mobile navigation and quick action */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="hidden items-center gap-2.5 md:flex">
             <button
-              id="mobile-header-reserve-btn"
+              id="nav-reserve-btn"
               type="button"
-              onClick={openReserva}
-              className="btn-tactile inline-flex items-center gap-1.5 rounded-full bg-[color:var(--wine)] px-3.5 py-1.5 text-xs font-semibold text-[color:var(--cream)] shadow-sm cursor-pointer"
+              onClick={() => openReservaWith()}
+              className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-4.5 py-2 text-xs lg:text-sm font-semibold tracking-wide text-[color:var(--cream)] shadow-sm cursor-pointer hover:bg-[color:var(--wine)]/90"
             >
-              <WhatsAppIcon className="h-3.5 w-3.5" /> Reservar
+              <WhatsAppIcon className="h-4 w-4 text-[color:var(--gold)]" /> Reservar
+            </button>
+          </div>
+
+          {/* Mobile navigation trigger */}
+          <div className="flex items-center gap-2 xl:hidden">
+            <button
+              type="button"
+              onClick={() => openReservaWith()}
+              className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--wine)] px-3 py-1.5 text-xs font-semibold text-[color:var(--cream)] cursor-pointer"
+            >
+              <WhatsAppIcon className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Reservar
             </button>
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <button
-                  id="mobile-menu-trigger"
                   type="button"
                   aria-label="Abrir menú"
-                  className="rounded-md p-2 text-[color:var(--wine)] hover:bg-[color:var(--wine)]/10 cursor-pointer"
+                  className="rounded-full p-2 text-[color:var(--ink)] hover:bg-[color:var(--wine)]/10"
                 >
                   <Menu className="h-6 w-6" />
                 </button>
               </SheetTrigger>
               <SheetContent
                 side="right"
-                className="bg-[color:var(--cream)] border-l border-[color:var(--gold)]/40 text-[color:var(--ink)] flex flex-col justify-between p-6 overflow-y-auto"
+                className="w-[85vw] max-w-sm bg-[color:var(--cream)] border-l border-[color:var(--gold)]/30 text-[color:var(--ink)] p-6"
               >
-                <SheetTitle className="sr-only">Menú de Navegación</SheetTitle>
-                <SheetDescription className="sr-only">
-                  Enlaces de navegación móvil para Che Malbec
+                <SheetTitle className="font-serif text-2xl text-[color:var(--wine)]">
+                  Che Malbec
+                </SheetTitle>
+                <SheetDescription className="text-xs text-[color:var(--ink)]/70">
+                  Wine Bar Boutique & Mercado en Buenos Aires
                 </SheetDescription>
-                <div>
-                  <div className="flex items-center justify-between border-b border-[color:var(--gold)]/20 pb-4 mb-4">
-                    <img src={logo} alt="Che Malbec Wine Bar Boutique" className="h-6 w-auto" />
-                  </div>
-                  <ul className="flex flex-col gap-2.5 text-base font-medium text-[color:var(--ink)]">
-                    <li>
-                      <a
-                        href="#experiencia"
-                        id="mobile-nav-experiencia"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
-                      >
-                        Experiencia
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#opiniones"
-                        id="mobile-nav-opiniones"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
-                      >
-                        Reseñas
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#degustaciones"
-                        id="mobile-nav-degustaciones"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
-                      >
-                        Degustaciones
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#carta"
-                        id="mobile-nav-carta"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
-                      >
-                        Carta
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#novedades"
-                        id="mobile-nav-novedades"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
-                      >
-                        Novedades
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#historia"
-                        id="mobile-nav-historia"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
-                      >
-                        Historia
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#ubicacion"
-                        id="mobile-nav-ubicacion"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="hover:text-[color:var(--wine)] transition-colors block py-1.5 border-b border-[color:var(--gold)]/10"
-                      >
-                        Ubicación
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div className="space-y-4">
-                  <button
-                    id="mobile-menu-reserve-btn"
-                    type="button"
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      openReserva();
-                    }}
-                    className="w-full flex items-center justify-center gap-2 rounded-full bg-[color:var(--wine)] py-3 text-base font-semibold text-[color:var(--cream)] shadow-md transition-all hover:bg-[color:var(--ink)] cursor-pointer"
+                <div className="mt-8 flex flex-col space-y-4 text-base font-medium">
+                  <a
+                    href="#fiestas"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 rounded-lg bg-[color:var(--wine)]/10 p-3 text-[color:var(--wine)] font-semibold border border-[color:var(--gold)]/20"
                   >
-                    <WhatsAppIcon className="h-5 w-5" /> Reservar Mesa
-                  </button>
-                  <p className="text-center text-xs text-[color:var(--ink)]/60">
-                    Av. de Mayo 777 · Monserrat
-                  </p>
+                    <PartyPopper className="h-5 w-5 text-[color:var(--gold)]" /> Llevá Che a tu fiesta
+                  </a>
+                  <a href="#experiencia" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                    La Experiencia
+                  </a>
+                  <a href="#sucursales" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                    Nuestras 2 Sucursales
+                  </a>
+                  <a href="#degustaciones" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                    Degustaciones & Flights
+                  </a>
+                  <a href="#carta" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                    Carta Completa & Precios
+                  </a>
+                  <a href="#novedades" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                    Agenda de Eventos
+                  </a>
+                  <a href="#delivery" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)] flex items-center gap-2">
+                    <ShoppingBag className="h-4 w-4 text-red-600" /> Pedir por Delivery
+                  </a>
+                  <a href="#franquicias" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                    Franquicias
+                  </a>
+                  <a href="#opiniones" onClick={() => setMobileMenuOpen(false)} className="py-1 hover:text-[color:var(--wine)]">
+                    Opiniones Google (4.8★)
+                  </a>
+                  <div className="pt-4 border-t border-[color:var(--gold)]/20 space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        openReservaWith();
+                      }}
+                      className="w-full rounded-full bg-[color:var(--wine)] py-3 text-center text-sm font-semibold uppercase tracking-wider text-[color:var(--cream)] shadow-md"
+                    >
+                      Reservar Mesa
+                    </button>
+                    <a
+                      href={PEDIDOSYA_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-full items-center justify-center gap-2 rounded-full border border-red-600 bg-red-600/10 py-3 text-center text-sm font-semibold text-red-700"
+                    >
+                      <ShoppingBag className="h-4 w-4" /> PedidosYa
+                    </a>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
@@ -375,418 +427,1116 @@ function Index() {
         </nav>
       </header>
 
-      <main>
-        {/* HERO */}
-        <section id="inicio" className="relative min-h-[100svh] w-full overflow-hidden">
-          <div className="absolute inset-0">
+      <main className="pt-[62px]">
+        {/* HERO SECTION */}
+        <section id="inicio" className="relative min-h-[92svh] w-full overflow-hidden flex items-center">
+          <div className="absolute inset-0 z-0">
             <img
               src={fachada}
-              alt="Fachada histórica de Che Malbec en el Palacio Vera, Avenida de Mayo, Buenos Aires"
-              className="h-full w-full object-cover ken-burns"
-              loading="eager"
-              {...({ fetchpriority: "high" } as Record<string, string>)}
+              alt="Fachada histórica y cava boutique de Che Malbec"
+              className="h-full w-full object-cover brightness-[0.42] scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[color:var(--ink)]/80 via-[color:var(--ink)]/55 to-[color:var(--ink)]/90" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--ink)] via-[color:var(--ink)]/50 to-[color:var(--ink)]/30" />
           </div>
-          <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-4xl flex-col items-center justify-center px-6 pt-24 pb-16 text-center text-[color:var(--cream)]">
-            <span
-              className="gold-divider mb-6 reveal reveal-slide-down in"
-              style={{ transitionDelay: "150ms" }}
-            >
-              Boutique Wine Bar & Tastings in Buenos Aires
-            </span>
-            <h1
-              className="reveal reveal-slide-up in font-serif text-4xl leading-[1.1] sm:text-6xl md:text-7xl"
-              style={{ transitionDelay: "300ms" }}
-            >
-              <span className="sr-only">
-                Che Malbec — Wine Bar Boutique & Degustación de Vinos en Palacio Vera
-              </span>
-              El vino argentino se disfruta mejor{" "}
-              <em className="text-[color:var(--gold)] not-italic font-medium">
-                cuando se comparte
-              </em>
+
+          <div className="relative z-10 mx-auto max-w-5xl px-6 py-20 text-center text-[color:var(--cream)]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)]/40 bg-[color:var(--wine)]/70 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[color:var(--gold)] backdrop-blur-md shadow-lg">
+              <Wine className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Wine Bar Boutique · Monserrat & San Telmo
+            </div>
+
+            <h1 className="mt-6 font-serif text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.08] tracking-tight">
+              El Arte del Buen Vino Argentino y <span className="italic text-[color:var(--gold)]">Momentos Inolvidables</span>
             </h1>
-            <p
-              className="reveal reveal-fade in mt-6 max-w-2xl text-base leading-relaxed text-[color:var(--cream)]/85 sm:text-lg"
-              style={{ transitionDelay: "450ms" }}
-            >
-              Degustaciones guiadas por sommeliers, vinos de bodegas boutique y gastronomía casera
-              en un wine bar íntimo ubicado en el histórico Palacio Vera, en el corazón de Buenos
-              Aires.
+
+            <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg text-[color:var(--cream)]/90 leading-relaxed font-light">
+              Descubrí etiquetas de bodegas boutique, degustaciones guiadas por sommeliers, tapeo casero y la calidez de nuestras dos cavas en el centro histórico de Buenos Aires.
             </p>
-            <div
-              className="reveal reveal-slide-up in mt-10 flex w-full flex-col items-center gap-3 sm:w-auto sm:flex-row"
-              style={{ transitionDelay: "600ms" }}
-            >
+
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <button
-                id="hero-reserve-btn"
                 type="button"
-                onClick={openReserva}
-                className="btn-tactile inline-flex w-full items-center justify-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg sm:w-auto cursor-pointer"
+                onClick={() => openReservaWith()}
+                className="btn-tactile inline-flex items-center gap-2.5 rounded-full bg-[color:var(--gold)] px-8 py-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] shadow-xl hover:scale-105 transition-all cursor-pointer"
               >
-                <WhatsAppIcon className="h-5 w-5" /> Reservar mesa
+                <WhatsAppIcon className="h-5 w-5" /> Reservar Degustación / Mesa
               </button>
+
               <a
-                href="#experiencia"
-                id="hero-view-experience-link"
-                className="btn-tactile inline-flex w-full items-center justify-center gap-2 rounded-full border border-[color:var(--gold)]/70 px-8 py-4 text-sm font-medium uppercase tracking-[0.12em] text-[color:var(--cream)] hover:bg-[color:var(--cream)]/10 sm:w-auto"
+                href="#carta"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full border border-[color:var(--cream)]/40 bg-white/10 px-7 py-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--cream)] backdrop-blur-sm hover:bg-white/20 transition-all"
               >
-                Ver la experiencia
+                <Utensils className="h-4 w-4" /> Ver Carta & Precios
+              </a>
+
+              <a
+                href="#fiestas"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] bg-[color:var(--wine)]/80 px-7 py-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--gold)] backdrop-blur-sm hover:bg-[color:var(--wine)] transition-all"
+              >
+                <PartyPopper className="h-4 w-4" /> Llevá Che a tu fiesta
               </a>
             </div>
-            <div
-              className="reveal reveal-fade in mt-12 flex items-center gap-2 text-sm text-[color:var(--cream)]/80"
-              style={{ transitionDelay: "750ms" }}
-            >
-              <span className="text-[color:var(--gold)]">★★★★★</span>
-              <span>+1100 reseñas en Google</span>
-            </div>
-          </div>
-          <a
-            href="#opiniones"
-            id="hero-scroll-down-btn"
-            aria-label="Bajar a opiniones"
-            className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[color:var(--cream)]/70 transition-all duration-300 hover:text-[color:var(--gold)] hover:translate-y-1 hover:scale-110 p-3 rounded-full flex items-center justify-center"
-          >
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-            >
-              <path d="M12 5v14m0 0l-6-6m6 6l6-6" />
-            </svg>
-          </a>
-        </section>
 
-        {/* OPINIONES / TESTIMONIOS */}
-        <section
-          id="opiniones"
-          className="bg-[color:var(--wine)] py-20 text-[color:var(--cream)] sm:py-28"
-        >
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
-              <div>
-                <p
-                  className="gold-divider reveal reveal-slide-down"
-                  style={{ color: "var(--gold)" }}
-                >
-                  Opiniones
-                </p>
-                <h2 className="reveal reveal-slide-up mt-5 font-serif text-4xl leading-[1.05] sm:text-5xl md:text-6xl">
-                  Reseñas de Che Malbec: 4.8 <span className="text-[color:var(--gold)]">★</span> en
-                  Google Maps
-                </h2>
+            {/* Micro badges */}
+            <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-[color:var(--cream)]/85">
+              <div className="rounded-xl bg-black/40 p-3.5 backdrop-blur-md border border-[color:var(--gold)]/30 shadow-lg">
+                <span className="font-semibold text-[color:var(--gold)] block text-sm">2 Sedes en CABA</span>
+                Av. de Mayo & San Telmo
               </div>
-              <p className="reveal reveal-fade text-base leading-relaxed text-[color:var(--cream)]/80">
-                Lo que más destacan: la calidez del espacio, la cercanía de los sommeliers y las
-                picadas abundantes.
-              </p>
-            </div>
-
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {[
-                {
-                  q: "Una verdadera joya en medio del centro. Agustín nos guió copa a copa con mucha paciencia, explicando la historia de cada bodega. Las empanadas caseras son espectaculares. Ambiente íntimo ideal para bajar un cambio.",
-                  n: "Mariana S.",
-                  r: "Cliente local",
-                },
-                {
-                  q: "Me encantó el lugar. Al estar dentro del histórico Palacio Vera, se respira una atmósfera única. Tienen etiquetas boutique muy interesantes y la atención del personal te hace sentir como en casa desde que entrás.",
-                  n: "Jean-Pierre L.",
-                  r: "Visitante",
-                },
-                {
-                  q: "Los vinos y la comida son excelentes, y la atención del sommelier impecable. El local es chico y acogedor — siempre conviene reservar para asegurar la mesa.",
-                  n: "Carlos G.",
-                  r: "Reseña verificada",
-                },
-              ].map((t, i) => (
-                <article
-                  key={t.n}
-                  className="reveal reveal-slide-up card-premium flex flex-col rounded-sm border border-[color:var(--cream)]/10 bg-[color:var(--cream)]/[0.04] p-5 sm:p-7 backdrop-blur-sm"
-                  style={{ transitionDelay: `${i * 150}ms` }}
-                >
-                  <div className="text-lg tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
-                  <p className="mt-5 flex-1 font-serif text-lg italic leading-relaxed text-[color:var(--cream)]/95">
-                    “{t.q}”
-                  </p>
-                  <div className="mt-6">
-                    <p className="font-semibold text-[color:var(--cream)]">{t.n}</p>
-                    <p className="text-sm text-[color:var(--cream)]/60">{t.r}</p>
-                  </div>
-                </article>
-              ))}
+              <div className="rounded-xl bg-black/40 p-3.5 backdrop-blur-md border border-[color:var(--gold)]/30 shadow-lg">
+                <span className="font-semibold text-[color:var(--gold)] block text-sm">4.8 ★ Google Maps</span>
+                Cientos de reseñas reales
+              </div>
+              <div className="rounded-xl bg-black/40 p-3.5 backdrop-blur-md border border-[color:var(--gold)]/30 shadow-lg">
+                <span className="font-semibold text-[color:var(--gold)] block text-sm">Catas en 4 Pasos</span>
+                Guiadas por sommeliers
+              </div>
+              <div className="rounded-xl bg-black/40 p-3.5 backdrop-blur-md border border-[color:var(--gold)]/30 shadow-lg">
+                <span className="font-semibold text-[color:var(--gold)] block text-sm">Delivery Activo</span>
+                PedidosYa & WhatsApp
+              </div>
             </div>
           </div>
         </section>
 
-        {/* EXPERIENCIA */}
-        <section
-          id="experiencia"
-          className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32"
-        >
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-20">
-            <div className="reveal reveal-slide-right hover-zoom-container order-2 md:order-1 rounded-sm shadow-xl">
-              <img
-                src={copa}
-                alt="Copa de vino Malbec servida por un sommelier en el salón boutique de Che Malbec"
-                className="hover-zoom-image aspect-[4/5] w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <div className="reveal reveal-slide-left order-1 md:order-2">
-              <p className="gold-divider">La Experiencia en Palacio Vera</p>
-              <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
-                Experiencia de Vinos Boutique y Guía de Sommeliers
-              </h2>
-              <p className="mt-6 text-lg leading-relaxed text-[color:var(--ink)]/80">
-                Un espacio creado para disfrutar excelentes vinos argentinos seleccionados por
-                nuestros sommeliers, compartir una buena mesa y aprender sobre cada etiqueta
-                boutique en un ambiente relajado.
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-[color:var(--ink)]/70">
-                Entrar a Che Malbec en el histórico Palacio Vera es como descubrir un pequeño
-                refugio porteño en Montserrat donde el tiempo se detiene: maderas cálidas,
-                iluminación íntima y una carta de picadas caseras pensada para acompañar cada copa.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* DEGUSTACIONES */}
-        <section id="degustaciones" className="bg-[color:var(--cream)] py-24 sm:py-32">
+        {/* DEDICATED SECTION: LA EXPERIENCIA CHE MALBEC */}
+        <section id="experiencia" className="bg-[color:var(--card)] py-20 sm:py-28 border-b border-[color:var(--gold)]/25">
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center">
-              <p className="gold-divider reveal reveal-slide-down">Degustaciones de Vinos</p>
-              <h2 className="reveal reveal-slide-up mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
-                Degustación de Vinos y Catas Guiadas por Sommeliers
+              <p className="gold-divider reveal reveal-slide-down">Nuestra Esencia</p>
+              <h2 className="reveal reveal-slide-up mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)]">
+                La Experiencia Che Malbec
               </h2>
-            </div>
-
-            <div className="mt-16 grid gap-8 md:grid-cols-3">
-              {[
-                {
-                  t: "Degustaciones Guiadas por Sommeliers",
-                  d: "Catas y degustaciones guiadas de vinos argentinos premium, donde aprenderás la historia y notas de cada bodega boutique.",
-                },
-                {
-                  t: "Catas por Pasos de Vinos Boutique",
-                  d: "Una experiencia sensorial exclusiva para explorar diversas etiquetas de vinos boutique de regiones vitivinícolas del país.",
-                },
-                {
-                  t: "Maridaje con Picadas Caseras",
-                  d: "Combinación ideal de copas seleccionadas con tablas de quesos artesanales, fiambres de calidad y empanadas caseras.",
-                },
-              ].map((c, i) => (
-                <article
-                  key={c.t}
-                  className="reveal reveal-slide-up tasting-card group relative flex flex-col rounded-sm border border-[color:var(--gold)]/40 bg-[color:var(--card)] p-8"
-                  style={{ transitionDelay: `${i * 150}ms` }}
-                >
-                  <span className="tasting-num font-serif text-sm italic text-[color:var(--gold)] inline-block">
-                    0{i + 1}
-                  </span>
-                  <h3 className="mt-3 text-2xl text-[color:var(--wine)] font-serif font-semibold">
-                    {c.t}
-                  </h3>
-                  <p className="mt-4 flex-1 text-[color:var(--ink)]/75 leading-relaxed">{c.d}</p>
-                  <div className="tasting-line mt-6 h-px w-12 bg-[color:var(--gold)]" />
-                </article>
-              ))}
-            </div>
-
-            <div
-              className="reveal reveal-slide-up mt-14 text-center"
-              style={{ transitionDelay: "150ms" }}
-            >
-              <button
-                id="degustaciones-reserve-btn"
-                type="button"
-                onClick={openReserva}
-                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] cursor-pointer"
-              >
-                <WhatsAppIcon className="h-5 w-5" /> Reservar degustación
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* CARTA */}
-        <section
-          id="carta"
-          className="relative bg-[color:var(--ink)] py-24 text-[color:var(--cream)] sm:py-32"
-        >
-          <div className="mx-auto grid max-w-6xl items-center gap-14 px-6 md:grid-cols-[1.1fr_1fr]">
-            <div className="reveal reveal-slide-right">
-              <p className="gold-divider">La carta</p>
-              <h2 className="mt-5 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold">
-                Nuestra Carta: Vinos Argentinos y Picadas Caseras
-              </h2>
-              <p className="mt-6 max-w-md text-[color:var(--cream)]/75 leading-relaxed">
-                Una propuesta gastronómica honesta en Monserrat. Ideal para acompañar una copa de
-                Malbec, una charla relajada o una cata de vinos por pasos.
+              <p className="mt-4 text-sm sm:text-base text-[color:var(--ink)]/80 leading-relaxed">
+                Más que un wine bar, un punto de encuentro donde el vino argentino se descubre copa a copa, sin solemnidades y con la calidez de un hogar porteño.
               </p>
-
-              <ul className="mt-10 space-y-4">
-                {[
-                  "Vinos argentinos por copa y botella",
-                  "Etiquetas boutique seleccionadas",
-                  "Picadas abundantes",
-                  "Empanadas caseras",
-                  "Tablas de quesos y fiambres",
-                ].map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 border-b border-[color:var(--cream)]/15 pb-4"
-                  >
-                    <span className="mt-2 h-px w-5 shrink-0 bg-[color:var(--gold)]" />
-                    <span className="font-serif text-lg italic text-[color:var(--cream)]/95">
-                      {item}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                id="carta-reserve-btn"
-                type="button"
-                onClick={openReserva}
-                className="btn-tactile mt-10 inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--gold)] cursor-pointer"
-              >
-                Reservar mesa
-              </button>
             </div>
 
-            <div className="reveal reveal-slide-left grid grid-cols-2 gap-4">
-              <div className="col-span-2 hover-zoom-container rounded-sm shadow-2xl">
-                <img
-                  src={copaBotella}
-                  alt="Botella de Malbec argentino de bodega boutique y copa servida en el wine bar Che Malbec"
-                  className="hover-zoom-image aspect-[4/5] w-full object-cover sm:aspect-[5/4]"
-                  loading="lazy"
-                />
-              </div>
-              <div className="hover-zoom-container rounded-sm shadow-md">
-                <img
-                  src={burrata}
-                  alt="Plato de burrata fresca con jamón crudo y rúcula, ideal para maridar con vinos tintos boutique en Che Malbec"
-                  className="hover-zoom-image aspect-square w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-              <div className="hover-zoom-container rounded-sm shadow-md">
-                <img
-                  src={clientes}
-                  alt="Clientes compartiendo una degustación de vinos boutique y picadas caseras en la cava de Che Malbec"
-                  className="hover-zoom-image aspect-square w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* NOVEDADES / EVENTOS */}
-        <section
-          id="novedades"
-          className="bg-[color:var(--card)] py-10 md:py-12 border-t border-[color:var(--gold)]/20"
-        >
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="mx-auto max-w-2xl text-center md:mb-6 mb-4">
-              <p className="gold-divider reveal reveal-slide-down">Agenda de Eventos</p>
-              <h2 className="reveal reveal-slide-up mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
-                Eventos de Wine Bar: Feria de Vinos y Más
-              </h2>
-            </div>
-
-            <div className="grid gap-12 md:grid-cols-2 md:items-center">
-              {/* Detalles del Evento */}
-              <div className="reveal reveal-slide-right order-2 md:order-1 space-y-6">
-                <span className="inline-block rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
-                  Próximo Evento 🍷
-                </span>
-                <h3 className="font-serif text-3xl text-[color:var(--ink)] sm:text-4xl">
-                  Feria de Vinos Boutique en CABA
-                </h3>
-
-                <div className="rounded-lg bg-[color:var(--cream)]/40 p-5 border border-[color:var(--gold)]/20 space-y-3 shadow-sm">
-                  <p className="flex items-center gap-2.5 text-base font-semibold text-[color:var(--wine)]">
-                    <Calendar className="h-5 w-5 text-[color:var(--gold)] shrink-0" /> Próxima
-                    edición: ¡Muy pronto!
-                  </p>
-                  <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
-                    <Clock className="h-4 w-4 text-[color:var(--gold)] shrink-0" /> Consultar fechas
-                    y horarios
-                  </p>
-                  <p className="flex items-center gap-2.5 text-sm text-[color:var(--ink)]/80">
-                    <MapPin className="h-4 w-4 text-[color:var(--gold)] shrink-0" /> Avenida de Mayo
-                    777, Monserrat
+            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between" style={{ transitionDelay: "0ms" }}>
+                <div className="space-y-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
+                    <Building2 className="h-6 w-6 text-[color:var(--gold)]" />
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-[color:var(--wine)]">
+                    Cavas con Historia
+                  </h3>
+                  <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
+                    Ubicados en el emblemático Palacio Vera (1910) y en el corazón de San Telmo, combinando arquitectura clásica con intimidad contemporánea.
                   </p>
                 </div>
+                <div className="pt-4 border-t border-[color:var(--gold)]/20 mt-4 text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
+                  Monserrat & San Telmo
+                </div>
+              </div>
 
-                <div className="space-y-4">
-                  <p className="text-base leading-relaxed text-[color:var(--ink)]/85 font-medium">
-                    Te esperamos para disfrutar una noche a pura fiesta y vinitos con una propuesta
-                    imperdible:
+              <div className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between" style={{ transitionDelay: "100ms" }}>
+                <div className="space-y-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
+                    <Sparkles className="h-6 w-6 text-[color:var(--gold)]" />
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-[color:var(--wine)]">
+                    Sommeliers Cercanos
+                  </h3>
+                  <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
+                    Catas didácticas y distendidas donde aprendés de cepas, notas aromáticas y regiones vitivinícolas sin necesidad de ser un experto.
                   </p>
-                  <ul className="grid gap-3 text-sm text-[color:var(--ink)]/85">
-                    <li className="flex items-start gap-2">
-                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                      <span>
-                        <strong>Más de 15 etiquetas de bodegas boutique</strong> y vinos de autor
-                        para degustar libremente.
+                </div>
+                <div className="pt-4 border-t border-[color:var(--gold)]/20 mt-4 text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
+                  Guía Personalizada
+                </div>
+              </div>
+
+              <div className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between" style={{ transitionDelay: "200ms" }}>
+                <div className="space-y-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
+                    <Wine className="h-6 w-6 text-[color:var(--gold)]" />
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-[color:var(--wine)]">
+                    Bodegas Boutique
+                  </h3>
+                  <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
+                    Curaduría federal de pequeños productores de Salta, Mendoza, Patagonia y La Rioja con partidas limitadas y cosechas seleccionadas.
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-[color:var(--gold)]/20 mt-4 text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
+                  +100 Etiquetas Únicas
+                </div>
+              </div>
+
+              <div className="card-boutique reveal reveal-slide-up p-6 flex flex-col justify-between" style={{ transitionDelay: "300ms" }}>
+                <div className="space-y-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-[color:var(--wine)]/10 text-[color:var(--wine)]">
+                    <Utensils className="h-6 w-6 text-[color:var(--gold)]" />
+                  </div>
+                  <h3 className="font-serif text-lg font-bold text-[color:var(--wine)]">
+                    Gastronomía Autóctona
+                  </h3>
+                  <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
+                    Picadas abundantes de quesos y fiambres seleccionados, empanadas caseras de osobuco al Malbec y sándwiches gourmet recién horneados.
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-[color:var(--gold)]/20 mt-4 text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">
+                  Maridajes Perfectos
+                </div>
+              </div>
+            </div>
+
+            {/* Sommelier quote callout */}
+            <div className="mt-12 rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/60 p-6 sm:p-8 text-center max-w-3xl mx-auto shadow-sm">
+              <p className="font-serif text-base sm:text-lg italic text-[color:var(--wine)] leading-relaxed">
+                “En Che Malbec desmitificamos el vino: te invitamos a explorar, maridar y disfrutar de etiquetas excepcionales en un ambiente íntimo y sin apuros.”
+              </p>
+              <span className="mt-3 block text-xs font-semibold uppercase tracking-widest text-[color:var(--gold)]">
+                — Equipo de Sommeliers Che Malbec
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* BARRA / BANNER DE DELIVERY */}
+        <section id="delivery" className="bg-wine-velvet text-[color:var(--cream)] py-8 border-y border-[color:var(--gold)]/30 shadow-inner">
+          <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 text-left">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[color:var(--gold)] text-[color:var(--ink)] shadow-md">
+                <ShoppingBag className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold">
+                  ¿Querés Che Malbec en tu casa?
+                </h3>
+                <p className="text-xs sm:text-sm text-[color:var(--cream)]/85">
+                  Pedí nuestras empanadas de autor, picadas abundantes y vinos boutique directo a tu domicilio.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <a
+                href={PEDIDOSYA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[#EA044E] px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-lg hover:bg-[#c90342] transition-all cursor-pointer"
+              >
+                <ShoppingBag className="h-4 w-4" /> Pedir por PedidosYa
+              </a>
+              <a
+                href={WA_DELIVERY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-lg hover:bg-[#20bd5a] transition-all cursor-pointer"
+              >
+                <WhatsAppIcon className="h-4 w-4" /> Pedir por WhatsApp
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* MULTI-SUCURSALES */}
+        <section id="sucursales" className="bg-[color:var(--cream)] py-20 sm:py-28">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="gold-divider reveal reveal-slide-down">Nuestras Casas</p>
+              <h2 className="reveal reveal-slide-up mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)]">
+                Dos Sedes en Buenos Aires
+              </h2>
+              <p className="mt-4 text-sm sm:text-base text-[color:var(--ink)]/80">
+                Vení a vivir la experiencia Che Malbec en el emblemático Palacio Vera de Monserrat o en nuestra sede de San Telmo.
+              </p>
+            </div>
+
+            <div className="mt-14 grid gap-8 md:grid-cols-2">
+              {/* Sucursal 1: Monserrat */}
+              <article className="reveal reveal-slide-right flex flex-col rounded-xl border border-[color:var(--gold)]/40 bg-[color:var(--card)] p-6 sm:p-8 shadow-xl">
+                <div className="flex items-center justify-between pb-4 border-b border-[color:var(--gold)]/20">
+                  <div>
+                    <span className="text-xs uppercase tracking-widest font-semibold text-[color:var(--gold)]">
+                      Sede Central
+                    </span>
+                    <h3 className="font-serif text-2xl font-bold text-[color:var(--wine)]">
+                      {SUCURSAL_MONSERRAT.nombre}
+                    </h3>
+                  </div>
+                  <MapPin className="h-6 w-6 text-[color:var(--gold)]" />
+                </div>
+
+                <p className="mt-4 text-sm text-[color:var(--ink)]/85 font-medium">
+                  📍 {SUCURSAL_MONSERRAT.direccion} ({SUCURSAL_MONSERRAT.detalle})
+                </p>
+
+                <div className="mt-4 rounded-lg bg-[color:var(--cream)]/50 p-4 text-xs space-y-1.5 text-[color:var(--ink)]/85 border border-[color:var(--gold)]/20">
+                  <p className="font-semibold text-[color:var(--wine)] flex items-center gap-1.5 pb-1 border-b border-[color:var(--gold)]/20">
+                    <Clock className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Horarios de atención:
+                  </p>
+                  {SUCURSAL_MONSERRAT.horarios.map((h) => (
+                    <div key={h.dia} className="flex justify-between">
+                      <span>{h.dia}:</span>
+                      <span className="font-medium">{h.hora}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4 overflow-hidden rounded-lg border border-[color:var(--gold)]/35 aspect-[16/9] shadow-sm">
+                  <iframe
+                    title="Mapa Monserrat"
+                    src={SUCURSAL_MONSERRAT.mapsEmbed}
+                    className="h-full w-full"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2.5 pt-2 mt-auto">
+                  <button
+                    type="button"
+                    onClick={() => openReservaWith("Monserrat (Palacio Vera - Av. de Mayo 777)")}
+                    className="btn-tactile flex-1 rounded-full bg-[color:var(--wine)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90"
+                  >
+                    Reservar en Monserrat
+                  </button>
+                  <a
+                    href={SUCURSAL_MONSERRAT.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full border border-[color:var(--gold)] px-3 py-2 text-xs font-medium text-[color:var(--ink)] hover:bg-[color:var(--gold)]/20 transition-all"
+                  >
+                    <ExternalLink className="h-3 w-3" /> Maps
+                  </a>
+                  <a
+                    href={SUCURSAL_MONSERRAT.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full border border-[color:var(--gold)] px-3 py-2 text-xs font-medium text-[color:var(--ink)] hover:bg-[color:var(--gold)]/20 transition-all"
+                  >
+                    {SUCURSAL_MONSERRAT.instagramTag}
+                  </a>
+                </div>
+              </article>
+
+              {/* Sucursal 2: San Telmo */}
+              <article className="reveal reveal-slide-left flex flex-col rounded-xl border border-[color:var(--gold)]/40 bg-[color:var(--card)] p-6 sm:p-8 shadow-xl">
+                <div className="flex items-center justify-between pb-4 border-b border-[color:var(--gold)]/20">
+                  <div>
+                    <span className="text-xs uppercase tracking-widest font-semibold text-[color:var(--gold)]">
+                      Sede San Telmo
+                    </span>
+                    <h3 className="font-serif text-2xl font-bold text-[color:var(--wine)]">
+                      {SUCURSAL_SANTELMO.nombre}
+                    </h3>
+                  </div>
+                  <MapPin className="h-6 w-6 text-[color:var(--gold)]" />
+                </div>
+
+                <p className="mt-4 text-sm text-[color:var(--ink)]/85 font-medium">
+                  📍 {SUCURSAL_SANTELMO.direccion} ({SUCURSAL_SANTELMO.detalle})
+                </p>
+
+                <div className="mt-4 rounded-lg bg-[color:var(--cream)]/50 p-4 text-xs space-y-1.5 text-[color:var(--ink)]/85 border border-[color:var(--gold)]/20">
+                  <p className="font-semibold text-[color:var(--wine)] flex items-center gap-1.5 pb-1 border-b border-[color:var(--gold)]/20">
+                    <Clock className="h-3.5 w-3.5 text-[color:var(--gold)]" /> Horarios de atención:
+                  </p>
+                  {SUCURSAL_SANTELMO.horarios.map((h) => (
+                    <div key={h.dia} className="flex justify-between">
+                      <span>{h.dia}:</span>
+                      <span className="font-medium">{h.hora}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-4 overflow-hidden rounded-lg border border-[color:var(--gold)]/35 aspect-[16/9] shadow-sm">
+                  <iframe
+                    title="Mapa San Telmo"
+                    src={SUCURSAL_SANTELMO.mapsEmbed}
+                    className="h-full w-full"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2.5 pt-2 mt-auto">
+                  <button
+                    type="button"
+                    onClick={() => openReservaWith("San Telmo (Estados Unidos 407)")}
+                    className="btn-tactile flex-1 rounded-full bg-[color:var(--wine)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90"
+                  >
+                    Reservar en San Telmo
+                  </button>
+                  <a
+                    href={SUCURSAL_SANTELMO.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full border border-[color:var(--gold)] px-3 py-2 text-xs font-medium text-[color:var(--ink)] hover:bg-[color:var(--gold)]/20 transition-all"
+                  >
+                    <ExternalLink className="h-3 w-3" /> Maps
+                  </a>
+                  <a
+                    href={SUCURSAL_SANTELMO.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full border border-[color:var(--gold)] px-3 py-2 text-xs font-medium text-[color:var(--ink)] hover:bg-[color:var(--gold)]/20 transition-all"
+                  >
+                    {SUCURSAL_SANTELMO.instagramTag}
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        {/* DEGUSTACIONES Y FLIGHTS DE CATA */}
+        <section id="degustaciones" className="bg-[color:var(--card)] py-20 sm:py-28 border-y border-[color:var(--gold)]/30">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="gold-divider reveal reveal-slide-down">Experiencias Sensoriales</p>
+              <h2 className="reveal reveal-slide-up mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)]">
+                Menús Degustación y Vuelos de Vino
+              </h2>
+              <p className="mt-4 text-sm sm:text-base text-[color:var(--ink)]/80">
+                Catas guiadas por sommelier para viajar copa a copa por las mejores regiones vitivinícolas de Argentina.
+              </p>
+            </div>
+
+            <Tabs defaultValue="pasos" className="mt-12">
+              <TabsList className="mx-auto flex max-w-md justify-center bg-[color:var(--cream)] border border-[color:var(--gold)]/40 p-1 rounded-full shadow-xs">
+                <TabsTrigger value="pasos" className="rounded-full data-[state=active]:bg-[color:var(--wine)] data-[state=active]:text-[color:var(--cream)] text-xs font-semibold py-2 px-6 cursor-pointer transition-all">
+                  Menú Degustación 4 Pasos
+                </TabsTrigger>
+                <TabsTrigger value="flights" className="rounded-full data-[state=active]:bg-[color:var(--wine)] data-[state=active]:text-[color:var(--cream)] text-xs font-semibold py-2 px-6 cursor-pointer transition-all">
+                  Flights 4 Copas
+                </TabsTrigger>
+              </TabsList>
+
+              {/* CONTENIDO 4 PASOS */}
+              <TabsContent value="pasos" className="mt-10 space-y-10">
+                {/* Los 4 Pasos de Comida */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/45 p-4 text-center shadow-xs">
+                    <span className="inline-block rounded-full bg-[color:var(--gold)]/20 px-2.5 py-0.5 text-[11px] font-serif italic text-[color:var(--wine)] font-bold">
+                      1er Paso
+                    </span>
+                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">Variedad de Quesos</h4>
+                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">Selección artesanal</p>
+                  </div>
+                  <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/45 p-4 text-center shadow-xs">
+                    <span className="inline-block rounded-full bg-[color:var(--gold)]/20 px-2.5 py-0.5 text-[11px] font-serif italic text-[color:var(--wine)] font-bold">
+                      2do Paso
+                    </span>
+                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">Brusqueta Serrana</h4>
+                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">Jamón crudo, tomate deshidratado y rúcula</p>
+                  </div>
+                  <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/45 p-4 text-center shadow-xs">
+                    <span className="inline-block rounded-full bg-[color:var(--gold)]/20 px-2.5 py-0.5 text-[11px] font-serif italic text-[color:var(--wine)] font-bold">
+                      3er Paso
+                    </span>
+                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">Empanada Tradicional</h4>
+                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">Carne cortada a cuchillo</p>
+                  </div>
+                  <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/45 p-4 text-center shadow-xs">
+                    <span className="inline-block rounded-full bg-[color:var(--gold)]/20 px-2.5 py-0.5 text-[11px] font-serif italic text-[color:var(--wine)] font-bold">
+                      4to Paso
+                    </span>
+                    <h4 className="font-serif font-bold text-sm text-[color:var(--wine)] mt-2">Choripán Gourmet</h4>
+                    <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">Receta tradicional argentina</p>
+                  </div>
+                </div>
+
+                {/* Opciones de Maridaje */}
+                <div>
+                  <h3 className="font-serif text-xl sm:text-2xl text-[color:var(--wine)] font-bold text-center mb-6">
+                    Elegí tu Opción de Maridaje
+                  </h3>
+                  <div className="grid gap-6 md:grid-cols-3">
+                    <div className="card-boutique p-6 flex flex-col justify-between shadow-md">
+                      <div>
+                        <div className="flex justify-between items-baseline border-b border-[color:var(--gold)]/30 pb-3">
+                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">FEDERAL</h4>
+                          <span className="font-bold text-lg text-[color:var(--ink)]">$55.000</span>
+                        </div>
+                        <ul className="mt-4 space-y-2 text-xs text-[color:var(--ink)]/85">
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Coquena Torrontés (Salta)</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Saurus Estate Pinot Noir (Patagonia)</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Chañarmuyo Malbec (La Rioja)</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Lagarde Cabernet Sauvignon (Mendoza)</li>
+                        </ul>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => openReservaWith()}
+                        className="btn-tactile mt-6 w-full rounded-full bg-[color:var(--wine)] py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90"
+                      >
+                        Reservar Maridaje Federal
+                      </button>
+                    </div>
+
+                    <div className="relative rounded-xl border-2 border-[color:var(--gold)] bg-[color:var(--cream)]/65 p-6 flex flex-col justify-between shadow-xl scale-[1.02]">
+                      <span className="absolute -top-3 right-4 rounded-full bg-[color:var(--gold)] px-3.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[color:var(--ink)] shadow-sm">
+                        ⭐ Más Elegido
                       </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                      <span>
-                        <strong>Banda de rock de los 80's</strong> en vivo.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                      <span>
-                        <strong>Canilla libre por tres horas</strong> (con reserva previa).
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                      <span>
-                        La copa del evento va de <strong>regalo</strong>.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-[color:var(--gold)] mt-0.5">✔</span>
-                      <span>
-                        <strong>Valor:</strong> Consultar valor vigente.
-                      </span>
-                    </li>
-                  </ul>
+                      <div>
+                        <div className="flex justify-between items-baseline border-b border-[color:var(--gold)]/30 pb-3">
+                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">SELECCIÓN CHE MALBEC</h4>
+                          <span className="font-bold text-lg text-[color:var(--ink)]">$60.000</span>
+                        </div>
+                        <ul className="mt-4 space-y-2 text-xs text-[color:var(--ink)]/85">
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Colomé Torrontés (Bodega Colomé)</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Domaine Bousquet Reserva Cabernet Franc</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Sottano Malbec (Bodega Sottano)</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Lagarde Cabernet Sauvignon (Lagarde)</li>
+                        </ul>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => openReservaWith()}
+                        className="btn-tactile mt-6 w-full rounded-full bg-[color:var(--wine)] py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90 shadow-md"
+                      >
+                        Reservar Selección Che
+                      </button>
+                    </div>
+
+                    <div className="card-boutique p-6 flex flex-col justify-between shadow-md">
+                      <div>
+                        <div className="flex justify-between items-baseline border-b border-[color:var(--gold)]/30 pb-3">
+                          <h4 className="font-serif text-xl font-bold text-[color:var(--wine)]">CATENA ZAPATA</h4>
+                          <span className="font-bold text-lg text-[color:var(--ink)]">$73.500</span>
+                        </div>
+                        <ul className="mt-4 space-y-2 text-xs text-[color:var(--ink)]/85">
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Saint Felicien Chardonnay</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> Nicasia Cabernet Franc</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> DV Catena Cabernet Malbec</li>
+                          <li className="flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[color:var(--gold)] shrink-0" /> DV Catena Syrah Syrah</li>
+                        </ul>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => openReservaWith()}
+                        className="btn-tactile mt-6 w-full rounded-full bg-[color:var(--wine)] py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90"
+                      >
+                        Reservar Catena Zapata
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* CONTENIDO FLIGHTS 4 COPAS */}
+              <TabsContent value="flights" className="mt-10">
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="card-boutique p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                      <div className="border-b border-[color:var(--gold)]/30 pb-2.5">
+                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">No Somos Solo Malbec</h4>
+                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">$34.500</p>
+                      </div>
+                      <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
+                        <li>• Saurus Pinot Noir</li>
+                        <li>• Domaine Bousquet Cabernet Franc</li>
+                        <li>• Crux Tempranillo</li>
+                        <li>• Chakana Estate Red Blend</li>
+                      </ul>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => openReservaWith()}
+                      className="btn-tactile mt-4 w-full rounded-full border border-[color:var(--wine)] py-2 text-[11px] font-semibold uppercase tracking-wider text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all cursor-pointer"
+                    >
+                      Pedir Flight
+                    </button>
+                  </div>
+
+                  <div className="card-boutique p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                      <div className="border-b border-[color:var(--gold)]/30 pb-2.5">
+                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">Fly Salta</h4>
+                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">$39.000</p>
+                      </div>
+                      <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
+                        <li>• Don David Torrontés</li>
+                        <li>• Amalaya Malbec</li>
+                        <li>• Anko Malbec</li>
+                        <li>• Coquena Cabernet Sauvignon</li>
+                      </ul>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => openReservaWith()}
+                      className="btn-tactile mt-4 w-full rounded-full border border-[color:var(--wine)] py-2 text-[11px] font-semibold uppercase tracking-wider text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all cursor-pointer"
+                    >
+                      Pedir Flight
+                    </button>
+                  </div>
+
+                  <div className="card-boutique p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                      <div className="border-b border-[color:var(--gold)]/30 pb-2.5">
+                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">Fly Malbec Federal</h4>
+                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">$42.500</p>
+                      </div>
+                      <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
+                        <li>• Saurus Selec Malbec (Patagonia)</li>
+                        <li>• Sottano Malbec (Mendoza)</li>
+                        <li>• Chañarmuyo Malbec (La Rioja)</li>
+                        <li>• Coquena Malbec (Salta)</li>
+                      </ul>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => openReservaWith()}
+                      className="btn-tactile mt-4 w-full rounded-full border border-[color:var(--wine)] py-2 text-[11px] font-semibold uppercase tracking-wider text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all cursor-pointer"
+                    >
+                      Pedir Flight
+                    </button>
+                  </div>
+
+                  <div className="card-boutique p-5 flex flex-col justify-between shadow-md">
+                    <div>
+                      <div className="border-b border-[color:var(--gold)]/30 pb-2.5">
+                        <h4 className="font-serif text-base font-bold text-[color:var(--wine)]">Fly Catena Zapata</h4>
+                        <p className="text-base font-bold text-[color:var(--gold)] mt-0.5">$49.000</p>
+                      </div>
+                      <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
+                        <li>• Saint Felicien Chardonnay</li>
+                        <li>• Nicasia Cabernet Franc</li>
+                        <li>• DV Catena Cabernet Malbec</li>
+                        <li>• DV Catena Syrah Syrah</li>
+                      </ul>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => openReservaWith()}
+                      className="btn-tactile mt-4 w-full rounded-full border border-[color:var(--wine)] py-2 text-[11px] font-semibold uppercase tracking-wider text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all cursor-pointer"
+                    >
+                      Pedir Flight
+                    </button>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </section>
+
+        {/* CARTA COMPLETA */}
+        <section id="carta" className="bg-ink-atmosphere text-[color:var(--cream)] py-20 sm:py-28">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="gold-divider">
+                Propuesta Gastronómica & Vinos
+              </p>
+              <h2 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--cream)]">
+                Nuestra Carta
+              </h2>
+              <p className="mt-3 text-sm sm:text-base text-[color:var(--cream)]/75">
+                Platos caseros, picadas de autor, empanadas premium y vinos por copa con precios actualizados.
+              </p>
+            </div>
+
+            <Tabs defaultValue="picadas" className="mt-12">
+              <div className="overflow-x-auto pb-2">
+                <TabsList className="mx-auto flex w-max justify-center bg-white/5 border border-[color:var(--gold)]/35 p-1 rounded-full backdrop-blur-md">
+                  <TabsTrigger value="picadas" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                    Picadas de Autor
+                  </TabsTrigger>
+                  <TabsTrigger value="empanadas" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                    Empanadas ($4.400)
+                  </TabsTrigger>
+                  <TabsTrigger value="sandwiches" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                    Sándwiches & Tapeo
+                  </TabsTrigger>
+                  <TabsTrigger value="pizzas" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                    Pizzas & Postres
+                  </TabsTrigger>
+                  <TabsTrigger value="vinos" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                    Vinos por Copa
+                  </TabsTrigger>
+                  <TabsTrigger value="tragos" className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all">
+                    Tragos & Cervezas
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+
+              {/* 1. PICADAS */}
+              <TabsContent value="picadas" className="mt-8 space-y-6">
+                <div className="grid gap-3 sm:grid-cols-3 text-center bg-white/5 p-4 rounded-xl border border-[color:var(--gold)]/30 backdrop-blur-sm">
+                  <div>
+                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">Chica (2/3 personas)</span>
+                    <p className="font-serif text-2xl font-bold mt-0.5">$35.000</p>
+                  </div>
+                  <div>
+                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">Mediana (4/5 personas)</span>
+                    <p className="font-serif text-2xl font-bold mt-0.5">$48.000</p>
+                  </div>
+                  <div>
+                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">Grande (6/7 personas)</span>
+                    <p className="font-serif text-2xl font-bold mt-0.5">$64.000</p>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  <div className="card-boutique-dark p-5">
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">PICARONA</h4>
+                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                      Jamón cocido, salame criollo, mortadela, queso fynbo, parmesano, queso azul, olivas verdes, pepinos, leber y brusquetas.
+                    </p>
+                  </div>
+                  <div className="card-boutique-dark p-5">
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">MALEVO</h4>
+                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                      Jamón crudo, salame criollo, salchichón, fontina, sardo, brie, olivas negras, ajíes en vinagre, berenjenas en escabeche y brusquetas.
+                    </p>
+                  </div>
+                  <div className="card-boutique-dark p-5">
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">AVENIDA</h4>
+                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                      Bondiola, longaniza, salchichón, gruyere, provolone, queso azul, olivas negras, ajíes en vinagre, berenjenas en escabeche y brusqueta.
+                    </p>
+                  </div>
+                  <div className="card-boutique-dark p-5">
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">TOSCANA</h4>
+                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                      Lomo horneado, spianatta, mortadela, fynbo, canestrato, gouda saborizado, olivas verdes, pepinos, leber y brusquetas.
+                    </p>
+                  </div>
+                  <div className="card-boutique-dark p-5 sm:col-span-2 lg:col-span-2">
+                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">QUESO QUESO</h4>
+                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                      Fynbo, parmesano, cheddar, gouda saborizado, gruyere, queso azul, canestrato, brie, olivas verdes, olivas negras y brusquetas.
+                    </p>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* 2. EMPANADAS */}
+              <TabsContent value="empanadas" className="mt-8">
+                <div className="rounded-xl border border-[color:var(--gold)]/35 bg-white/5 p-6 backdrop-blur-sm">
+                  <div className="flex justify-between items-center pb-4 border-b border-white/10">
+                    <div>
+                      <span className="text-[11px] font-semibold text-[color:var(--gold)] uppercase tracking-wider">Receta Casera</span>
+                      <h3 className="font-serif text-xl font-bold text-[color:var(--cream)]">
+                        Empanadas Artesanales Che Malbec
+                      </h3>
+                    </div>
+                    <span className="rounded-full bg-[color:var(--gold)] px-3.5 py-1 text-xs font-bold text-[color:var(--ink)] shadow-md">
+                      $4.400 c/u
+                    </span>
+                  </div>
+                  <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 text-xs">
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Osobuco al Malbec (O)</span>
+                      <span className="text-[color:var(--cream)]/80">Osobuco braseado, cebolla, zanahoria, romero, condimentos y Malbec argentino.</span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Bondiola a la Cerveza Negra (B)</span>
+                      <span className="text-[color:var(--cream)]/80">Bondiola, cebolla colorada, verdeo, ají verde, condimentos y cerveza stout.</span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Salteña (S)</span>
+                      <span className="text-[color:var(--cream)]/80">Carne cortada a cuchillo, cebolla, ají, verdeo, papa y huevo.</span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Tucumana (T)</span>
+                      <span className="text-[color:var(--cream)]/80">Carne cortada a cuchillo (matambre), cebolla, ají, verdeo y huevo.</span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Carne Tradicional (CT)</span>
+                      <span className="text-[color:var(--cream)]/80">Carne molida, cebolla, ají, condimentos y aceitunas verdes.</span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Carne Dulce (CTD)</span>
+                      <span className="text-[color:var(--cream)]/80">Carne molida, cebolla, ají, aceitunas, huevo, pasas de uva y azúcar.</span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Pollo al Disco (P)</span>
+                      <span className="text-[color:var(--cream)]/80">Pollo tierno, cebolla, ají, condimentos y huevo duro.</span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Caprese (CSE)</span>
+                      <span className="text-[color:var(--cream)]/80">Muzzarella seleccionada, tomate fresco y albahaca aromática.</span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">Jamón & Queso / Verdura</span>
+                      <span className="text-[color:var(--cream)]/80">Jamón cocido y muzzarella / Espinaca, cebolla y queso sardo.</span>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* 3. SANDWICHES & TAPEO */}
+              <TabsContent value="sandwiches" className="mt-8 space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="card-boutique-dark p-6 space-y-4">
+                    <h3 className="font-serif text-lg font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Sándwiches Boutique
+                    </h3>
+                    <ul className="space-y-3 text-xs divide-y divide-white/10">
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Burrata</span>
+                          <span className="text-[color:var(--cream)]/70">Mortadela con pistacho, burrata y pesto</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$15.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Palacio Vera</span>
+                          <span className="text-[color:var(--cream)]/70">Lomo horneado, queso azul, pera y rúcula</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$12.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Gringo</span>
+                          <span className="text-[color:var(--cream)]/70">Jamón crudo, queso fynbo, tomate, rúcula y salsa serrana</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Mafia</span>
+                          <span className="text-[color:var(--cream)]/70">Bondiola, queso sardo, ajíes en vinagre y mostaneza</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Presidente / Pelusa</span>
+                          <span className="text-[color:var(--cream)]/70">Lomo o Mortadela con quesos especiales y aderezos</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$12.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Porteño / Tango / Latino</span>
+                          <span className="text-[color:var(--cream)]/70">Clásicos con jamón, salame milán o verduras frescas</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$10.000</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="card-boutique-dark p-6 space-y-4">
+                    <h3 className="font-serif text-lg font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Para Acompañar el Vino
+                    </h3>
+                    <ul className="space-y-3 text-xs divide-y divide-white/10">
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Burrata (Sin TACC)</span>
+                          <span className="text-[color:var(--cream)]/70">Jamón crudo, burrata fresca, rúcula, tomates y oliva</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$28.500</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Bocconcino (Sin TACC)</span>
+                          <span className="text-[color:var(--cream)]/70">Bocconcino, cherry, albahaca, olivas negras y oliva</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$17.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Tortilla de Papas Entera (Sin TACC)</span>
+                          <span className="text-[color:var(--cream)]/70">Receta tradicional bien jugosa</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$16.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Pan con Tomate y Jamón Crudo</span>
+                          <span className="text-[color:var(--cream)]/70">Pan de campo con emulsión de tomate y jamón crudo</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Pan de Campo Artesanal</span>
+                          <span className="text-[color:var(--cream)]/70">Porción recién horneada</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm">$3.000</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* 4. PIZZAS & POSTRES */}
+              <TabsContent value="pizzas" className="mt-8 space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="card-boutique-dark p-6 space-y-3 text-xs">
+                    <h3 className="font-serif text-lg font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Pizzas Artesanales
+                    </h3>
+                    <div className="flex justify-between pt-1">
+                      <span>Pizza de Burrata (Muzzarella, rúcula, burrata, tomates disecados)</span>
+                      <span className="font-bold text-[color:var(--gold)]">$48.000</span>
+                    </div>
+                    <div className="flex justify-between pt-1">
+                      <span>Pizza de Stracciatella y Mortadela con Pistacho</span>
+                      <span className="font-bold text-[color:var(--gold)]">$48.000</span>
+                    </div>
+                    <div className="flex justify-between pt-1">
+                      <span>Bocconcino (Muzzarella, bocconcino, cherry, albahaca)</span>
+                      <span className="font-bold text-[color:var(--gold)]">$38.000</span>
+                    </div>
+                    <div className="flex justify-between pt-1">
+                      <span>Crudo y Rúcula / 4 Quesos</span>
+                      <span className="font-bold text-[color:var(--gold)]">$35.000</span>
+                    </div>
+                    <div className="flex justify-between pt-1">
+                      <span>Napolitana / Calabresa</span>
+                      <span className="font-bold text-[color:var(--gold)]">$33.000</span>
+                    </div>
+                    <div className="flex justify-between pt-1">
+                      <span>Muzzarella / Anchoas</span>
+                      <span className="font-bold text-[color:var(--gold)]">$30.000</span>
+                    </div>
+                  </div>
+
+                  <div className="card-boutique-dark p-6 space-y-4">
+                    <h3 className="font-serif text-lg font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Postres & Dulces
+                    </h3>
+                    <div className="p-4 rounded-lg bg-white/5 border border-[color:var(--gold)]/20">
+                      <div className="flex justify-between items-center">
+                        <h4 className="font-serif text-base font-bold text-[color:var(--gold)]">
+                          Trío Queso y Dulce
+                        </h4>
+                        <span className="font-bold text-[color:var(--gold)] text-base">$7.500</span>
+                      </div>
+                      <p className="mt-2 text-xs text-[color:var(--cream)]/75">
+                        Degustación clásica argentina de tres combinaciones tradicionales:
+                      </p>
+                      <ul className="mt-2 space-y-1 text-xs text-[color:var(--cream)]/85">
+                        <li>• Membrillo con Queso Azul</li>
+                        <li>• Batata con Sardo</li>
+                        <li>• Cayote con Queso de Cabra</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* 5. VINOS POR COPA */}
+              <TabsContent value="vinos" className="mt-8 space-y-6">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div className="card-boutique-dark p-6 space-y-3 text-xs">
+                    <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Tintos por Copa
+                    </h3>
+                    <div className="flex justify-between"><span>Alto Las Hormigas Terroir Luján de Cuyo</span><span className="font-bold text-[color:var(--gold)]">$10.000</span></div>
+                    <div className="flex justify-between"><span>Sarapura Blend / Alpataco Merlot</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
+                    <div className="flex justify-between"><span>Trivento Gold Cabernet Franc</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
+                    <div className="flex justify-between"><span>Alta Vista Los Escasos Syrah</span><span className="font-bold text-[color:var(--gold)]">$8.500</span></div>
+                    <div className="flex justify-between"><span>El Turco / Padrillos Pinot / Crux Tempranillo</span><span className="font-bold text-[color:var(--gold)]">$8.000</span></div>
+                    <div className="flex justify-between"><span>Trivento Red Blend / Saurus Pinot / Ábside</span><span className="font-bold text-[color:var(--gold)]">$7.500</span></div>
+                    <div className="flex justify-between"><span>Trapiche Reserva Cabernet Sauvignon</span><span className="font-bold text-[color:var(--gold)]">$7.000</span></div>
+                    <div className="flex justify-between"><span>Domiciano Estelar Malbec / Manos Negras Criolla</span><span className="font-bold text-[color:var(--gold)]">$6.500</span></div>
+                  </div>
+
+                  <div className="card-boutique-dark p-6 space-y-3 text-xs">
+                    <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
+                      Blancos y Rosados por Copa
+                    </h3>
+                    <div className="flex justify-between"><span>Las Perdices Riesling</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
+                    <div className="flex justify-between"><span>Correntoso Pinot Noir Rosé / Trivento Rosé</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
+                    <div className="flex justify-between"><span>La Linda Sweet Viognier</span><span className="font-bold text-[color:var(--gold)]">$8.000</span></div>
+                    <div className="flex justify-between"><span>Alta Vista Chardonnay / Crux Sauvignon Blanc</span><span className="font-bold text-[color:var(--gold)]">$7.500</span></div>
+                    <div className="flex justify-between"><span>Fond de Cave Chardonnay / Palo Santo Sauvignon</span><span className="font-bold text-[color:var(--gold)]">$7.000</span></div>
+                    <div className="flex justify-between"><span>Coquena Torrontés (Salta)</span><span className="font-bold text-[color:var(--gold)]">$6.500</span></div>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* 6. TRAGOS & CERVEZAS */}
+              <TabsContent value="tragos" className="mt-8 space-y-6">
+                <div className="grid gap-6 sm:grid-cols-3 text-xs">
+                  <div className="card-boutique-dark p-5 space-y-2">
+                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">Tragos / Aperitivos</h4>
+                    <div className="flex justify-between"><span>Aperol Spritz / Gin Tonic / Negroni</span><span className="font-bold text-[color:var(--gold)]">$12.000</span></div>
+                    <div className="flex justify-between"><span>Fernet Cola / Campari Tonic</span><span className="font-bold text-[color:var(--gold)]">$10.000</span></div>
+                    <div className="flex justify-between"><span>Vermut</span><span className="font-bold text-[color:var(--gold)]">$8.000</span></div>
+                  </div>
+                  <div className="card-boutique-dark p-5 space-y-2">
+                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">Cervezas</h4>
+                    <div className="flex justify-between"><span>Rabieta / Blue Moon</span><span className="font-bold text-[color:var(--gold)]">$9.000</span></div>
+                    <div className="flex justify-between"><span>Antares (IPA, Kölsch, Scotch, Honey)</span><span className="font-bold text-[color:var(--gold)]">$8.000</span></div>
+                    <div className="flex justify-between"><span>Heineken / Warsteiner / Grolsch / Imperial</span><span className="font-bold text-[color:var(--gold)]">$7.000</span></div>
+                  </div>
+                  <div className="card-boutique-dark p-5 space-y-2">
+                    <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">Sin Alcohol</h4>
+                    <div className="flex justify-between"><span>Agua / Saborizada / Gaseosas</span><span className="font-bold text-[color:var(--gold)]">$4.000</span></div>
+                    <div className="flex justify-between"><span>Soda</span><span className="font-bold text-[color:var(--gold)]">$3.600</span></div>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+
+            <div className="mt-12 text-center">
+              <button
+                type="button"
+                onClick={() => openReservaWith()}
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-8 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] shadow-xl cursor-pointer hover:scale-105 transition-all"
+              >
+                <WhatsAppIcon className="h-4 w-4" /> Reservar mesa para comer
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* SECCIÓN: LLEVÁ CHE MALBEC A TU FIESTA */}
+        <section id="fiestas" className="bg-[color:var(--card)] py-20 sm:py-28 border-b border-[color:var(--gold)]/20">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-12 md:grid-cols-2 items-center">
+              <div className="reveal reveal-slide-right space-y-6">
+                <div className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                  <PartyPopper className="h-4 w-4 text-[color:var(--gold)]" /> Catering de Vinos & Eventos Privados
+                </div>
+                <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)] leading-tight">
+                  Llevá Che Malbec a tu Fiesta o Celebración
+                </h2>
+                <p className="text-base sm:text-lg text-[color:var(--ink)]/80 leading-relaxed">
+                  Transformá tu cumpleaños, casamiento, reunión corporativa o fiesta privada con el sello de Che Malbec. Llevamos nuestra cava móvil, copas de cristal, sommeliers expertos y gastronomía casera a donde vos quieras.
+                </p>
+
+                <div className="space-y-3.5 pt-2">
+                  <div className="flex items-start gap-3 rounded-lg bg-[color:var(--cream)]/40 p-3.5 border border-[color:var(--gold)]/20">
+                    <Wine className="h-5 w-5 text-[color:var(--wine)] shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">Barras Móviles de Vinos Boutique</h4>
+                      <p className="text-xs text-[color:var(--ink)]/75">Etiquetas seleccionadas de pequeñas bodegas argentinas servidas por profesionales.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 rounded-lg bg-[color:var(--cream)]/40 p-3.5 border border-[color:var(--gold)]/20">
+                    <Sparkles className="h-5 w-5 text-[color:var(--wine)] shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">Catas Guiadas Privadas</h4>
+                      <p className="text-xs text-[color:var(--ink)]/75">Dinámicas de degustación por pasos exclusivas para agasajar a tus invitados.</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 rounded-lg bg-[color:var(--cream)]/40 p-3.5 border border-[color:var(--gold)]/20">
+                    <Utensils className="h-5 w-5 text-[color:var(--wine)] shrink-0 mt-0.5" />
+                    <div>
+                      <h4 className="font-semibold text-sm text-[color:var(--wine)]">Tapeo y Picadas Gourmet</h4>
+                      <p className="text-xs text-[color:var(--ink)]/75">Tablas de quesos y fiambres seleccionados, empanadas de osobuco y brusquetas.</p>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="pt-4">
                   <a
-                    id="event-reserve-link"
-                    href={WA_EVENT_URL}
+                    href={WA_FIESTAS_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn-tactile inline-flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--cream)] shadow-lg"
+                    className="btn-tactile inline-flex items-center gap-2.5 rounded-full bg-[color:var(--wine)] px-8 py-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--cream)] shadow-xl hover:bg-[color:var(--wine)]/90 cursor-pointer"
                   >
-                    <WhatsAppIcon className="h-5 w-5" /> Consultar próximas fechas
+                    <WhatsAppIcon className="h-5 w-5" /> Consultar presupuesto para mi fiesta
                   </a>
                 </div>
               </div>
 
-              {/* Video Promocional */}
-              <div className="reveal reveal-slide-left order-1 md:order-2 flex justify-center">
-                <div className="relative w-full max-w-[280px] sm:max-w-[300px] md:max-w-[340px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/30 bg-[color:var(--ink)] transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_20px_40px_rgba(199,162,91,0.15)] hover:border-[color:var(--gold)]">
+              <div className="reveal reveal-slide-left grid grid-cols-2 gap-4">
+                <div className="hover-zoom-container rounded-lg shadow-xl col-span-2 aspect-[16/9] overflow-hidden border border-[color:var(--gold)]/25">
+                  <img
+                    src={clientes}
+                    alt="Eventos y catas privadas con Che Malbec"
+                    className="hover-zoom-image h-full w-full object-cover"
+                  />
+                </div>
+                <div className="hover-zoom-container rounded-lg shadow-md aspect-square overflow-hidden border border-[color:var(--gold)]/25">
+                  <img
+                    src={copa}
+                    alt="Servicio de copas y vino para eventos"
+                    className="hover-zoom-image h-full w-full object-cover"
+                  />
+                </div>
+                <div className="hover-zoom-container rounded-lg shadow-md aspect-square overflow-hidden border border-[color:var(--gold)]/25">
+                  <img
+                    src={burrata}
+                    alt="Catering gastronómico de picadas y tapeo"
+                    className="hover-zoom-image h-full w-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* AGENDA DE EVENTOS */}
+        <section id="novedades" className="bg-[color:var(--card)] py-20 sm:py-28 border-t border-[color:var(--gold)]/20">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="gold-divider reveal reveal-slide-down">Cartelera del Mes</p>
+              <h2 className="reveal reveal-slide-up mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)]">
+                Próximos Eventos en Che Malbec
+              </h2>
+              <p className="mt-3 text-sm sm:text-base text-[color:var(--ink)]/80">
+                Noches especiales, catas maridadas y canilla libre con música en vivo. Cupos limitados.
+              </p>
+            </div>
+
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {EVENTOS_AGOSTO.map((ev, idx) => (
+                <article
+                  key={ev.titulo}
+                  className="card-boutique reveal reveal-slide-up flex flex-col justify-between p-6 shadow-md"
+                  style={{ transitionDelay: `${idx * 100}ms` }}
+                >
+                  <div className="space-y-3">
+                    <span className="inline-block rounded-full bg-[color:var(--wine)]/10 px-3 py-1 text-[11px] font-bold text-[color:var(--wine)] uppercase tracking-wider">
+                      {ev.tag}
+                    </span>
+                    <div className="flex items-center gap-2 text-xs font-semibold text-[color:var(--gold)]">
+                      <Calendar className="h-4 w-4" /> {ev.fechaBadge}
+                    </div>
+                    <h3 className="font-serif text-xl font-bold text-[color:var(--wine)] leading-snug">
+                      {ev.titulo}
+                    </h3>
+                    <p className="text-xs text-[color:var(--ink)]/75 leading-relaxed">
+                      {ev.descripcion}
+                    </p>
+                  </div>
+
+                  <div className="pt-6">
+                    <a
+                      href={ev.ctaWa}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-tactile inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-[color:var(--wine)] py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] hover:bg-[color:var(--wine)]/90 transition-all cursor-pointer"
+                    >
+                      <WhatsAppIcon className="h-3.5 w-3.5" /> Consultar Cupo
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {/* Video Promocional */}
+            <div className="mt-16 rounded-2xl bg-ink-atmosphere text-[color:var(--cream)] p-8 sm:p-12 grid gap-8 md:grid-cols-2 items-center border border-[color:var(--gold)]/30 shadow-2xl">
+              <div className="space-y-4">
+                <span className="text-xs uppercase tracking-widest text-[color:var(--gold)] font-semibold">
+                  Así se viven nuestras ferias
+                </span>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold">
+                  Feria de Vinos Boutique en CABA
+                </h3>
+                <p className="text-sm text-[color:var(--cream)]/80 leading-relaxed">
+                  Más de 15 etiquetas boutique en degustación libre, banda en vivo, charlas con sommeliers y copa de cristal de regalo. ¡Sumate a las próximas ediciones!
+                </p>
+                <div className="pt-2">
+                  <a
+                    href={WA_GENERAL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] shadow-md hover:scale-105 transition-all"
+                  >
+                    <WhatsAppIcon className="h-4 w-4" /> Recibir aviso de próximas ferias
+                  </a>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <div className="w-full max-w-[260px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/40 bg-black">
                   <video
                     src={feriaVinosVideo}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                     autoPlay
                     controls
                     playsInline
@@ -800,210 +1550,302 @@ function Index() {
           </div>
         </section>
 
-        {/* HISTORIA */}
-        <section id="historia" className="bg-[color:var(--cream)] py-24 sm:py-32">
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <p className="gold-divider reveal reveal-slide-down">Nuestra historia</p>
-            <h2 className="reveal reveal-slide-up mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
-              Nuestra Historia: Pasión por el Vino Boutique y las Catas
-            </h2>
-            <p
-              className="reveal reveal-fade mt-8 font-serif text-xl italic leading-relaxed text-[color:var(--ink)]/85 sm:text-2xl"
-              style={{ transitionDelay: "150ms" }}
-            >
-              “Che Malbec nació de la curiosidad por descubrir el mundo del vino y compartir esa
-              pasión con otros.”
-            </p>
-            <div
-              className="reveal reveal-slide-up mx-auto mt-8 max-w-2xl space-y-5 text-[color:var(--ink)]/75 leading-relaxed"
-              style={{ transitionDelay: "300ms" }}
-            >
-              <p>
-                Empezó como un hobby —vender vinos para descubrir nuevas etiquetas boutique— y
-                creció tras un viaje a Italia, donde una enoteca de barrio nos hizo comprender la
-                calidez y cercanía que queríamos replicar en Buenos Aires.
-              </p>
-              <p>
-                Hoy es un espacio íntimo en el histórico Palacio Vera (Montserrat) diseñado para
-                disfrutar excelentes vinos argentinos, conocer etiquetas exclusivas guiados por
-                sommeliers y vivir momentos de risas, desconexión y maridajes gourmet.
-              </p>
+        {/* FRANQUICIAS */}
+        <section id="franquicias" className="bg-[color:var(--cream)] py-20 sm:py-28">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="rounded-2xl border border-[color:var(--gold)]/40 bg-[color:var(--card)] p-8 sm:p-14 shadow-2xl">
+              <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] items-center">
+                <div className="space-y-6">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--wine)]">
+                    <Building2 className="h-4 w-4 text-[color:var(--gold)]" /> Modelo de Negocio & Expansión
+                  </div>
+                  <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)] leading-tight">
+                    Franquicias Che Malbec
+                  </h2>
+                  <p className="text-base text-[color:var(--ink)]/80 leading-relaxed">
+                    Sumate a una marca consolidada con alto ticket promedio, excelente reputación (4.8★ en Google) y un concepto probado que une wine bar boutique, mercado de vinos y gastronomía de autor.
+                  </p>
+
+                  <div className="grid gap-4 sm:grid-cols-2 text-xs text-[color:var(--ink)]/85 pt-2">
+                    <div className="flex items-start gap-2.5">
+                      <Check className="h-4 w-4 text-[color:var(--gold)] shrink-0 mt-0.5" />
+                      <span><strong>2 Formatos Disponibles:</strong> Completo (~300m²) o Express Wine Bar.</span>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <Check className="h-4 w-4 text-[color:var(--gold)] shrink-0 mt-0.5" />
+                      <span><strong>Acuerdos Directos con Bodegas:</strong> Márgenes preferenciales en etiquetas boutique.</span>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <Check className="h-4 w-4 text-[color:var(--gold)] shrink-0 mt-0.5" />
+                      <span><strong>Capacitación Integral:</strong> Formación en servicio, sommellerie y gestión.</span>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <Check className="h-4 w-4 text-[color:var(--gold)] shrink-0 mt-0.5" />
+                      <span><strong>Soporte Continuo:</strong> Marketing, carta centralizada y acompañamiento comercial.</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap gap-4 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setFranquiciaOpen(true)}
+                      className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--wine)] px-8 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[color:var(--cream)] shadow-xl hover:bg-[color:var(--wine)]/90 cursor-pointer"
+                    >
+                      <Building2 className="h-4 w-4 text-[color:var(--gold)]" /> Postular mi Franquicia
+                    </button>
+                    <a
+                      href={WA_FRANQUICIAS_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-tactile inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-6 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] hover:bg-[color:var(--gold)]/20 transition-all cursor-pointer"
+                    >
+                      <WhatsAppIcon className="h-4 w-4 text-[color:var(--gold)]" /> Consultar por WhatsApp
+                    </a>
+                  </div>
+                </div>
+
+                <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/65 p-6 sm:p-8 space-y-4 shadow-sm">
+                  <h3 className="font-serif text-xl font-bold text-[color:var(--wine)]">
+                    ¿Por qué elegir Che Malbec?
+                  </h3>
+                  <div className="space-y-3 text-xs text-[color:var(--ink)]/80">
+                    <p className="border-b border-[color:var(--gold)]/20 pb-2.5">
+                      🍷 <strong>Negocio de Experiencias:</strong> El público no busca solo beber un vino, sino aprender, compartir maridajes y disfrutar un ambiente cálido.
+                    </p>
+                    <p className="border-b border-[color:var(--gold)]/20 pb-2.5">
+                      📈 <strong>Múltiples Vías de Ingreso:</strong> Consumo en salón, eventos corporativos, catering de fiestas, delivery y venta de botellas para llevar.
+                    </p>
+                    <p>
+                      ⭐ <strong>Material Abierto:</strong> Ponemos a tu disposición toda la información del modelo para evaluar la inversión de forma transparente.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* UBICACIÓN */}
-        <section
-          id="ubicacion"
-          className="relative overflow-hidden bg-[color:var(--card)] py-24 sm:py-32"
-        >
-          <div className="mx-auto grid max-w-6xl items-center gap-12 px-6 md:grid-cols-2 md:gap-16">
-            <div className="reveal reveal-slide-right">
-              <p className="gold-divider">Cómo Llegar</p>
-              <h2 className="mt-5 text-3xl text-[color:var(--wine)] sm:text-4xl md:text-5xl font-serif font-semibold">
-                Visitanos en Monserrat: Palacio Vera
-              </h2>
-
-              <address className="mt-8 not-italic">
-                <p className="font-serif text-2xl text-[color:var(--ink)]">Avenida de Mayo 777</p>
-                <p className="text-[color:var(--ink)]/70">
-                  Histórico Palacio Vera · Monserrat · CABA, Argentina
+        {/* OPINIONES */}
+        <section id="opiniones" className="bg-wine-velvet text-[color:var(--cream)] py-20 sm:py-28 shadow-inner">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
+              <div>
+                <p className="gold-divider">
+                  Opiniones Reales
                 </p>
-              </address>
-
-              <div className="mt-8">
-                <h3 className="font-serif text-sm uppercase tracking-[0.18em] text-[color:var(--gold)]">
-                  Horarios
-                </h3>
-                <dl className="mt-4 divide-y divide-[color:var(--gold)]/30 text-[color:var(--ink)]/85">
-                  <div className="flex justify-between py-3">
-                    <dt>Lunes</dt>
-                    <dd>11:00 — 19:00</dd>
-                  </div>
-                  <div className="flex justify-between py-3">
-                    <dt>Martes a sábado</dt>
-                    <dd>11:00 — 23:00</dd>
-                  </div>
-                  <div className="flex justify-between py-3">
-                    <dt>Domingo</dt>
-                    <dd className="text-[color:var(--ink)]/50">Cerrado</dd>
-                  </div>
-                </dl>
+                <h2 className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl leading-tight">
+                  Calificación 4.8 <span className="text-[color:var(--gold)]">★</span> en Google Maps
+                </h2>
               </div>
-
-              <div className="mt-8 flex flex-wrap gap-3">
-                <button
-                  id="ubicacion-reserve-btn"
-                  type="button"
-                  onClick={openReserva}
-                  className="btn-tactile inline-flex items-center gap-2 rounded-full border border-[color:var(--wine)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] cursor-pointer"
-                >
-                  <WhatsAppIcon className="h-4 w-4" /> Reservar
-                </button>
-                <a
-                  id="ubicacion-maps-link"
-                  href={MAPS_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-tactile inline-flex items-center gap-2 rounded-full border border-[color:var(--gold)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.12em] text-[color:var(--ink)] hover:bg-[color:var(--gold)]/20 cursor-pointer"
-                >
-                  <MapPin className="h-4 w-4 text-[color:var(--gold)]" /> Abrir en Google Maps
-                </a>
-              </div>
+              <p className="text-sm sm:text-base leading-relaxed text-[color:var(--cream)]/80">
+                La calidez del espacio, la cercanía de nuestros sommeliers y la abundancia de las picadas caseras nos convirtieron en un clásico indiscutido.
+              </p>
             </div>
 
-            <div className="reveal reveal-slide-left">
-              <div className="overflow-hidden rounded-sm border border-[color:var(--gold)]/40 shadow-xl transition-all duration-500 hover:shadow-2xl hover:border-[color:var(--gold)]">
-                <iframe
-                  title="Mapa de Che Malbec"
-                  src="https://www.google.com/maps?q=Avenida+de+Mayo+777,+Buenos+Aires&output=embed"
-                  className="h-[320px] sm:h-[420px] w-full"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
+            <div className="mt-14 grid gap-6 md:grid-cols-3">
+              {[
+                {
+                  q: "Una verdadera joya en medio del centro. Agustín nos guió copa a copa con mucha paciencia, explicando la historia de cada bodega. Las empanadas caseras son espectaculares. Ambiente íntimo ideal para bajar un cambio.",
+                  n: "Mariana S.",
+                  r: "Cliente local · Google Maps",
+                },
+                {
+                  q: "Me encantó el lugar. Al estar dentro del histórico Palacio Vera, se respira una atmósfera única. Tienen etiquetas boutique muy interesantes y la atención te hace sentir como en casa.",
+                  n: "Jean-Pierre L.",
+                  r: "Visitante · Google Maps",
+                },
+                {
+                  q: "Los vinos y la comida son excelentes, y la atención del sommelier impecable. El local es chico y acogedor — siempre conviene reservar para asegurar la mesa.",
+                  n: "Carlos G.",
+                  r: "Reseña verificada · Google Maps",
+                },
+              ].map((t, i) => (
+                <article
+                  key={t.n}
+                  className="reveal reveal-slide-up flex flex-col rounded-xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm shadow-lg hover:border-[color:var(--gold)]/40 transition-all"
+                  style={{ transitionDelay: `${i * 150}ms` }}
+                >
+                  <div className="text-sm tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
+                  <p className="mt-4 flex-1 font-serif text-base italic leading-relaxed text-[color:var(--cream)]/95">
+                    “{t.q}”
+                  </p>
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <p className="font-semibold text-[color:var(--cream)] text-sm">{t.n}</p>
+                    <p className="text-xs text-[color:var(--cream)]/60">{t.r}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <a
+                href={SUCURSAL_MONSERRAT.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[color:var(--gold)] hover:underline"
+              >
+                Ver todas las reseñas en Google Maps <ExternalLink className="h-3.5 w-3.5" />
+              </a>
             </div>
           </div>
         </section>
 
         {/* CTA FINAL */}
-        <section className="relative overflow-hidden bg-[color:var(--wine)] py-24 text-[color:var(--cream)] sm:py-32">
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <p className="gold-divider reveal reveal-slide-down" style={{ color: "var(--gold)" }}>
-              Reservá tu mesa
+        <section className="bg-ink-atmosphere text-[color:var(--cream)] py-20 sm:py-28 text-center border-t border-[color:var(--gold)]/20">
+          <div className="mx-auto max-w-3xl px-6">
+            <p className="gold-divider">
+              Tu Próxima Copa Te Espera
             </p>
-            <h2 className="reveal reveal-slide-up mt-5 font-serif text-3xl leading-tight sm:text-5xl md:text-6xl">
-              ¿Listo para disfrutar{" "}
-              <em className="not-italic text-[color:var(--gold)]">una cata de vinos única?</em>
+            <h2 className="mt-4 font-serif text-3xl sm:text-5xl md:text-6xl font-semibold">
+              Vení a descubrir el mundo de los{" "}
+              <span className="italic text-[color:var(--gold)]">vinos boutique</span>
             </h2>
-            <p className="reveal reveal-fade mt-6 text-lg text-[color:var(--cream)]/85">
-              Escribinos y reservá tu lugar. Te esperamos en Av. de Mayo 777.
+            <p className="mt-4 text-sm sm:text-base text-[color:var(--cream)]/80">
+              Escribinos para asegurar tu mesa en Monserrat o San Telmo. Te esperamos con la copa servida.
             </p>
-            <button
-              id="cta-reserve-btn"
-              type="button"
-              onClick={openReserva}
-              className="btn-tactile reveal reveal-scale mt-10 inline-flex items-center gap-3 rounded-full bg-[color:var(--gold)] px-10 py-5 text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--ink)] shadow-2xl cursor-pointer"
-            >
-              <WhatsAppIcon className="h-5 w-5" /> Reservar tu mesa
-            </button>
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <button
+                type="button"
+                onClick={() => openReservaWith()}
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-10 py-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] shadow-2xl hover:scale-105 transition-all cursor-pointer"
+              >
+                <WhatsAppIcon className="h-5 w-5" /> Reservar Mesa
+              </button>
+              <a
+                href={PEDIDOSYA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full border border-red-500 bg-red-600/20 px-8 py-4 text-sm font-semibold uppercase tracking-wider text-red-300 hover:bg-red-600/30 transition-all cursor-pointer"
+              >
+                <ShoppingBag className="h-4 w-4" /> PedidosYa
+              </a>
+            </div>
           </div>
         </section>
       </main>
 
       {/* FOOTER */}
-      <footer className="bg-[color:var(--ink)] py-14 text-[color:var(--cream)]/80">
-        <div className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-3">
+      <footer className="bg-[#1b120f] py-14 text-[color:var(--cream)]/80 border-t border-[color:var(--gold)]/20">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 sm:grid-cols-2 md:grid-cols-4 text-xs">
           <div>
             <img src={logo} alt="Che Malbec" className="h-8 w-auto" />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[color:var(--cream)]/65">
-              Wine bar boutique en Buenos Aires. Vinos argentinos, degustaciones guiadas y picadas
-              para compartir.
+            <p className="mt-4 leading-relaxed text-[color:var(--cream)]/65">
+              Wine bar boutique en Buenos Aires. Vinos argentinos de bodegas seleccionadas, catas guiadas, picadas abundantes y eventos.
             </p>
+            <span className="mt-4 inline-block rounded-full bg-white/10 px-3 py-1 text-[10px] text-[color:var(--gold)] font-medium border border-[color:var(--gold)]/20">
+              Club de Vinos (Próximamente)
+            </span>
           </div>
+
           <div>
-            <h4 className="font-serif text-sm uppercase tracking-[0.18em] text-[color:var(--gold)]">
-              Visitanos
+            <h4 className="font-serif text-sm uppercase tracking-widest text-[color:var(--gold)] font-bold">
+              Sede Monserrat
             </h4>
-            <p className="mt-4 text-sm">
-              Av. de Mayo 777
+            <p className="mt-3">
+              Av. de Mayo 777 (Palacio Vera)
               <br />
               Monserrat · CABA
             </p>
-            <p className="mt-3 text-sm text-[color:var(--cream)]/65">
+            <p className="mt-2 text-[color:var(--cream)]/65">
               Lun 11–19h · Mar–Sáb 11–23h
               <br />
               Dom cerrado
             </p>
+            <a
+              href={SUCURSAL_MONSERRAT.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-block text-[color:var(--gold)] hover:underline"
+            >
+              Ver en Maps ↗
+            </a>
           </div>
+
           <div>
-            <h4 className="font-serif text-sm uppercase tracking-[0.18em] text-[color:var(--gold)]">
-              Contacto
+            <h4 className="font-serif text-sm uppercase tracking-widest text-[color:var(--gold)] font-bold">
+              Sede San Telmo
             </h4>
-            <ul className="mt-4 space-y-2 text-sm">
+            <p className="mt-3">
+              Estados Unidos 407
+              <br />
+              San Telmo · CABA
+            </p>
+            <p className="mt-2 text-[color:var(--cream)]/65">
+              Mar–Sáb 18–00h
+              <br />
+              Dom y Lun cerrado
+            </p>
+            <a
+              href={SUCURSAL_SANTELMO.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-block text-[color:var(--gold)] hover:underline"
+            >
+              Ver en Maps ↗
+            </a>
+          </div>
+
+          <div>
+            <h4 className="font-serif text-sm uppercase tracking-widest text-[color:var(--gold)] font-bold">
+              Contacto & Redes
+            </h4>
+            <ul className="mt-3 space-y-2">
               <li>
-                <a
-                  id="footer-whatsapp-link"
-                  href={WA_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[color:var(--gold)]"
-                >
+                <a href={WA_GENERAL_URL} target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">
                   WhatsApp: +54 9 11 2848-1233
                 </a>
               </li>
               <li>
-                <a
-                  id="footer-instagram-link"
-                  href="https://www.instagram.com/che.malbec"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[color:var(--gold)]"
-                >
-                  Instagram: @che.malbec
+                <a href={SUCURSAL_MONSERRAT.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">
+                  IG Monserrat: @che.malbec
                 </a>
+              </li>
+              <li>
+                <a href={SUCURSAL_SANTELMO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">
+                  IG San Telmo: @che.malbec.santelmo
+                </a>
+              </li>
+              <li>
+                <a href={PEDIDOSYA_URL} target="_blank" rel="noopener noreferrer" className="hover:text-[color:var(--gold)] transition-colors">
+                  Delivery: PedidosYa
+                </a>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setFranquiciaOpen(true)}
+                  className="text-[color:var(--gold)] hover:underline cursor-pointer text-left"
+                >
+                  Consultar Franquicias
+                </button>
               </li>
             </ul>
           </div>
         </div>
-        <div className="mx-auto mt-10 max-w-6xl border-t border-[color:var(--cream)]/15 px-6 pt-6 text-center text-xs text-[color:var(--cream)]/50">
-          © {new Date().getFullYear()} Che Malbec Mercado & Wine Bar · Todos los derechos reservados
+
+        <div className="mx-auto mt-10 max-w-6xl border-t border-white/10 px-6 pt-6 text-center text-[11px] text-[color:var(--cream)]/50">
+          © {new Date().getFullYear()} Che Malbec Mercado & Wine Bar · Todos los derechos reservados · Buenos Aires, Argentina
         </div>
       </footer>
 
       {/* Floating WhatsApp Action for Mobile */}
       <a
         id="floating-whatsapp-btn"
-        href={WA_URL}
+        href={WA_GENERAL_URL}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Contactar por WhatsApp"
-        className="btn-tactile fixed bottom-5 right-5 z-40 flex h-13 w-13 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl hover:scale-110 active:scale-95 md:hidden cursor-pointer"
+        className="btn-tactile fixed bottom-5 right-5 z-40 flex h-13 w-13 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl hover:scale-110 active:scale-95 md:hidden cursor-pointer"
       >
         <WhatsAppIcon className="h-7 w-7" />
       </a>
 
-      <ReservationDialog open={reservaOpen} onOpenChange={setReservaOpen} />
+      <ReservationDialog
+        open={reservaOpen}
+        onOpenChange={setReservaOpen}
+        defaultSucursal={reservaSucursal}
+      />
+      <FranchiseDialog open={franquiciaOpen} onOpenChange={setFranquiciaOpen} />
     </div>
   );
 }

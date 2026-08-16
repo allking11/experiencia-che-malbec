@@ -72,7 +72,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Descubrí el mejor wine bar boutique de Buenos Aires en el histórico Palacio Vera (Montserrat). Degustaciones de vinos guiadas por sommeliers, catas de Malbec y picadas caseras. ¡Reservá hoy!",
+          "Descubrí Che Malbec Wine Bar Boutique en Buenos Aires con dos sedes: Monserrat (Palacio Vera) y San Telmo. Degustaciones guiadas por sommeliers, catas de vino y picadas caseras.",
       },
       { name: "author", content: "Che Malbec" },
       { name: "robots", content: "index, follow" },
@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Disfrutá una degustación de vinos guiada por sommeliers en el histórico Palacio Vera de Montserrat, Buenos Aires. Vinos boutique y picadas argentinas.",
+          "Disfrutá una degustación de vinos guiada por sommeliers en nuestras sedes de Monserrat y San Telmo, Buenos Aires. Vinos boutique y picadas caseras.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

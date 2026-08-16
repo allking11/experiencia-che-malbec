@@ -99,6 +99,11 @@
 }
 
 @layer utilities {
+  ::selection {
+    background-color: oklch(0.38 0.08 38 / 0.9);
+    color: #fee9cc;
+  }
+
   .gold-divider {
     display: inline-flex;
     align-items: center;
@@ -106,8 +111,8 @@
     color: var(--gold);
     font-family: var(--font-serif);
     font-style: italic;
-    font-size: 0.875rem;
-    letter-spacing: 0.15em;
+    font-size: 0.8125rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
   .gold-divider::before,
@@ -118,8 +123,9 @@
     min-width: 0.75rem;
     flex-shrink: 1;
     height: 1px;
-    background: var(--gold);
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
   }
+
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
@@ -140,6 +146,57 @@
   /* Section Scroll Margin */
   section {
     scroll-margin-top: 5.5rem;
+  }
+
+  /* Atmospheric Backgrounds */
+  .bg-wine-velvet {
+    background: linear-gradient(145deg, oklch(0.42 0.09 38) 0%, oklch(0.32 0.07 38) 100%);
+  }
+
+  .bg-ink-atmosphere {
+    background: radial-gradient(circle at 50% 15%, oklch(0.26 0.04 42) 0%, oklch(0.18 0.03 36) 75%, oklch(0.15 0.02 36) 100%);
+  }
+
+  /* Luxury Card Utilities */
+  .card-boutique {
+    background-color: var(--card);
+    border: 1px solid oklch(0.72 0.11 78 / 0.35);
+    border-radius: 0.75rem;
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+  .card-boutique:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+    box-shadow: 0 16px 32px -12px oklch(0.22 0.03 38 / 0.18);
+  }
+
+  .card-boutique-dark {
+    background-color: oklch(1 0 0 / 0.04);
+    border: 1px solid oklch(0.72 0.11 78 / 0.22);
+    border-radius: 0.75rem;
+    backdrop-filter: blur(8px);
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.4s ease,
+      background-color 0.4s ease,
+      box-shadow 0.4s ease;
+  }
+  .card-boutique-dark:hover {
+    transform: translateY(-3px);
+    border-color: oklch(0.72 0.11 78 / 0.55);
+    background-color: oklch(1 0 0 / 0.07);
+    box-shadow: 0 14px 28px -10px oklch(0 0 0 / 0.4);
+  }
+
+  /* Gold Accent Utilities */
+  .gold-foil-border {
+    border: 1px solid oklch(0.72 0.11 78 / 0.4);
+  }
+  .gold-foil-border-hover:hover {
+    border-color: var(--gold);
   }
 
   /* Reveal System with Premium Cubic-Bezier */
@@ -236,7 +293,7 @@
   }
   .btn-tactile:hover {
     transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 10px 20px -10px oklch(0.22 0.03 38 / 0.25);
+    box-shadow: 0 10px 22px -8px oklch(0.22 0.03 38 / 0.28);
   }
   .btn-tactile:active {
     transform: translateY(0) scale(0.98);
@@ -253,7 +310,7 @@
   .card-premium:hover {
     transform: translateY(-4px);
     border-color: var(--gold);
-    box-shadow: 0 12px 24px -10px oklch(0.22 0.03 38 / 0.12);
+    box-shadow: 0 14px 28px -10px oklch(0.22 0.03 38 / 0.16);
   }
 
   /* Tasting-specific card microinteractions */
@@ -264,9 +321,9 @@
       box-shadow 0.45s ease;
   }
   .tasting-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     border-color: var(--gold);
-    box-shadow: 0 16px 32px -12px oklch(0.22 0.03 38 / 0.15);
+    box-shadow: 0 16px 32px -12px oklch(0.22 0.03 38 / 0.18);
   }
   .tasting-card .tasting-num {
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -342,4 +399,34 @@
   .animate-wine-glow {
     animation: winePulseGlow 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
   }
+
+  /* Horizontal Scroll Utilities for Mobile Tabs */
+  .tabs-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.72 0.11 78 / 0.4) transparent;
+  }
+  .tabs-scroll-container::-webkit-scrollbar {
+    height: 4px;
+  }
+  .tabs-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .tabs-scroll-container::-webkit-scrollbar-thumb {
+    background: oklch(0.72 0.11 78 / 0.4);
+    border-radius: 9999px;
+  }
+  .tabs-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
+
