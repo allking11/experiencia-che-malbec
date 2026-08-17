@@ -115,8 +115,11 @@ const WA_FRANQUICIAS_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent
   "📌 *[NUEVA CONSULTA DE FRANQUICIAS]*\nHola Che Malbec 👋 Me gustaría recibir más información y el brochure de franquicias.",
 )}`;
 
-const PEDIDOSYA_URL =
-  "https://www.pedidosya.com.ar/restaurantes/buenos-aires/che-malbec-c6e204a0-e0f9-4321-8150-4e0bc6828b44-menu";
+const PEDIDOSYA_MONSERRAT_URL =
+  "https://www.pedidosya.com.ar/restaurantes/buenos-aires/che-malbec-8df25b0e-e5ed-4c30-b5d4-0e6fb06b8d84-menu?origin=shop_list";
+const PEDIDOSYA_SANTELMO_URL =
+  "https://www.pedidosya.com.ar/restaurantes/buenos-aires/che-malbec-san-telmo-853f1925-62e0-4640-9fb9-490a1dd52fb6-menu?origin=shop_list";
+const PEDIDOSYA_URL = PEDIDOSYA_MONSERRAT_URL;
 
 const SUCURSAL_MONSERRAT = {
   nombre: "Monserrat · Histórico Palacio Vera",
@@ -131,6 +134,7 @@ const SUCURSAL_MONSERRAT = {
   mapsEmbed: "https://www.google.com/maps?q=Avenida+de+Mayo+777,+Buenos+Aires&output=embed",
   instagram: "https://www.instagram.com/che.malbec/",
   instagramTag: "@che.malbec",
+  pedidosYaUrl: PEDIDOSYA_MONSERRAT_URL,
 };
 
 const SUCURSAL_SANTELMO = {
@@ -145,6 +149,7 @@ const SUCURSAL_SANTELMO = {
   mapsEmbed: "https://www.google.com/maps?q=Estados+Unidos+407,+Buenos+Aires&output=embed",
   instagram: "https://www.instagram.com/che.malbec.santelmo/",
   instagramTag: "@che.malbec.santelmo",
+  pedidosYaUrl: PEDIDOSYA_SANTELMO_URL,
 };
 
 const EVENTOS_AGOSTO = [
@@ -397,7 +402,8 @@ function Index() {
           "https://www.instagram.com/che.malbec.santelmo",
           SUCURSAL_MONSERRAT.mapsUrl,
           SUCURSAL_SANTELMO.mapsUrl,
-          PEDIDOSYA_URL,
+          PEDIDOSYA_MONSERRAT_URL,
+          PEDIDOSYA_SANTELMO_URL,
         ],
         description:
           "Wine Bar Boutique y degustación de vinos guiada en Buenos Aires con dos sedes: Monserrat (Palacio Vera) y San Telmo. Catas de vinos boutique por sommeliers, picadas caseras y delivery por PedidosYa.",
@@ -510,6 +516,11 @@ function Index() {
               </a>
             </li>
             <li>
+              <a href="#opiniones" className="nav-link-animated hover:text-[color:var(--wine)]">
+                Opiniones (4.8★)
+              </a>
+            </li>
+            <li>
               <a href="#sucursales" className="nav-link-animated hover:text-[color:var(--wine)]">
                 Sucursales
               </a>
@@ -615,6 +626,13 @@ function Index() {
                     La Experiencia
                   </a>
                   <a
+                    href="#opiniones"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)]"
+                  >
+                    Opiniones Google (4.8★)
+                  </a>
+                  <a
                     href="#sucursales"
                     onClick={() => setMobileMenuOpen(false)}
                     className="py-1 hover:text-[color:var(--wine)]"
@@ -657,13 +675,6 @@ function Index() {
                     Franquicias
                   </a>
                   <a
-                    href="#opiniones"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="py-1 hover:text-[color:var(--wine)]"
-                  >
-                    Opiniones Google (4.8★)
-                  </a>
-                  <a
                     href="#faq"
                     onClick={() => setMobileMenuOpen(false)}
                     className="py-1 hover:text-[color:var(--wine)] flex items-center gap-2"
@@ -681,14 +692,24 @@ function Index() {
                     >
                       Reservar Mesa
                     </button>
-                    <a
-                      href={PEDIDOSYA_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center gap-2 rounded-full border border-red-600 bg-red-600/10 py-3 text-center text-sm font-semibold text-red-700"
-                    >
-                      <ShoppingBag className="h-4 w-4" /> PedidosYa
-                    </a>
+                    <div className="grid grid-cols-2 gap-2">
+                      <a
+                        href={PEDIDOSYA_MONSERRAT_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-1 rounded-full border border-red-600 bg-red-600/10 py-2.5 px-2 text-center text-xs font-semibold text-red-700 hover:bg-red-600/20"
+                      >
+                        <ShoppingBag className="h-3.5 w-3.5 shrink-0" /> Monserrat
+                      </a>
+                      <a
+                        href={PEDIDOSYA_SANTELMO_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-1 rounded-full border border-red-600 bg-red-600/10 py-2.5 px-2 text-center text-xs font-semibold text-red-700 hover:bg-red-600/20"
+                      >
+                        <ShoppingBag className="h-3.5 w-3.5 shrink-0" /> San Telmo
+                      </a>
+                    </div>
                   </div>
                 </div>
               </SheetContent>
@@ -898,43 +919,69 @@ function Index() {
           </div>
         </section>
 
-        {/* BARRA / BANNER DE DELIVERY */}
+        {/* OPINIONES */}
         <section
-          id="delivery"
-          className="bg-wine-velvet text-[color:var(--cream)] py-8 border-y border-[color:var(--gold)]/30 shadow-inner"
+          id="opiniones"
+          className="bg-wine-velvet text-[color:var(--cream)] py-20 sm:py-28 shadow-inner"
         >
-          <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4 text-left">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[color:var(--gold)] text-[color:var(--ink)] shadow-md">
-                <ShoppingBag className="h-6 w-6" />
-              </div>
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
               <div>
-                <h3 className="font-serif text-xl sm:text-2xl font-bold">
-                  ¿Querés Che Malbec en tu casa?
-                </h3>
-                <p className="text-xs sm:text-sm text-[color:var(--cream)]/85">
-                  Pedí nuestras empanadas de autor, picadas abundantes y vinos boutique directo a tu
-                  domicilio.
-                </p>
+                <p className="gold-divider">Opiniones Reales</p>
+                <h2 className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl leading-tight">
+                  Calificación 4.8 <span className="text-[color:var(--gold)]">★</span> en Google
+                  Maps
+                </h2>
               </div>
+              <p className="text-sm sm:text-base leading-relaxed text-[color:var(--cream)]/80">
+                La calidez del espacio, la cercanía de nuestros sommeliers y la abundancia de las
+                picadas caseras nos convirtieron en un clásico indiscutido.
+              </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 shrink-0">
+            <div className="mt-14 grid gap-6 md:grid-cols-3">
+              {[
+                {
+                  q: "Una verdadera joya en medio del centro. Agustín nos guió copa a copa con mucha paciencia, explicando la historia de cada bodega. Las empanadas caseras son espectaculares. Ambiente íntimo ideal para bajar un cambio.",
+                  n: "Mariana S.",
+                  r: "Cliente local · Google Maps",
+                },
+                {
+                  q: "Me encantó el lugar. Al estar dentro del histórico Palacio Vera, se respira una atmósfera única. Tienen etiquetas boutique muy interesantes y la atención te hace sentir como en casa.",
+                  n: "Jean-Pierre L.",
+                  r: "Visitante · Google Maps",
+                },
+                {
+                  q: "Los vinos y la comida son excelentes, y la atención del sommelier impecable. El local es chico y acogedor — siempre conviene reservar para asegurar la mesa.",
+                  n: "Carlos G.",
+                  r: "Reseña verificada · Google Maps",
+                },
+              ].map((t, i) => (
+                <article
+                  key={t.n}
+                  className="reveal reveal-slide-up flex flex-col rounded-xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm shadow-lg hover:border-[color:var(--gold)]/40 transition-all"
+                  style={{ transitionDelay: `${i * 150}ms` }}
+                >
+                  <div className="text-sm tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
+                  <p className="mt-4 flex-1 font-serif text-base italic leading-relaxed text-[color:var(--cream)]/95">
+                    “{t.q}”
+                  </p>
+                  <div className="mt-6 pt-4 border-t border-white/10">
+                    <p className="font-semibold text-[color:var(--cream)] text-sm">{t.n}</p>
+                    <p className="text-xs text-[color:var(--cream)]/60">{t.r}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
               <a
-                href={PEDIDOSYA_URL}
+                href={SUCURSAL_MONSERRAT.mapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[#EA044E] px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-lg hover:bg-[#c90342] transition-all cursor-pointer"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[color:var(--gold)] hover:underline"
               >
-                <ShoppingBag className="h-4 w-4" /> Pedir por PedidosYa
-              </a>
-              <a
-                href={WA_DELIVERY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-lg hover:bg-[#20bd5a] transition-all cursor-pointer"
-              >
-                <WhatsAppIcon className="h-4 w-4" /> Pedir por WhatsApp
+                Ver todas las reseñas en Google Maps <ExternalLink className="h-3.5 w-3.5" />
               </a>
             </div>
           </div>
@@ -999,10 +1046,18 @@ function Index() {
                   <button
                     type="button"
                     onClick={() => openReservaWith("Monserrat (Palacio Vera - Av. de Mayo 777)")}
-                    className="btn-tactile flex-1 rounded-full bg-[color:var(--wine)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90"
+                    className="btn-tactile flex-1 min-w-[140px] rounded-full bg-[color:var(--wine)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90"
                   >
                     Reservar en Monserrat
                   </button>
+                  <a
+                    href={SUCURSAL_MONSERRAT.pedidosYaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3.5 py-2 text-xs font-semibold text-red-700 hover:bg-red-500/20 transition-all"
+                  >
+                    <ShoppingBag className="h-3.5 w-3.5 text-red-600" /> PedidosYa
+                  </a>
                   <a
                     href={SUCURSAL_MONSERRAT.mapsUrl}
                     target="_blank"
@@ -1066,10 +1121,18 @@ function Index() {
                   <button
                     type="button"
                     onClick={() => openReservaWith("San Telmo (Estados Unidos 407)")}
-                    className="btn-tactile flex-1 rounded-full bg-[color:var(--wine)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90"
+                    className="btn-tactile flex-1 min-w-[140px] rounded-full bg-[color:var(--wine)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--cream)] text-center cursor-pointer hover:bg-[color:var(--wine)]/90"
                   >
                     Reservar en San Telmo
                   </button>
+                  <a
+                    href={SUCURSAL_SANTELMO.pedidosYaUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-red-500/40 bg-red-500/10 px-3.5 py-2 text-xs font-semibold text-red-700 hover:bg-red-500/20 transition-all"
+                  >
+                    <ShoppingBag className="h-3.5 w-3.5 text-red-600" /> PedidosYa
+                  </a>
                   <a
                     href={SUCURSAL_SANTELMO.mapsUrl}
                     target="_blank"
@@ -1088,6 +1151,56 @@ function Index() {
                   </a>
                 </div>
               </article>
+            </div>
+          </div>
+        </section>
+
+        {/* BARRA / BANNER DE DELIVERY */}
+        <section
+          id="delivery"
+          className="bg-wine-velvet text-[color:var(--cream)] py-8 border-y border-[color:var(--gold)]/30 shadow-inner"
+        >
+          <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 text-left">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[color:var(--gold)] text-[color:var(--ink)] shadow-md">
+                <ShoppingBag className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="font-serif text-xl sm:text-2xl font-bold">
+                  ¿Querés Che Malbec en tu casa?
+                </h3>
+                <p className="text-xs sm:text-sm text-[color:var(--cream)]/85">
+                  Pedí nuestras empanadas de autor, picadas abundantes y vinos boutique directo a tu
+                  domicilio.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+              <a
+                href={PEDIDOSYA_MONSERRAT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[#EA044E] px-4.5 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-lg hover:bg-[#c90342] transition-all cursor-pointer"
+              >
+                <ShoppingBag className="h-4 w-4" /> PedidosYa Monserrat
+              </a>
+              <a
+                href={PEDIDOSYA_SANTELMO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[#EA044E] px-4.5 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-lg hover:bg-[#c90342] transition-all cursor-pointer"
+              >
+                <ShoppingBag className="h-4 w-4" /> PedidosYa San Telmo
+              </a>
+              <a
+                href={WA_DELIVERY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[#25D366] px-4.5 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-lg hover:bg-[#20bd5a] transition-all cursor-pointer"
+              >
+                <WhatsAppIcon className="h-4 w-4" /> WhatsApp Delivery
+              </a>
             </div>
           </div>
         </section>
@@ -2257,74 +2370,6 @@ function Index() {
           </div>
         </section>
 
-        {/* OPINIONES */}
-        <section
-          id="opiniones"
-          className="bg-wine-velvet text-[color:var(--cream)] py-20 sm:py-28 shadow-inner"
-        >
-          <div className="mx-auto max-w-6xl px-6">
-            <div className="grid gap-10 md:grid-cols-[1.4fr_1fr] md:items-end">
-              <div>
-                <p className="gold-divider">Opiniones Reales</p>
-                <h2 className="mt-4 font-serif text-4xl sm:text-5xl md:text-6xl leading-tight">
-                  Calificación 4.8 <span className="text-[color:var(--gold)]">★</span> en Google
-                  Maps
-                </h2>
-              </div>
-              <p className="text-sm sm:text-base leading-relaxed text-[color:var(--cream)]/80">
-                La calidez del espacio, la cercanía de nuestros sommeliers y la abundancia de las
-                picadas caseras nos convirtieron en un clásico indiscutido.
-              </p>
-            </div>
-
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {[
-                {
-                  q: "Una verdadera joya en medio del centro. Agustín nos guió copa a copa con mucha paciencia, explicando la historia de cada bodega. Las empanadas caseras son espectaculares. Ambiente íntimo ideal para bajar un cambio.",
-                  n: "Mariana S.",
-                  r: "Cliente local · Google Maps",
-                },
-                {
-                  q: "Me encantó el lugar. Al estar dentro del histórico Palacio Vera, se respira una atmósfera única. Tienen etiquetas boutique muy interesantes y la atención te hace sentir como en casa.",
-                  n: "Jean-Pierre L.",
-                  r: "Visitante · Google Maps",
-                },
-                {
-                  q: "Los vinos y la comida son excelentes, y la atención del sommelier impecable. El local es chico y acogedor — siempre conviene reservar para asegurar la mesa.",
-                  n: "Carlos G.",
-                  r: "Reseña verificada · Google Maps",
-                },
-              ].map((t, i) => (
-                <article
-                  key={t.n}
-                  className="reveal reveal-slide-up flex flex-col rounded-xl border border-white/15 bg-white/5 p-6 backdrop-blur-sm shadow-lg hover:border-[color:var(--gold)]/40 transition-all"
-                  style={{ transitionDelay: `${i * 150}ms` }}
-                >
-                  <div className="text-sm tracking-widest text-[color:var(--gold)]">★ ★ ★ ★ ★</div>
-                  <p className="mt-4 flex-1 font-serif text-base italic leading-relaxed text-[color:var(--cream)]/95">
-                    “{t.q}”
-                  </p>
-                  <div className="mt-6 pt-4 border-t border-white/10">
-                    <p className="font-semibold text-[color:var(--cream)] text-sm">{t.n}</p>
-                    <p className="text-xs text-[color:var(--cream)]/60">{t.r}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="mt-12 text-center">
-              <a
-                href={SUCURSAL_MONSERRAT.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-[color:var(--gold)] hover:underline"
-              >
-                Ver todas las reseñas en Google Maps <ExternalLink className="h-3.5 w-3.5" />
-              </a>
-            </div>
-          </div>
-        </section>
-
         {/* PREGUNTAS FRECUENTES (SEO & EXPERIENCIA) */}
         <section
           id="faq"
@@ -2393,21 +2438,29 @@ function Index() {
               Escribinos para asegurar tu mesa en Monserrat o San Telmo. Te esperamos con la copa
               servida.
             </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
+            <div className="mt-10 flex flex-wrap justify-center gap-3.5">
               <button
                 type="button"
                 onClick={() => openReservaWith()}
-                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-10 py-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] shadow-2xl hover:scale-105 transition-all cursor-pointer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-8 py-4 text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] shadow-2xl hover:scale-105 transition-all cursor-pointer"
               >
                 <WhatsAppIcon className="h-5 w-5" /> Reservar Mesa
               </button>
               <a
-                href={PEDIDOSYA_URL}
+                href={PEDIDOSYA_MONSERRAT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-tactile inline-flex items-center gap-2 rounded-full border border-red-500 bg-red-600/20 px-8 py-4 text-sm font-semibold uppercase tracking-wider text-red-300 hover:bg-red-600/30 transition-all cursor-pointer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full border border-red-500 bg-red-600/20 px-6 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-red-300 hover:bg-red-600/30 transition-all cursor-pointer"
               >
-                <ShoppingBag className="h-4 w-4" /> PedidosYa
+                <ShoppingBag className="h-4 w-4" /> PedidosYa Monserrat
+              </a>
+              <a
+                href={PEDIDOSYA_SANTELMO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-tactile inline-flex items-center gap-2 rounded-full border border-red-500 bg-red-600/20 px-6 py-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-red-300 hover:bg-red-600/30 transition-all cursor-pointer"
+              >
+                <ShoppingBag className="h-4 w-4" /> PedidosYa San Telmo
               </a>
             </div>
           </div>
@@ -2442,14 +2495,24 @@ function Index() {
               <br />
               Dom cerrado
             </p>
-            <a
-              href={SUCURSAL_MONSERRAT.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-block text-[color:var(--gold)] hover:underline"
-            >
-              Ver en Maps ↗
-            </a>
+            <div className="mt-2 space-y-1">
+              <a
+                href={SUCURSAL_MONSERRAT.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-[color:var(--gold)] hover:underline"
+              >
+                Ver en Maps ↗
+              </a>
+              <a
+                href={PEDIDOSYA_MONSERRAT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-red-400 hover:underline"
+              >
+                PedidosYa Monserrat ↗
+              </a>
+            </div>
           </div>
 
           <div>
@@ -2466,14 +2529,24 @@ function Index() {
               <br />
               Dom y Lun cerrado
             </p>
-            <a
-              href={SUCURSAL_SANTELMO.mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-block text-[color:var(--gold)] hover:underline"
-            >
-              Ver en Maps ↗
-            </a>
+            <div className="mt-2 space-y-1">
+              <a
+                href={SUCURSAL_SANTELMO.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-[color:var(--gold)] hover:underline"
+              >
+                Ver en Maps ↗
+              </a>
+              <a
+                href={PEDIDOSYA_SANTELMO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-red-400 hover:underline"
+              >
+                PedidosYa San Telmo ↗
+              </a>
+            </div>
           </div>
 
           <div>
@@ -2520,14 +2593,25 @@ function Index() {
                 </a>
               </li>
               <li>
-                <a
-                  href={PEDIDOSYA_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[color:var(--gold)] transition-colors"
-                >
-                  Delivery: PedidosYa
-                </a>
+                <div className="space-y-1 pt-1">
+                  <span className="text-[10px] uppercase tracking-wider text-[color:var(--gold)] font-semibold block">Delivery</span>
+                  <a
+                    href={PEDIDOSYA_MONSERRAT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:text-[color:var(--gold)] transition-colors text-red-400"
+                  >
+                    PedidosYa Av. de Mayo
+                  </a>
+                  <a
+                    href={PEDIDOSYA_SANTELMO_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block hover:text-[color:var(--gold)] transition-colors text-red-400"
+                  >
+                    PedidosYa San Telmo
+                  </a>
+                </div>
               </li>
               <li>
                 <button
