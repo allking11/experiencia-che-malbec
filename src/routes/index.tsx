@@ -33,7 +33,14 @@ import {
   Award,
   Compass,
   BookOpen,
+  HelpCircle,
 } from "lucide-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import {
   Sheet,
   SheetContent,
@@ -43,12 +50,13 @@ import {
 } from "@/components/ui/sheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const SITE_URL = "https://che-malbec.vercel.app";
+const SITE_URL = "https://chemalbec.com";
 
 export const Route = createFileRoute("/")({
   head: () => {
     const ogImageUrl = `${SITE_URL}${fachada}`;
     return {
+      links: [{ rel: "canonical", href: `${SITE_URL}/` }],
       meta: [
         {
           title: "Che Malbec — Boutique Wine Bar & Degustación de Vinos en Buenos Aires",
@@ -57,6 +65,11 @@ export const Route = createFileRoute("/")({
           name: "description",
           content:
             "Disfrutá de catas de vino, picadas caseras y degustaciones guiadas en nuestras dos sedes: Monserrat (Palacio Vera) y San Telmo. Delivery por PedidosYa y franquicias disponibles.",
+        },
+        {
+          name: "keywords",
+          content:
+            "che malbec, wine bar buenos aires, degustacion de vinos buenos aires, cata de vinos palacio vera, wine bar san telmo, vinos boutique buenos aires, maridaje buenos aires, bodegas boutique argentina, picadas buenos aires, eventos privados vino",
         },
         {
           property: "og:title",
@@ -68,10 +81,19 @@ export const Route = createFileRoute("/")({
             "Degustaciones de vinos boutique, 4 pasos guiados, tablas de quesos y empanadas artesanales en Buenos Aires.",
         },
         { property: "og:image", content: ogImageUrl },
+        {
+          property: "og:image:alt",
+          content: "Fachada y Cava Boutique de Che Malbec en Buenos Aires",
+        },
+        { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:image", content: ogImageUrl },
+        {
+          name: "twitter:image:alt",
+          content: "Che Malbec Mercado & Wine Bar Buenos Aires",
+        },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: SITE_URL },
-        { property: "og:site_name", content: "Che Malbec" },
+        { property: "og:url", content: `${SITE_URL}/` },
+        { property: "og:site_name", content: "Che Malbec Mercado & Wine Bar" },
         { property: "og:locale", content: "es_AR" },
       ],
     };
@@ -168,6 +190,44 @@ const EVENTOS_AGOSTO = [
   },
 ];
 
+const FAQ_ITEMS = [
+  {
+    pregunta: "¿Cómo reservar una degustación de vinos o mesa en Che Malbec?",
+    respuesta:
+      "Podés reservar tu degustación guiada por sommelier o tu mesa para tapeo directamente por WhatsApp al +54 9 11 2848-1233 o a través del formulario de reserva de esta web. Recomendamos reservar con anticipación debido a la exclusividad de nuestras salas.",
+  },
+  {
+    pregunta: "¿Dónde quedan las sucursales de Che Malbec y qué horarios manejan?",
+    respuesta:
+      "Tenemos dos sedes en la Ciudad de Buenos Aires: Sede Monserrat en el histórico Palacio Vera (Avenida de Mayo 777), abierta lunes de 11:00 a 19:00 y martes a sábados de 11:00 a 23:00; y Sede San Telmo (Estados Unidos 407), abierta de martes a sábados de 18:00 a 00:00.",
+  },
+  {
+    pregunta: "¿Qué incluye la Degustación de Vinos Guiada en 4 Pasos?",
+    respuesta:
+      "Es una experiencia sensorial completa de 4 pasos guiada por un sommelier profesional. Se degustan copas de etiquetas boutique seleccionadas (blanco/rosado, tintos jóvenes y Malbecs de alta gama) acompañadas de maridaje con tablas de quesos, fiambres artesanales o empanadas caseras.",
+  },
+  {
+    pregunta: "¿Se pueden comprar vinos boutique para llevar?",
+    respuesta:
+      "Sí, Che Malbec funciona como Mercado & Wine Bar. Podés adquirir botellas exclusivas de pequeños productores y bodegas boutique de distintas regiones vitivinícolas argentinas a precio directo de vinoteca.",
+  },
+  {
+    pregunta: "¿Ofrecen catering y wine bar para eventos privados?",
+    respuesta:
+      "Sí, con nuestro servicio 'Llevá Che Malbec a tu fiesta' organizamos barras móviles de vino boutique, servicio de sommelier en vivo, catas privadas y picadas gourmet para casamientos, cumpleaños y eventos corporativos.",
+  },
+  {
+    pregunta: "¿Hacen delivery de vinos y comida?",
+    respuesta:
+      "Sí, realizamos envíos a domicilio tanto de vinos seleccionados como de empanadas, pizzas y tablas de quesos a través de PedidosYa o haciendo tu pedido directo por nuestro WhatsApp.",
+  },
+  {
+    pregunta: "¿Cómo abrir una franquicia de Che Malbec?",
+    respuesta:
+      "Disponemos de modelos de franquicia formato Wine Bar Boutique y formato Cava / Mercado Express para CABA, Gran Buenos Aires e interior del país. Podés consultar y solicitar el dossier comercial desde el módulo de franquicias de nuestra web.",
+  },
+];
+
 function useReveal() {
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>(".reveal");
@@ -220,99 +280,195 @@ function Index() {
 
   const schemaJson = {
     "@context": "https://schema.org",
-    "@type": ["Winery", "BarOrPub", "Restaurant"],
-    name: "Che Malbec - Mercado & Wine Bar",
-    image: `${SITE_URL}${fachada}`,
-    "@id": `${SITE_URL}/#bar`,
-    url: SITE_URL,
-    telephone: "+5491128481233",
-    priceRange: "$$",
-    servesCuisine: [
-      "Vinos de Bodegas Boutique",
-      "Degustaciones Guiadas",
-      "Picadas de Autor",
-      "Empanadas Artesanales",
-      "Sándwiches Gourmet",
-      "Pizzas Caseras",
-    ],
-    acceptsReservations: "True",
-    hasMenu: `${SITE_URL}/#carta`,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.8",
-      bestRating: "5",
-      ratingCount: "180",
-    },
-    department: [
+    "@graph": [
       {
-        "@type": ["Winery", "BarOrPub"],
-        name: "Che Malbec Monserrat (Palacio Vera)",
-        image: `${SITE_URL}${fachada}`,
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: `${SITE_URL}/`,
+        name: "Che Malbec",
+        description: "Boutique Wine Bar y Degustación de Vinos en Buenos Aires",
+        inLanguage: "es-AR",
+      },
+      {
+        "@type": ["Winery", "BarOrPub", "Restaurant"],
+        "@id": `${SITE_URL}/#organization`,
+        name: "Che Malbec Mercado & Wine Bar",
+        alternateName: "Che Malbec",
+        url: `${SITE_URL}/`,
+        logo: `${SITE_URL}/icon-512.png`,
+        image: [
+          `${SITE_URL}${fachada}`,
+          `${SITE_URL}${copa}`,
+          `${SITE_URL}${copaBotella}`,
+          `${SITE_URL}${burrata}`,
+          `${SITE_URL}${clientes}`,
+        ],
         telephone: "+5491128481233",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Avenida de Mayo 777 (Palacio Vera)",
-          addressLocality: "Buenos Aires",
-          addressRegion: "CABA",
-          postalCode: "C1084",
-          addressCountry: "AR",
+        priceRange: "$$",
+        currenciesAccepted: "ARS, USD, EUR, BRL",
+        paymentAccepted:
+          "Efectivo, Tarjeta de Crédito, Tarjeta de Débito, Mercado Pago, Transferencia",
+        servesCuisine: [
+          "Vinos de Bodegas Boutique",
+          "Degustaciones Guiadas por Sommeliers",
+          "Picadas de Autor y Tablas de Quesos",
+          "Empanadas Artesanales",
+          "Sándwiches Gourmet",
+          "Pizzas Caseras",
+        ],
+        acceptsReservations: "True",
+        hasMenu: `${SITE_URL}/#carta`,
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "4.8",
+          bestRating: "5",
+          ratingCount: "180",
         },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: -34.6087,
-          longitude: -58.3776,
-        },
-        openingHoursSpecification: [
+        department: [
           {
-            "@type": "OpeningHoursSpecification",
-            dayOfWeek: "Monday",
-            opens: "11:00",
-            closes: "19:00",
+            "@type": ["Winery", "BarOrPub", "Restaurant"],
+            "@id": `${SITE_URL}/#sede-monserrat`,
+            name: "Che Malbec Monserrat (Palacio Vera)",
+            image: `${SITE_URL}${fachada}`,
+            telephone: "+5491128481233",
+            url: `${SITE_URL}/#sucursales`,
+            hasMap: SUCURSAL_MONSERRAT.mapsUrl,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Avenida de Mayo 777 (Palacio Vera)",
+              addressLocality: "Buenos Aires",
+              addressRegion: "CABA",
+              postalCode: "C1084",
+              addressCountry: "AR",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: -34.6087,
+              longitude: -58.3776,
+            },
+            openingHoursSpecification: [
+              {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Monday"],
+                opens: "11:00",
+                closes: "19:00",
+              },
+              {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                opens: "11:00",
+                closes: "23:00",
+              },
+            ],
           },
           {
-            "@type": "OpeningHoursSpecification",
-            dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            opens: "11:00",
-            closes: "23:00",
+            "@type": ["Winery", "BarOrPub", "Restaurant"],
+            "@id": `${SITE_URL}/#sede-santelmo`,
+            name: "Che Malbec San Telmo",
+            image: `${SITE_URL}${fachada}`,
+            telephone: "+5491128481233",
+            url: `${SITE_URL}/#sucursales`,
+            hasMap: SUCURSAL_SANTELMO.mapsUrl,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "Estados Unidos 407 (San Telmo)",
+              addressLocality: "Buenos Aires",
+              addressRegion: "CABA",
+              postalCode: "C1101",
+              addressCountry: "AR",
+            },
+            geo: {
+              "@type": "GeoCoordinates",
+              latitude: -34.6186,
+              longitude: -58.3713,
+            },
+            openingHoursSpecification: [
+              {
+                "@type": "OpeningHoursSpecification",
+                dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                opens: "18:00",
+                closes: "00:00",
+              },
+            ],
+          },
+        ],
+        sameAs: [
+          "https://www.instagram.com/che.malbec",
+          "https://www.instagram.com/che.malbec.santelmo",
+          SUCURSAL_MONSERRAT.mapsUrl,
+          SUCURSAL_SANTELMO.mapsUrl,
+          PEDIDOSYA_URL,
+        ],
+        description:
+          "Wine Bar Boutique y degustación de vinos guiada en Buenos Aires con dos sedes: Monserrat (Palacio Vera) y San Telmo. Catas de vinos boutique por sommeliers, picadas caseras y delivery por PedidosYa.",
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/#faq`,
+        mainEntity: FAQ_ITEMS.map((faq) => ({
+          "@type": "Question",
+          name: faq.pregunta,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: faq.respuesta,
+          },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${SITE_URL}/#breadcrumbs`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Inicio",
+            item: `${SITE_URL}/#inicio`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Experiencia",
+            item: `${SITE_URL}/#experiencia`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: "Sucursales",
+            item: `${SITE_URL}/#sucursales`,
+          },
+          {
+            "@type": "ListItem",
+            position: 4,
+            name: "Degustaciones",
+            item: `${SITE_URL}/#degustaciones`,
+          },
+          {
+            "@type": "ListItem",
+            position: 5,
+            name: "Carta y Precios",
+            item: `${SITE_URL}/#carta`,
+          },
+          {
+            "@type": "ListItem",
+            position: 6,
+            name: "Eventos",
+            item: `${SITE_URL}/#novedades`,
+          },
+          {
+            "@type": "ListItem",
+            position: 7,
+            name: "Franquicias",
+            item: `${SITE_URL}/#franquicias`,
+          },
+          {
+            "@type": "ListItem",
+            position: 8,
+            name: "Preguntas Frecuentes",
+            item: `${SITE_URL}/#faq`,
           },
         ],
       },
-      {
-        "@type": ["Winery", "BarOrPub"],
-        name: "Che Malbec San Telmo",
-        image: `${SITE_URL}${fachada}`,
-        telephone: "+5491128481233",
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: "Estados Unidos 407 (San Telmo)",
-          addressLocality: "Buenos Aires",
-          addressRegion: "CABA",
-          postalCode: "C1101",
-          addressCountry: "AR",
-        },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: -34.6186,
-          longitude: -58.3713,
-        },
-        openingHoursSpecification: [
-          {
-            "@type": "OpeningHoursSpecification",
-            dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            opens: "18:00",
-            closes: "00:00",
-          },
-        ],
-      },
     ],
-    sameAs: [
-      "https://www.instagram.com/che.malbec",
-      "https://www.instagram.com/che.malbec.santelmo",
-      SUCURSAL_MONSERRAT.mapsUrl,
-      SUCURSAL_SANTELMO.mapsUrl,
-    ],
-    description:
-      "Wine Bar Boutique y degustación de vinos guiada en Buenos Aires con dos sedes: Monserrat (Palacio Vera) y San Telmo. Catas de vinos boutique por sommeliers, picadas caseras y delivery por PedidosYa.",
   };
 
   return (
@@ -393,6 +549,11 @@ function Index() {
             <li>
               <a href="#franquicias" className="nav-link-animated hover:text-[color:var(--wine)]">
                 Franquicias
+              </a>
+            </li>
+            <li>
+              <a href="#faq" className="nav-link-animated hover:text-[color:var(--wine)]">
+                Preguntas
               </a>
             </li>
           </ul>
@@ -501,6 +662,13 @@ function Index() {
                     className="py-1 hover:text-[color:var(--wine)]"
                   >
                     Opiniones Google (4.8★)
+                  </a>
+                  <a
+                    href="#faq"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="py-1 hover:text-[color:var(--wine)] flex items-center gap-2"
+                  >
+                    <HelpCircle className="h-4 w-4 text-[color:var(--gold)]" /> Preguntas Frecuentes
                   </a>
                   <div className="pt-4 border-t border-[color:var(--gold)]/20 space-y-2">
                     <button
@@ -2157,6 +2325,62 @@ function Index() {
           </div>
         </section>
 
+        {/* PREGUNTAS FRECUENTES (SEO & EXPERIENCIA) */}
+        <section
+          id="faq"
+          className="bg-[color:var(--cream)] py-20 sm:py-28 border-t border-[color:var(--gold)]/25"
+        >
+          <div className="mx-auto max-w-4xl px-6">
+            <div className="text-center">
+              <p className="gold-divider reveal reveal-slide-down">Dudas Habituales</p>
+              <h2 className="reveal reveal-slide-up mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold text-[color:var(--wine)]">
+                Preguntas Frecuentes
+              </h2>
+              <p className="mt-4 text-sm sm:text-base text-[color:var(--ink)]/80 max-w-2xl mx-auto leading-relaxed">
+                Todo lo que necesitás saber sobre nuestras degustaciones guiadas, reservas, cavas
+                históricas en Monserrat y San Telmo, catering y delivery.
+              </p>
+            </div>
+
+            <div className="mt-12">
+              <Accordion type="single" collapsible className="w-full space-y-4">
+                {FAQ_ITEMS.map((item, idx) => (
+                  <AccordionItem
+                    key={idx}
+                    value={`faq-${idx}`}
+                    className="reveal reveal-slide-up border border-[color:var(--gold)]/30 rounded-2xl bg-white/75 px-6 py-1 backdrop-blur-sm shadow-sm transition-all hover:border-[color:var(--gold)]/70 hover:shadow-md"
+                    style={{ transitionDelay: `${idx * 60}ms` }}
+                  >
+                    <AccordionTrigger className="text-left font-serif text-base sm:text-lg font-semibold text-[color:var(--wine)] py-4 hover:no-underline cursor-pointer">
+                      <span className="flex items-center gap-3">
+                        <HelpCircle className="h-5 w-5 shrink-0 text-[color:var(--gold)]" />
+                        {item.pregunta}
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm sm:text-base text-[color:var(--ink)]/85 leading-relaxed pt-1 pb-4 pl-8">
+                      {item.respuesta}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+
+            <div className="mt-12 text-center">
+              <p className="text-xs sm:text-sm text-[color:var(--ink)]/70">
+                ¿Tenés otra consulta personalizada?{" "}
+                <a
+                  href={WA_GENERAL_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-[color:var(--wine)] underline hover:text-[color:var(--gold)] transition-colors inline-flex items-center gap-1"
+                >
+                  Escribinos por WhatsApp ↗
+                </a>
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* CTA FINAL */}
         <section className="bg-ink-atmosphere text-[color:var(--cream)] py-20 sm:py-28 text-center border-t border-[color:var(--gold)]/20">
           <div className="mx-auto max-w-3xl px-6">
@@ -2285,6 +2509,14 @@ function Index() {
                   className="hover:text-[color:var(--gold)] transition-colors"
                 >
                   IG San Telmo: @che.malbec.santelmo
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#faq"
+                  className="hover:text-[color:var(--gold)] transition-colors"
+                >
+                  Preguntas Frecuentes
                 </a>
               </li>
               <li>

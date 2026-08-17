@@ -1,8 +1,9 @@
 {
   "name": "Che Malbec Mercado & Wine Bar",
   "short_name": "Che Malbec",
-  "description": "Boutique wine bar in Buenos Aires. Vinos argentinos, degustaciones guiadas y picadas.",
+  "description": "Boutique wine bar y degustaciones de vino en Buenos Aires (Monserrat y San Telmo). Vinos argentinos, catas guiadas y picadas.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#fee9cc",
   "theme_color": "#581c25",

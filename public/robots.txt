@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://che-malbec.vercel.app/sitemap.xml
+Sitemap: https://chemalbec.com/sitemap.xml

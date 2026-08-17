@@ -72,10 +72,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Descubrí Che Malbec Wine Bar Boutique en Buenos Aires con dos sedes: Monserrat (Palacio Vera) y San Telmo. Degustaciones guiadas por sommeliers, catas de vino y picadas caseras.",
+          "Descubrí Che Malbec Wine Bar Boutique en Buenos Aires (Palacio Vera en Monserrat y San Telmo). Degustaciones guiadas por sommeliers, catas de vino boutique y picadas caseras.",
+      },
+      {
+        name: "keywords",
+        content:
+          "che malbec, wine bar buenos aires, degustacion de vinos buenos aires, cata de vinos palacio vera, wine bar san telmo, vinos boutique buenos aires, maridaje buenos aires, bodegas boutique argentina, picadas buenos aires, eventos privados vino",
       },
       { name: "author", content: "Che Malbec" },
-      { name: "robots", content: "index, follow" },
+      { name: "publisher", content: "Che Malbec Mercado & Wine Bar" },
+      {
+        name: "robots",
+        content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      },
+      { name: "geo.region", content: "AR-C" },
+      { name: "geo.placename", content: "Buenos Aires" },
+      { name: "geo.position", content: "-34.6087;-58.3776" },
+      { name: "ICBM", content: "-34.6087, -58.3776" },
+      { name: "theme-color", content: "#581c25" },
       { property: "og:title", content: "Che Malbec | Boutique Wine Bar & Degustación de Vinos" },
       {
         property: "og:description",
@@ -83,10 +97,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Disfrutá una degustación de vinos guiada por sommeliers en nuestras sedes de Monserrat y San Telmo, Buenos Aires. Vinos boutique y picadas caseras.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://chemalbec.com/" },
+      { property: "og:site_name", content: "Che Malbec Mercado & Wine Bar" },
+      { property: "og:locale", content: "es_AR" },
       { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:title",
+        content: "Che Malbec | Boutique Wine Bar & Degustación de Vinos en Buenos Aires",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Degustaciones de vinos guiadas por sommeliers, etiquetas de bodegas boutique y picadas caseras en Buenos Aires.",
+      },
     ],
     links: [
-      { rel: "canonical", href: "https://che-malbec.vercel.app/" },
+      { rel: "canonical", href: "https://chemalbec.com/" },
+      { rel: "alternate", hrefLang: "es", href: "https://chemalbec.com/" },
+      { rel: "alternate", hrefLang: "x-default", href: "https://chemalbec.com/" },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "icon", type: "image/png", href: "/favicon-32x32.png", sizes: "32x32" },
