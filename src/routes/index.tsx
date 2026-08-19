@@ -1536,40 +1536,40 @@ function Index() {
 
             <Tabs defaultValue="picadas" className="mt-12">
               <div className="overflow-x-auto pb-2">
-                <TabsList className="mx-auto flex w-max justify-center bg-white/5 border border-[color:var(--gold)]/35 p-1 rounded-full backdrop-blur-md">
+                <TabsList className="mx-auto flex w-max h-auto justify-center bg-black/40 border border-[color:var(--gold)]/40 p-1.5 rounded-full backdrop-blur-md">
                   <TabsTrigger
                     value="picadas"
-                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                    className="rounded-full text-[color:var(--cream)]/80 hover:text-[color:var(--cream)] hover:bg-white/10 data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] data-[state=active]:font-bold text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
                   >
                     Picadas de Autor
                   </TabsTrigger>
                   <TabsTrigger
                     value="empanadas"
-                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                    className="rounded-full text-[color:var(--cream)]/80 hover:text-[color:var(--cream)] hover:bg-white/10 data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] data-[state=active]:font-bold text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
                   >
                     Empanadas ($4.400)
                   </TabsTrigger>
                   <TabsTrigger
                     value="sandwiches"
-                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                    className="rounded-full text-[color:var(--cream)]/80 hover:text-[color:var(--cream)] hover:bg-white/10 data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] data-[state=active]:font-bold text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
                   >
                     Sándwiches & Tapeo
                   </TabsTrigger>
                   <TabsTrigger
                     value="pizzas"
-                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                    className="rounded-full text-[color:var(--cream)]/80 hover:text-[color:var(--cream)] hover:bg-white/10 data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] data-[state=active]:font-bold text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
                   >
                     Pizzas & Postres
                   </TabsTrigger>
                   <TabsTrigger
                     value="vinos"
-                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                    className="rounded-full text-[color:var(--cream)]/80 hover:text-[color:var(--cream)] hover:bg-white/10 data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] data-[state=active]:font-bold text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
                   >
                     Vinos por Copa
                   </TabsTrigger>
                   <TabsTrigger
                     value="tragos"
-                    className="rounded-full data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
+                    className="rounded-full text-[color:var(--cream)]/80 hover:text-[color:var(--cream)] hover:bg-white/10 data-[state=active]:bg-[color:var(--gold)] data-[state=active]:text-[color:var(--ink)] data-[state=active]:font-bold text-xs font-semibold py-2 px-4.5 cursor-pointer transition-all"
                   >
                     Tragos & Cervezas
                   </TabsTrigger>
