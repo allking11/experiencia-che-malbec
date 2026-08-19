@@ -114,6 +114,9 @@ const WA_FIESTAS_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
 const WA_FRANQUICIAS_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
   "📌 *[NUEVA CONSULTA DE FRANQUICIAS]*\nHola Che Malbec 👋 Me gustaría recibir más información y el brochure de franquicias.",
 )}`;
+const WA_FERIAS_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+  "Hola Che Malbec 👋 Quiero recibir aviso de las próximas ferias de vinos y eventos especiales.",
+)}`;
 
 const PEDIDOSYA_MONSERRAT_URL =
   "https://www.pedidosya.com.ar/restaurantes/buenos-aires/che-malbec-8df25b0e-e5ed-4c30-b5d4-0e6fb06b8d84-menu?origin=shop_list";
@@ -2248,7 +2251,7 @@ function Index() {
                 </p>
                 <div className="pt-2">
                   <a
-                    href={WA_GENERAL_URL}
+                    href={WA_FERIAS_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn-tactile inline-flex items-center gap-2 rounded-full bg-[color:var(--gold)] px-6 py-3 text-xs sm:text-sm font-semibold uppercase tracking-wider text-[color:var(--ink)] shadow-md hover:scale-105 transition-all"

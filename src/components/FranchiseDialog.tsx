@@ -151,6 +151,11 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
     const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
     setWhatsappUrl(url);
     setIsSubmitted(true);
+    try {
+      window.open(url, "_blank", "noopener,noreferrer");
+    } catch {
+      // Fallback is handled by the prominent button
+    }
     toast.success("¡Datos completados! Hacé clic en enviar para abrir WhatsApp.");
   };
 
@@ -558,14 +563,24 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
                   <WhatsAppIcon className="h-5 w-5" /> Enviar por WhatsApp
                 </a>
               )}
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={() => setIsSubmitted(false)}
-                className="text-xs text-[color:var(--wine)] hover:underline cursor-pointer min-h-[36px]"
-              >
-                Modificar datos
-              </Button>
+              <div className="flex items-center justify-between pt-1">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setIsSubmitted(false)}
+                  className="text-xs text-[color:var(--wine)] hover:underline cursor-pointer min-h-[36px] px-2"
+                >
+                  Modificar datos
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => handleOpenChange(false)}
+                  className="text-xs text-[color:var(--ink)]/70 hover:text-[color:var(--ink)] cursor-pointer min-h-[36px] px-2"
+                >
+                  Cerrar
+                </Button>
+              </div>
             </div>
           </div>
         )}
