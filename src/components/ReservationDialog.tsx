@@ -258,13 +258,23 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
     });
     setIsSubmitted(true);
 
-    // Direct user action: attempt immediate open synchronously while user gesture is active
+    // Redirección directa e instantánea a WhatsApp (evita bloqueos de pop-up en móviles)
     try {
-      window.open(url, "_blank", "noopener,noreferrer");
+      const isMobile =
+        typeof navigator !== "undefined" &&
+        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = url;
+      } else {
+        const win = window.open(url, "_blank", "noopener,noreferrer");
+        if (!win || win.closed || typeof win.closed === "undefined") {
+          window.location.href = url;
+        }
+      }
     } catch {
-      // Fallback is handled by the prominent button on the confirmation screen
+      window.location.href = url;
     }
-    toast.success("¡Reserva preparada! Hacé clic en enviar para abrir WhatsApp 🍷");
+    toast.success("Abriendo WhatsApp para enviar tu reserva 🍷");
   };
 
   return (
@@ -281,26 +291,31 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
                   style={{ animationDuration: "1.6s" }}
                 />
                 <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-[#25D366] text-white shadow-md border-2 border-[color:var(--cream)]">
-                  <CheckCircle2 className="h-3.5 w-3.5" />
+                  <WhatsAppIcon className="h-3.5 w-3.5" />
                 </div>
               </div>
             </div>
 
             {/* Header & Subtitle */}
             <p className="gold-divider mb-1 text-xs" style={{ color: "var(--gold)" }}>
-              Reserva Preparada
+              Paso Final Obligatorio
             </p>
             <DialogTitle className="font-serif text-2xl font-bold text-[color:var(--wine)] sm:text-3xl">
-              ¡Tu reserva está lista! 🍷
+              ¡Último paso para tu mesa! 🍷
             </DialogTitle>
-            <DialogDescription className="mt-1 text-xs sm:text-sm text-[color:var(--ink)]/80 max-w-xs leading-relaxed">
-              Hacé clic en el botón verde abajo para abrir WhatsApp con el mensaje estructurado de tu reserva.
+            <DialogDescription className="mt-1 text-xs sm:text-sm text-[color:var(--ink)]/85 max-w-xs leading-relaxed font-medium">
+              Tu mesa <strong>no quedará reservada</strong> hasta que envíes este mensaje al restaurante por WhatsApp.
             </DialogDescription>
+
+            {/* Aviso visual de alerta */}
+            <div className="mt-3 w-full rounded-lg bg-amber-500/10 border border-amber-500/30 p-2.5 text-xs text-amber-950 dark:text-amber-200 text-center">
+              ⚠️ <strong>Mesa pendiente:</strong> Tocá el botón verde abajo para enviar el mensaje y confirmar con el restaurante.
+            </div>
 
             {/* Reservation Summary Box */}
             <div className="mt-3.5 w-full rounded-lg border border-[color:var(--gold)]/30 bg-[color:var(--card)] p-3.5 sm:p-4 text-left shadow-xs space-y-2">
               <p className="text-[11px] uppercase tracking-wider text-[color:var(--gold)] font-semibold flex items-center gap-1.5 border-b border-[color:var(--gold)]/20 pb-1.5">
-                <Sparkles className="h-3.5 w-3.5" /> Detalle de tu mesa
+                <Sparkles className="h-3.5 w-3.5" /> Detalle de tu pedido
               </p>
               <div className="space-y-1.5 text-xs text-[color:var(--ink)]">
                 <div className="pb-1 border-b border-[color:var(--gold)]/10">
@@ -365,9 +380,9 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
                 onClick={() => {
                   toast.success("Abriendo WhatsApp de Che Malbec 🍷");
                 }}
-                className="btn-tactile inline-flex w-full min-h-[48px] items-center justify-center gap-2 rounded-full bg-[#25D366] py-3.5 px-4 text-xs sm:text-sm font-semibold uppercase tracking-wider text-white shadow-xl hover:bg-[#20bd5a] transition-all cursor-pointer"
+                className="btn-tactile inline-flex w-full min-h-[50px] items-center justify-center gap-2 rounded-full bg-[#25D366] py-3.5 px-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-white shadow-xl hover:bg-[#20bd5a] transition-all cursor-pointer animate-pulse"
               >
-                <WhatsAppIcon className="h-5 w-5" /> Enviar por WhatsApp
+                <WhatsAppIcon className="h-5 w-5" /> Enviar Reserva por WhatsApp Ahora
               </a>
 
               <div className="flex items-center justify-between pt-1">
@@ -399,8 +414,8 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
               <DialogTitle className="font-serif text-2xl sm:text-3xl text-[color:var(--wine)]">
                 Pedí tu reserva
               </DialogTitle>
-              <DialogDescription className="text-xs sm:text-sm text-[color:var(--ink)]/70">
-                Completá los datos y confirmamos por WhatsApp. Disponibilidad hasta 7 días.
+              <DialogDescription className="text-xs sm:text-sm text-[color:var(--ink)]/75">
+                Completá los datos y te redirigimos directo a WhatsApp para que el restaurante te reserve la mesa.
               </DialogDescription>
             </DialogHeader>
 
@@ -599,9 +614,9 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
               <Button
                 id="reserva-submit-btn"
                 type="submit"
-                className="btn-tactile w-full min-h-[48px] rounded-full bg-[color:var(--wine)] py-3.5 text-xs sm:text-sm font-semibold uppercase tracking-[0.14em] text-[color:var(--cream)] cursor-pointer shadow-lg hover:bg-[color:var(--wine)]/90"
+                className="btn-tactile w-full min-h-[48px] rounded-full bg-[#25D366] hover:bg-[#20bd5a] py-3.5 text-xs sm:text-sm font-bold uppercase tracking-wider text-white cursor-pointer shadow-lg transition-all flex items-center justify-center gap-2"
               >
-                Confirmar por WhatsApp
+                <WhatsAppIcon className="h-4 w-4" /> Continuar a WhatsApp para Confirmar
               </Button>
             </form>
           </>
