@@ -1264,7 +1264,7 @@ function Index() {
                       Brusqueta Serrana
                     </h4>
                     <p className="text-[11px] text-[color:var(--ink)]/70 mt-1">
-                      Jamón crudo, tomate deshidratado y rúcula
+                      Jamón crudo, tomate deshidratado, rúcula y salsa serrana
                     </p>
                   </div>
                   <div className="rounded-xl border border-[color:var(--gold)]/35 bg-[color:var(--cream)]/45 p-4 text-center shadow-xs">
@@ -1426,7 +1426,7 @@ function Index() {
                       </div>
                       <ul className="mt-3 space-y-1.5 text-xs text-[color:var(--ink)]/80">
                         <li>• Saurus Pinot Noir</li>
-                        <li>• Domaine Bousquet Cabernet Franc</li>
+                        <li>• Domaine Bousquet Reserva Cabernet Franc</li>
                         <li>• Crux Tempranillo</li>
                         <li>• Chakana Estate Red Blend</li>
                       </ul>
@@ -1581,72 +1581,154 @@ function Index() {
 
               {/* 1. PICADAS */}
               <TabsContent value="picadas" className="mt-8 space-y-6">
-                <div className="grid gap-3 sm:grid-cols-3 text-center bg-white/5 p-4 rounded-xl border border-[color:var(--gold)]/30 backdrop-blur-sm">
-                  <div>
-                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">
-                      Chica (2/3 personas)
-                    </span>
-                    <p className="font-serif text-2xl font-bold mt-0.5">$35.000</p>
-                  </div>
-                  <div>
-                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">
-                      Mediana (4/5 personas)
-                    </span>
-                    <p className="font-serif text-2xl font-bold mt-0.5">$48.000</p>
-                  </div>
-                  <div>
-                    <span className="text-xs text-[color:var(--gold)] uppercase font-semibold tracking-wider">
-                      Grande (6/7 personas)
-                    </span>
-                    <p className="font-serif text-2xl font-bold mt-0.5">$64.000</p>
-                  </div>
+                <div className="text-center bg-white/5 p-4 rounded-xl border border-[color:var(--gold)]/30 backdrop-blur-sm">
+                  <p className="text-xs sm:text-sm text-[color:var(--cream)]/90">
+                    <span className="font-semibold text-[color:var(--gold)]">Guía de Porciones:</span> Chica (2 a 3 personas) · Mediana (4 a 5 personas) · Grande (6 a 7 personas)
+                  </p>
+                  <p className="text-[11px] text-[color:var(--cream)]/65 mt-1">
+                    Todas nuestras picadas de autor se acompañan con pan de campo artesanal y brusquetas recién horneadas.
+                  </p>
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  <div className="card-boutique-dark p-5">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
-                      PICARONA
-                    </h4>
-                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Jamón cocido, salame criollo, mortadela, queso fynbo, parmesano, queso azul,
-                      olivas verdes, pepinos, leber y brusquetas.
-                    </p>
+                  <div className="card-boutique-dark p-5 flex flex-col justify-between">
+                    <div>
+                      <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                        PICARONA
+                      </h4>
+                      <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                        Jamón cocido, salame criollo, mortadela, queso fynbo, parmesano, queso azul,
+                        olivas verdes, pepinos, leber y brusquetas.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1.5 pt-4 mt-4 border-t border-white/10 text-center">
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Chica</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$39.500</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Mediana</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$53.800</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Grande</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$71.800</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-boutique-dark p-5">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
-                      MALEVO
-                    </h4>
-                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Jamón crudo, salame criollo, salchichón, fontina, sardo, brie, olivas negras,
-                      ajíes en vinagre, berenjenas en escabeche y brusquetas.
-                    </p>
+
+                  <div className="card-boutique-dark p-5 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                          MALEVO
+                        </h4>
+                        <span className="text-[10px] uppercase font-bold text-[color:var(--gold)]/80 bg-[color:var(--gold)]/10 px-2 py-0.5 rounded-full">
+                          Clásico Porteño
+                        </span>
+                      </div>
+                      <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                        Jamón crudo, salame criollo, salchichón, fontina, sardo, brie, olivas negras,
+                        ajíes en vinagre, berenjenas en escabeche y brusquetas.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1.5 pt-4 mt-4 border-t border-white/10 text-center">
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Chica</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$40.500</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Mediana</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$55.200</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Grande</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$73.500</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-boutique-dark p-5">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
-                      AVENIDA
-                    </h4>
-                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Bondiola, longaniza, salchichón, gruyere, provolone, queso azul, olivas
-                      negras, ajíes en vinagre, berenjenas en escabeche y brusqueta.
-                    </p>
+
+                  <div className="card-boutique-dark p-5 flex flex-col justify-between">
+                    <div>
+                      <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                        AVENIDA
+                      </h4>
+                      <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                        Bondiola, longaniza, salchichón, gruyere, provolone, queso azul, olivas
+                        negras, ajíes en vinagre, berenjenas en escabeche y brusqueta.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1.5 pt-4 mt-4 border-t border-white/10 text-center">
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Chica</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$39.500</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Mediana</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$53.800</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Grande</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$71.800</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-boutique-dark p-5">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
-                      TOSCANA
-                    </h4>
-                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Lomo horneado, spianatta, mortadela, fynbo, canestrato, gouda saborizado,
-                      olivas verdes, pepinos, leber y brusquetas.
-                    </p>
+
+                  <div className="card-boutique-dark p-5 flex flex-col justify-between">
+                    <div>
+                      <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                        TOSCANA
+                      </h4>
+                      <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                        Lomo horneado, spianatta, mortadela, fynbo, canestrato, gouda saborizado,
+                        olivas verdes, pepinos, leber y brusquetas.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1.5 pt-4 mt-4 border-t border-white/10 text-center">
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Chica</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$38.500</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Mediana</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$52.500</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Grande</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$69.500</span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="card-boutique-dark p-5 sm:col-span-2 lg:col-span-2">
-                    <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
-                      QUESO QUESO
-                    </h4>
-                    <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
-                      Fynbo, parmesano, cheddar, gouda saborizado, gruyere, queso azul, canestrato,
-                      brie, olivas verdes, olivas negras y brusquetas.
-                    </p>
+
+                  <div className="card-boutique-dark p-5 flex flex-col justify-between sm:col-span-2 lg:col-span-2">
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-serif text-lg font-bold text-[color:var(--gold)]">
+                          QUESO QUESO
+                        </h4>
+                        <span className="text-[10px] uppercase font-bold text-[color:var(--gold)]/80 bg-[color:var(--gold)]/10 px-2 py-0.5 rounded-full">
+                          ⭐ Selección de Quesos
+                        </span>
+                      </div>
+                      <p className="mt-2 text-xs text-[color:var(--cream)]/80 leading-relaxed">
+                        Fynbo, parmesano, cheddar, gouda saborizado, gruyere, queso azul, canestrato,
+                        brie, olivas verdes, olivas negras y brusquetas.
+                      </p>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2 pt-4 mt-4 border-t border-white/10 text-center">
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Chica</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$41.300</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Mediana</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$56.700</span>
+                      </div>
+                      <div className="bg-white/5 rounded p-1.5 border border-white/5">
+                        <span className="block text-[10px] text-[color:var(--cream)]/60 uppercase font-medium">Grande</span>
+                        <span className="font-serif font-bold text-xs sm:text-sm text-[color:var(--gold)]">$75.600</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </TabsContent>
@@ -1673,8 +1755,7 @@ function Index() {
                         Osobuco al Malbec (O)
                       </span>
                       <span className="text-[color:var(--cream)]/80">
-                        Osobuco braseado, cebolla, zanahoria, romero, condimentos y Malbec
-                        argentino.
+                        Osobuco braseado, cebolla, zanahoria, romero, condimentos y Malbec argentino.
                       </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
@@ -1690,7 +1771,7 @@ function Index() {
                         Salteña (S)
                       </span>
                       <span className="text-[color:var(--cream)]/80">
-                        Carne cortada a cuchillo, cebolla, ají, verdeo, papa y huevo.
+                        Carne cortada a cuchillo, cebolla, ají, verdeo, condimentos, papa y huevo.
                       </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
@@ -1698,7 +1779,7 @@ function Index() {
                         Tucumana (T)
                       </span>
                       <span className="text-[color:var(--cream)]/80">
-                        Carne cortada a cuchillo (matambre), cebolla, ají, verdeo y huevo.
+                        Carne cortada a cuchillo (matambre), cebolla, ají, verdeo, condimentos y huevo.
                       </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
@@ -1706,23 +1787,31 @@ function Index() {
                         Carne Tradicional (CT)
                       </span>
                       <span className="text-[color:var(--cream)]/80">
-                        Carne molida, cebolla, ají, condimentos y aceitunas verdes.
+                        Carne molida, cebolla, ají, condimentos, aceituna verde y huevo.
                       </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
                       <span className="font-bold text-[color:var(--gold)] block text-sm">
-                        Carne Dulce (CTD)
+                        Carne Tradicional Dulce (CTD)
                       </span>
                       <span className="text-[color:var(--cream)]/80">
-                        Carne molida, cebolla, ají, aceitunas, huevo, pasas de uva y azúcar.
+                        Carne molida, cebolla, ají, condimentos, aceituna verde, huevo y pasas de uva.
                       </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
                       <span className="font-bold text-[color:var(--gold)] block text-sm">
-                        Pollo al Disco (P)
+                        Pollo (P)
                       </span>
                       <span className="text-[color:var(--cream)]/80">
-                        Pollo tierno, cebolla, ají, condimentos y huevo duro.
+                        Pollo tierno, cebolla, ají, condimentos y huevo.
+                      </span>
+                    </div>
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                      <span className="font-bold text-[color:var(--gold)] block text-sm">
+                        Verdura (V)
+                      </span>
+                      <span className="text-[color:var(--cream)]/80">
+                        Espinaca, cebolla, condimentos y queso seleccionado.
                       </span>
                     </div>
                     <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
@@ -1733,12 +1822,12 @@ function Index() {
                         Muzzarella seleccionada, tomate fresco y albahaca aromática.
                       </span>
                     </div>
-                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all">
+                    <div className="p-3.5 rounded-lg bg-white/5 border border-white/5 hover:border-[color:var(--gold)]/30 transition-all sm:col-span-2 lg:col-span-1">
                       <span className="font-bold text-[color:var(--gold)] block text-sm">
-                        Jamón & Queso / Verdura
+                        Jamón y Queso (JYQ)
                       </span>
                       <span className="text-[color:var(--cream)]/80">
-                        Jamón cocido y muzzarella / Espinaca, cebolla y queso sardo.
+                        Jamón cocido de primera calidad y muzzarella fundida.
                       </span>
                     </div>
                   </div>
@@ -1756,13 +1845,35 @@ function Index() {
                       <li className="flex justify-between items-start pt-2">
                         <div>
                           <span className="font-bold text-[color:var(--cream)] block text-sm">
-                            Burrata
+                            Porteño
                           </span>
                           <span className="text-[color:var(--cream)]/70">
-                            Mortadela con pistacho, burrata y pesto
+                            Jamón cocido, queso barra, tomate, lechuga y salsa de aceitunas
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$15.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$10.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Tango
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Salame tipo milán, queso barra, espinaca y berenjena en escabeche
+                          </span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$10.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Latino
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Jamón cocido, tomate, queso cheddar, cebolla colorada, espinaca y mostaneza
+                          </span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$10.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
@@ -1773,18 +1884,29 @@ function Index() {
                             Lomo horneado, queso azul, pera y rúcula
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$12.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$12.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
                           <span className="font-bold text-[color:var(--cream)] block text-sm">
-                            Gringo
+                            Pelusa
                           </span>
                           <span className="text-[color:var(--cream)]/70">
-                            Jamón crudo, queso fynbo, tomate, rúcula y salsa serrana
+                            Mortadela, queso sardo, lechuga y pickles
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$12.000</span>
+                      </li>
+                      <li className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">
+                            Presidente
+                          </span>
+                          <span className="text-[color:var(--cream)]/70">
+                            Lomo horneado, queso cheddar, pepino agridulce y salsa picante
+                          </span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$12.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
@@ -1795,29 +1917,29 @@ function Index() {
                             Bondiola, queso sardo, ajíes en vinagre y mostaneza
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$13.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
                           <span className="font-bold text-[color:var(--cream)] block text-sm">
-                            Presidente / Pelusa
+                            Gringo
                           </span>
                           <span className="text-[color:var(--cream)]/70">
-                            Lomo o Mortadela con quesos especiales y aderezos
+                            Jamón crudo, queso fynbo, tomate, rúcula y salsa serrana
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$12.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$13.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
                           <span className="font-bold text-[color:var(--cream)] block text-sm">
-                            Porteño / Tango / Latino
+                            Burrata
                           </span>
                           <span className="text-[color:var(--cream)]/70">
-                            Clásicos con jamón, salame milán o verduras frescas
+                            Mortadela con pistacho, burrata y pesto genovés
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$10.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$15.000</span>
                       </li>
                     </ul>
                   </div>
@@ -1836,18 +1958,21 @@ function Index() {
                             Jamón crudo, burrata fresca, rúcula, tomates y oliva
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$28.500</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$28.500</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
                           <span className="font-bold text-[color:var(--cream)] block text-sm">
                             Bocconcino (Sin TACC)
                           </span>
-                          <span className="text-[color:var(--cream)]/70">
+                          <span className="text-[color:var(--cream)]/70 block">
                             Bocconcino, cherry, albahaca, olivas negras y oliva
                           </span>
+                          <span className="inline-block mt-1 text-[11px] font-medium text-[color:var(--gold)]/90 bg-[color:var(--gold)]/10 px-2 py-0.5 rounded border border-[color:var(--gold)]/20">
+                            + Adicional jamón crudo: $5.000
+                          </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$17.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$17.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
@@ -1858,7 +1983,7 @@ function Index() {
                             Receta tradicional bien jugosa
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$16.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$16.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
@@ -1869,7 +1994,7 @@ function Index() {
                             Pan de campo con emulsión de tomate y jamón crudo
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$13.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$13.000</span>
                       </li>
                       <li className="flex justify-between items-start pt-2">
                         <div>
@@ -1880,7 +2005,7 @@ function Index() {
                             Porción recién horneada
                           </span>
                         </div>
-                        <span className="font-bold text-[color:var(--gold)] text-sm">$3.000</span>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$3.000</span>
                       </li>
                     </ul>
                   </div>
@@ -1890,33 +2015,77 @@ function Index() {
               {/* 4. PIZZAS & POSTRES */}
               <TabsContent value="pizzas" className="mt-8 space-y-6">
                 <div className="grid gap-6 md:grid-cols-2">
-                  <div className="card-boutique-dark p-6 space-y-3 text-xs">
+                  <div className="card-boutique-dark p-6 space-y-3.5 text-xs">
                     <h3 className="font-serif text-lg font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
                       Pizzas Artesanales
                     </h3>
-                    <div className="flex justify-between pt-1">
-                      <span>Pizza de Burrata (Muzzarella, rúcula, burrata, tomates disecados)</span>
-                      <span className="font-bold text-[color:var(--gold)]">$48.000</span>
-                    </div>
-                    <div className="flex justify-between pt-1">
-                      <span>Pizza de Stracciatella y Mortadela con Pistacho</span>
-                      <span className="font-bold text-[color:var(--gold)]">$48.000</span>
-                    </div>
-                    <div className="flex justify-between pt-1">
-                      <span>Bocconcino (Muzzarella, bocconcino, cherry, albahaca)</span>
-                      <span className="font-bold text-[color:var(--gold)]">$38.000</span>
-                    </div>
-                    <div className="flex justify-between pt-1">
-                      <span>Crudo y Rúcula / 4 Quesos</span>
-                      <span className="font-bold text-[color:var(--gold)]">$35.000</span>
-                    </div>
-                    <div className="flex justify-between pt-1">
-                      <span>Napolitana / Calabresa</span>
-                      <span className="font-bold text-[color:var(--gold)]">$33.000</span>
-                    </div>
-                    <div className="flex justify-between pt-1">
-                      <span>Muzzarella / Anchoas</span>
-                      <span className="font-bold text-[color:var(--gold)]">$30.000</span>
+                    <div className="space-y-3 divide-y divide-white/10">
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Pizza de Burrata</span>
+                          <span className="text-[color:var(--cream)]/70">Muzzarella, rúcula fresca, burrata y tomates disecados</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$48.000</span>
+                      </div>
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Pizza de Stracciatella y Mortadela</span>
+                          <span className="text-[color:var(--cream)]/70">Muzzarella, mortadela con pistacho y stracciatella</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$48.000</span>
+                      </div>
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Bocconcino</span>
+                          <span className="text-[color:var(--cream)]/70 block">Salsa de tomate, muzzarella, bocconcino, cherry, albahaca y aceitunas negras</span>
+                          <span className="inline-block mt-1 text-[10px] font-medium text-[color:var(--gold)]/90 bg-[color:var(--gold)]/10 px-2 py-0.5 rounded border border-[color:var(--gold)]/20">
+                            + Adicional jamón crudo: $5.000
+                          </span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$38.000</span>
+                      </div>
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Crudo y Rúcula</span>
+                          <span className="text-[color:var(--cream)]/70">Salsa de tomate, muzzarella, jamón crudo, rúcula y aceitunas negras</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$35.000</span>
+                      </div>
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">4 Quesos</span>
+                          <span className="text-[color:var(--cream)]/70">Salsa de tomate, muzzarella, queso azul, parmesano, fontina y aceitunas negras</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$35.000</span>
+                      </div>
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Napolitana</span>
+                          <span className="text-[color:var(--cream)]/70">Salsa de tomate, muzzarella, jamón cocido, tomate fresco y aceitunas verdes</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$33.000</span>
+                      </div>
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Calabresa</span>
+                          <span className="text-[color:var(--cream)]/70">Salsa de tomate, muzzarella, longaniza y aceitunas verdes</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$33.000</span>
+                      </div>
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Pizza de Muzzarella</span>
+                          <span className="text-[color:var(--cream)]/70">Salsa de tomate, muzzarella, orégano y aceitunas verdes</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$30.000</span>
+                      </div>
+                      <div className="flex justify-between items-start pt-2">
+                        <div>
+                          <span className="font-bold text-[color:var(--cream)] block text-sm">Anchoas</span>
+                          <span className="text-[color:var(--cream)]/70">Salsa de tomate, muzzarella, anchoas seleccionadas y aceitunas negras</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)] text-sm shrink-0 ml-3">$30.000</span>
+                      </div>
                     </div>
                   </div>
 
@@ -1924,21 +2093,59 @@ function Index() {
                     <h3 className="font-serif text-lg font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
                       Postres & Dulces
                     </h3>
-                    <div className="p-4 rounded-lg bg-white/5 border border-[color:var(--gold)]/20">
-                      <div className="flex justify-between items-center">
-                        <h4 className="font-serif text-base font-bold text-[color:var(--gold)]">
-                          Trío Queso y Dulce
-                        </h4>
-                        <span className="font-bold text-[color:var(--gold)] text-base">$7.500</span>
+                    <div className="grid gap-3.5">
+                      <div className="p-3.5 rounded-lg bg-white/5 border border-white/10 hover:border-[color:var(--gold)]/30 transition-all">
+                        <div className="flex justify-between items-center">
+                          <h4 className="font-serif text-sm font-bold text-[color:var(--cream)]">
+                            Flan con Dulce de Leche
+                          </h4>
+                          <span className="font-bold text-[color:var(--gold)] text-sm">$4.500</span>
+                        </div>
+                        <p className="mt-1 text-xs text-[color:var(--cream)]/70">
+                          Receta tradicional casera acompañado de generosa porción de dulce de leche.
+                        </p>
                       </div>
-                      <p className="mt-2 text-xs text-[color:var(--cream)]/75">
-                        Degustación clásica argentina de tres combinaciones tradicionales:
-                      </p>
-                      <ul className="mt-2 space-y-1 text-xs text-[color:var(--cream)]/85">
-                        <li>• Membrillo con Queso Azul</li>
-                        <li>• Batata con Sardo</li>
-                        <li>• Cayote con Queso de Cabra</li>
-                      </ul>
+
+                      <div className="p-3.5 rounded-lg bg-white/5 border border-white/10 hover:border-[color:var(--gold)]/30 transition-all">
+                        <div className="flex justify-between items-center">
+                          <h4 className="font-serif text-sm font-bold text-[color:var(--cream)]">
+                            Chocotorta Artesanal
+                          </h4>
+                          <span className="font-bold text-[color:var(--gold)] text-sm">$7.000</span>
+                        </div>
+                        <p className="mt-1 text-xs text-[color:var(--cream)]/70">
+                          El clásico argentino con capas de galletitas de chocolate, dulce de leche y queso crema.
+                        </p>
+                      </div>
+
+                      <div className="p-3.5 rounded-lg bg-white/5 border border-[color:var(--gold)]/30 bg-[color:var(--gold)]/5 hover:border-[color:var(--gold)]/50 transition-all">
+                        <div className="flex justify-between items-center">
+                          <h4 className="font-serif text-sm font-bold text-[color:var(--gold)]">
+                            Trío Queso y Dulce
+                          </h4>
+                          <span className="font-bold text-[color:var(--gold)] text-sm">$7.500</span>
+                        </div>
+                        <p className="mt-1 text-xs text-[color:var(--cream)]/75">
+                          Degustación patria tradicional en tres pasos:
+                        </p>
+                        <div className="mt-1.5 flex flex-wrap gap-1 text-[11px] text-[color:var(--cream)]/85">
+                          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5">Membrillo con Queso Azul</span>
+                          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5">Batata con Sardo</span>
+                          <span className="bg-white/5 px-2 py-0.5 rounded border border-white/5">Cayote con Queso de Cabra</span>
+                        </div>
+                      </div>
+
+                      <div className="p-3.5 rounded-lg bg-white/5 border border-white/10 hover:border-[color:var(--gold)]/30 transition-all">
+                        <div className="flex justify-between items-center">
+                          <h4 className="font-serif text-sm font-bold text-[color:var(--cream)]">
+                            Tiramisú Tradicional
+                          </h4>
+                          <span className="font-bold text-[color:var(--gold)] text-sm">$9.500</span>
+                        </div>
+                        <p className="mt-1 text-xs text-[color:var(--cream)]/70">
+                          Postre italiano con vainillas al café espresso, crema mascarpone y cacao amargo.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1947,71 +2154,200 @@ function Index() {
               {/* 5. VINOS POR COPA */}
               <TabsContent value="vinos" className="mt-8 space-y-6">
                 <div className="grid gap-6 md:grid-cols-2">
-                  <div className="card-boutique-dark p-6 space-y-3 text-xs">
-                    <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
-                      Tintos por Copa
+                  <div className="card-boutique-dark p-6 space-y-3.5 text-xs">
+                    <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2 flex items-center justify-between">
+                      <span>Tintos por Copa</span>
+                      <span className="text-[10px] text-[color:var(--cream)]/60 font-sans uppercase tracking-wider">15 Etiquetas</span>
                     </h3>
-                    <div className="flex justify-between">
-                      <span>Alto Las Hormigas Terroir Luján de Cuyo</span>
-                      <span className="font-bold text-[color:var(--gold)]">$10.000</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Sarapura Blend / Alpataco Merlot</span>
-                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Trivento Gold Cabernet Franc</span>
-                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Alta Vista Los Escasos Syrah</span>
-                      <span className="font-bold text-[color:var(--gold)]">$8.500</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>El Turco / Padrillos Pinot / Crux Tempranillo</span>
-                      <span className="font-bold text-[color:var(--gold)]">$8.000</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Trivento Red Blend / Saurus Pinot / Ábside</span>
-                      <span className="font-bold text-[color:var(--gold)]">$7.500</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Trapiche Reserva Cabernet Sauvignon</span>
-                      <span className="font-bold text-[color:var(--gold)]">$7.000</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Domiciano Estelar Malbec / Manos Negras Criolla</span>
-                      <span className="font-bold text-[color:var(--gold)]">$6.500</span>
+                    <div className="space-y-2.5 divide-y divide-white/10">
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Trivento Gold Malbec</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Malbec de alta gama</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$10.000</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Alfredo Roca Parcelas Originales Sangiovese</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Cepa toscana no tradicional</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$10.000</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Sin Reglas Assemblage</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Corte de autor</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$9.500</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Lagarde Malbec</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Luján de Cuyo</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$9.000</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Manos Negras Cabernet Sauvignon</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Altamira, Valle de Uco</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$9.000</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Alma Inquieta Blend</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Blend seleccionado</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$8.500</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Saurus Estate Pinot Noir</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">San Patricio del Chañar, Patagonia</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$8.500</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Dominiciano Cosecha Nocturna Malbec</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Barrancas, Maipú</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Dominiciano Cosecha Nocturna Cabernet Franc</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Cosecha nocturna</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Punto Ar Nuit Petit Verdot</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Varietal estructurado</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Fond de Cave Reserva Cabernet Sauvignon</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Roble francés</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Coquena Tannat</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Cafayate, Salta</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$7.500</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Punto Ar Soleil Cabernet Franc</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">Valle de Uco</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$7.500</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Alfredo Roca Fincas Pinot Noir</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">San Rafael, Mendoza</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$7.500</span>
+                      </div>
+                      <div className="flex justify-between items-center pt-2">
+                        <div>
+                          <span className="font-medium text-[color:var(--cream)] block">Alfredo Roca Fincas Merlot</span>
+                          <span className="text-[11px] text-[color:var(--cream)]/60">San Rafael, Mendoza</span>
+                        </div>
+                        <span className="font-bold text-[color:var(--gold)]">$7.500</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="card-boutique-dark p-6 space-y-3 text-xs">
-                    <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
-                      Blancos y Rosados por Copa
-                    </h3>
-                    <div className="flex justify-between">
-                      <span>Las Perdices Riesling</span>
-                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
+                  <div className="space-y-6">
+                    <div className="card-boutique-dark p-6 space-y-3.5 text-xs">
+                      <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2 flex items-center justify-between">
+                        <span>Blancos por Copa</span>
+                        <span className="text-[10px] text-[color:var(--cream)]/60 font-sans uppercase tracking-wider">7 Etiquetas</span>
+                      </h3>
+                      <div className="space-y-2.5 divide-y divide-white/10">
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Zaha Semillón</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Paraje Altamira (Alejandro Sejanovich)</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$12.000</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Alpataco Chardonnay</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Patagonia Argentina</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$9.500</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Alta Vista Chardonnay</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Mendoza</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Turbio Cruza de Blancas</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Vino de mínima intervención</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Crux Sauvignon Blanc</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Valle de Uco</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Prisionero Chenin Dulce Natural</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Dulce natural para postres</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Coquena Torrontés</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Cafayate, Salta</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$7.500</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Correntoso Pinot Noir Rosé / Trivento Rosé</span>
-                      <span className="font-bold text-[color:var(--gold)]">$9.000</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>La Linda Sweet Viognier</span>
-                      <span className="font-bold text-[color:var(--gold)]">$8.000</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Alta Vista Chardonnay / Crux Sauvignon Blanc</span>
-                      <span className="font-bold text-[color:var(--gold)]">$7.500</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Fond de Cave Chardonnay / Palo Santo Sauvignon</span>
-                      <span className="font-bold text-[color:var(--gold)]">$7.000</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Coquena Torrontés (Salta)</span>
-                      <span className="font-bold text-[color:var(--gold)]">$6.500</span>
+
+                    <div className="card-boutique-dark p-6 space-y-3.5 text-xs">
+                      <h3 className="font-serif text-base font-bold text-[color:var(--gold)] border-b border-white/10 pb-2 flex items-center justify-between">
+                        <span>Rosados por Copa</span>
+                        <span className="text-[10px] text-[color:var(--cream)]/60 font-sans uppercase tracking-wider">2 Etiquetas</span>
+                      </h3>
+                      <div className="space-y-2.5 divide-y divide-white/10">
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Gaia Pinot Noir Rosé Orgánico</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Domaine Bousquet (Gualtallary)</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$10.000</span>
+                        </div>
+                        <div className="flex justify-between items-center pt-2">
+                          <div>
+                            <span className="font-medium text-[color:var(--cream)] block">Lagarde Rosé is a Rose</span>
+                            <span className="text-[11px] text-[color:var(--cream)]/60">Estilo provenzal fresco</span>
+                          </div>
+                          <span className="font-bold text-[color:var(--gold)]">$8.000</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2032,10 +2368,6 @@ function Index() {
                       <span>Fernet Cola / Campari Tonic</span>
                       <span className="font-bold text-[color:var(--gold)]">$10.000</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Vermut</span>
-                      <span className="font-bold text-[color:var(--gold)]">$8.000</span>
-                    </div>
                   </div>
                   <div className="card-boutique-dark p-5 space-y-2">
                     <h4 className="font-serif text-sm font-bold text-[color:var(--gold)] border-b border-white/10 pb-2">
@@ -2050,7 +2382,11 @@ function Index() {
                       <span className="font-bold text-[color:var(--gold)]">$8.000</span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Heineken / Warsteiner / Grolsch / Imperial</span>
+                      <span>Heineken / Warsteiner</span>
+                      <span className="font-bold text-[color:var(--gold)]">$7.000</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Grolsch IPA / Imperial IPA / Quilmes IPA</span>
                       <span className="font-bold text-[color:var(--gold)]">$7.000</span>
                     </div>
                   </div>
