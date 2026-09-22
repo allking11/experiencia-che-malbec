@@ -40,8 +40,21 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      let req = request;
+      const url = new URL(request.url);
+      const host =
+        request.headers.get("x-forwarded-host") ||
+        request.headers.get("host") ||
+        url.host ||
+        "";
+
+      if (host.toLowerCase().startsWith("links.") && url.pathname === "/") {
+        url.pathname = "/links";
+        req = new Request(url.toString(), request);
+      }
+
       const handler = await getServerEntry();
-      const response = await handler.fetch(request, env, ctx);
+      const response = await handler.fetch(req, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);
     } catch (error) {
       console.error(error);

@@ -9,6 +9,7 @@ import clientes from "@/assets/clientes.jpg";
 import feriaVinosVideo from "@/assets/feria-vinos.mp4";
 import { ReservationDialog } from "@/components/ReservationDialog";
 import { FranchiseDialog } from "@/components/FranchiseDialog";
+import { LinktreePage } from "@/components/LinktreePage";
 import {
   Calendar,
   Clock,
@@ -479,6 +480,15 @@ function Index() {
       },
     ],
   };
+
+  const isLinksHost =
+    typeof window !== "undefined" &&
+    (window.location.hostname.toLowerCase().startsWith("links.") ||
+      new URLSearchParams(window.location.search).get("view") === "links");
+
+  if (isLinksHost) {
+    return <LinktreePage />;
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-[color:var(--wine)] selection:text-[color:var(--cream)]">
