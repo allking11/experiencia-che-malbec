@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
 import fachada from "@/assets/fachada.jpg";
@@ -9,7 +9,6 @@ import clientes from "@/assets/clientes.jpg";
 import feriaVinosVideo from "@/assets/feria-vinos.mp4";
 import { ReservationDialog } from "@/components/ReservationDialog";
 import { FranchiseDialog } from "@/components/FranchiseDialog";
-import { LinktreePage } from "@/components/LinktreePage";
 import {
   Calendar,
   Clock,
@@ -54,6 +53,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const SITE_URL = "https://chemalbec.com";
 
 export const Route = createFileRoute("/")({
+  beforeLoad: ({ location }) => {
+    if (location.searchStr && new URLSearchParams(location.searchStr).get("view") === "links") {
+      throw redirect({ to: "/links" });
+    }
+  },
   head: () => {
     const ogImageUrl = `${SITE_URL}${fachada}`;
     return {
@@ -480,15 +484,6 @@ function Index() {
       },
     ],
   };
-
-  const isLinksHost =
-    typeof window !== "undefined" &&
-    (window.location.hostname.toLowerCase().startsWith("links.") ||
-      new URLSearchParams(window.location.search).get("view") === "links");
-
-  if (isLinksHost) {
-    return <LinktreePage />;
-  }
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-[color:var(--wine)] selection:text-[color:var(--cream)]">
@@ -1534,6 +1529,7 @@ function Index() {
         </section>
 
         {/* CARTA COMPLETA */}
+        <span id="menu" className="sr-only" aria-hidden="true" />
         <section id="carta" className="bg-ink-atmosphere text-[color:var(--cream)] py-20 sm:py-28">
           <div className="mx-auto max-w-6xl px-6">
             <div className="mx-auto max-w-2xl text-center">

@@ -11,6 +11,7 @@ import {
   Sparkles,
   ChevronRight,
   Bike,
+  MessageCircle,
 } from "lucide-react";
 import {
   Dialog,
@@ -32,7 +33,7 @@ interface LinkButtonConfig {
   isExternal?: boolean;
   isPrimary?: boolean;
   badge?: string;
-  actionType?: "direct" | "modal-reserva" | "modal-delivery";
+  actionType: "direct" | "modal-reserva" | "modal-delivery";
 }
 
 // Configuración de los 8 botones requeridos por el cliente
@@ -62,7 +63,7 @@ const LINK_BUTTONS: LinkButtonConfig[] = [
     emoji: "📖",
     title: "Mirá nuestro menú",
     subtitle: "Carta de vinos boutique seleccionados, tablas y platos",
-    url: "https://chemalbec.com/#menu",
+    url: "https://chemalbec.com/#carta",
     isExternal: true,
     actionType: "direct",
   },
@@ -123,6 +124,9 @@ const PEDIDOSYA_MONSERRAT_URL =
   "https://www.pedidosya.com.ar/restaurantes/buenos-aires/che-malbec-8df25b0e-e5ed-4c30-b5d4-0e6fb06b8d84-menu?origin=shop_list";
 const PEDIDOSYA_SANTELMO_URL =
   "https://www.pedidosya.com.ar/restaurantes/buenos-aires/che-malbec-san-telmo-853f1925-62e0-4640-9fb9-490a1dd52fb6-menu?origin=shop_list";
+const WA_DELIVERY_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(
+  "Hola Che Malbec 👋 Quiero consultar por un pedido de delivery directo.",
+)}`;
 
 export function LinktreePage() {
   const [reservaModalOpen, setReservaModalOpen] = useState(false);
@@ -130,45 +134,65 @@ export function LinktreePage() {
   const [copied, setCopied] = useState(false);
 
   const handleShare = async () => {
-    const url =
-      typeof window !== "undefined" ? window.location.href : "https://links.chemalbec.com";
-    if (typeof navigator !== "undefined" && navigator.share) {
+    const shareUrl = "https://links.chemalbec.com/";
+    const shareData = {
+      title: "Che Malbec — Enlaces Oficiales",
+      text: "Reservas, menú, delivery, eventos y franquicias en Che Malbec.",
+      url: shareUrl,
+    };
+
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
       try {
-        await navigator.share({
-          title: "Che Malbec — Enlaces Oficiales",
-          text: "Reservas, menú, delivery, eventos y franquicias en Che Malbec.",
-          url,
-        });
-        return;
-      } catch {
-        // Ignorar si el usuario cancela el diálogo nativo
+        await navigator.share(shareData);
+        return; // Compartido exitosamente mediante Web Share API
+      } catch (err: unknown) {
+        // Si el usuario canceló explícitamente el diálogo nativo, salimos sin error
+        if (err instanceof Error && err.name === "AbortError") {
+          return;
+        }
+        // Si falló por falta de permisos en WebView o navegador, continuamos al fallback
       }
     }
 
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      await navigator.clipboard.writeText(url);
+    // Fallback a Clipboard API con manejo robusto de excepciones
+    try {
+      if (
+        typeof navigator !== "undefined" &&
+        navigator.clipboard &&
+        typeof navigator.clipboard.writeText === "function"
+      ) {
+        await navigator.clipboard.writeText(shareUrl);
+      } else {
+        // Fallback clásico para WebViews que no exponen Clipboard API
+        const textArea = document.createElement("textarea");
+        textArea.value = shareUrl;
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        const success = document.execCommand("copy");
+        document.body.removeChild(textArea);
+        if (!success) throw new Error("Copia no soportada");
+      }
+
       setCopied(true);
       toast.success("¡Enlace copiado al portapapeles!");
       setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("No se pudo copiar el enlace. URL: " + shareUrl);
     }
   };
 
-  const handleButtonClick = (btn: LinkButtonConfig) => {
-    if (btn.actionType === "modal-reserva") {
-      setReservaModalOpen(true);
-      return;
-    }
-    if (btn.actionType === "modal-delivery") {
-      setDeliveryModalOpen(true);
-      return;
-    }
-    if (btn.url) {
-      window.open(btn.url, btn.isExternal ? "_blank" : "_self", "noopener,noreferrer");
-    }
+  const handleModalOptionClick = (closeFn: (open: boolean) => void) => {
+    // Breve pausa para asegurar que WebKit / Safari registre la apertura de pestaña antes de desmontar el diálogo
+    setTimeout(() => {
+      closeFn(false);
+    }, 150);
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-[color:var(--cream)] text-[color:var(--ink)] selection:bg-[color:var(--wine)] selection:text-[color:var(--cream)] flex flex-col items-center justify-start px-4 py-8 sm:py-12 overflow-x-hidden">
+    <div className="relative min-h-screen w-full bg-[color:var(--cream)] text-[color:var(--ink)] selection:bg-[color:var(--wine)] selection:text-[color:var(--cream)] flex flex-col items-center justify-start px-4 pt-[max(2rem,env(safe-area-inset-top))] pb-[max(2.5rem,env(safe-area-inset-bottom))] overflow-x-hidden">
       {/* Fondo ambiental sutil con luz dorada, característico de Che Malbec */}
       <div
         className="pointer-events-none fixed inset-0 opacity-40"
@@ -180,21 +204,25 @@ export function LinktreePage() {
 
       {/* Contenedor centralizado estilo Linktree (sin menú ni footer) */}
       <main className="relative z-10 w-full max-w-[480px] flex flex-col items-center">
-        {/* Barra superior mínima: solo botón de compartir */}
+        {/* Barra superior mínima: botón de compartir con touch target accesible (>=44px) */}
         <div className="w-full flex justify-end mb-3">
           <button
             onClick={handleShare}
-            aria-label="Compartir perfil"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[color:var(--wine)]/10 hover:bg-[color:var(--wine)] text-[color:var(--wine)] hover:text-[color:var(--cream)] border border-[color:var(--gold)]/40 text-xs font-semibold tracking-wide transition-all duration-200 active:scale-95 shadow-xs cursor-pointer"
+            type="button"
+            aria-label={
+              copied ? "Enlace copiado al portapapeles" : "Compartir enlaces de Che Malbec"
+            }
+            aria-live="polite"
+            className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-full bg-[color:var(--wine)]/10 hover:bg-[color:var(--wine)] text-[color:var(--wine)] hover:text-[color:var(--cream)] border border-[color:var(--gold)]/50 text-xs font-semibold tracking-wide transition-all duration-200 active:scale-95 shadow-xs cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--cream)]"
           >
             {copied ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-700" />
+                <Check className="w-4 h-4 text-emerald-700" aria-hidden="true" />
                 <span className="text-emerald-700 font-bold">¡Copiado!</span>
               </>
             ) : (
               <>
-                <Share2 className="w-3.5 h-3.5 text-[color:var(--gold)]" />
+                <Share2 className="w-4 h-4 text-[#855b16]" aria-hidden="true" />
                 <span>Compartir</span>
               </>
             )}
@@ -207,52 +235,50 @@ export function LinktreePage() {
             <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-[#fffdfa] border-2 border-[color:var(--gold)] shadow-[0_8px_20px_-6px_rgba(107,63,46,0.25)] p-2 flex items-center justify-center transition-transform duration-300 hover:scale-105">
               <img
                 src={logo}
-                alt="Logo Che Malbec"
+                alt="Che Malbec Mercado & Wine Bar — Enlaces Oficiales y Reservas"
+                width={128}
+                height={128}
+                loading="eager"
+                decoding="async"
                 className="w-full h-full object-contain filter drop-shadow-xs"
               />
             </div>
           </div>
 
-          <p className="gold-divider mt-4 text-[11px] uppercase tracking-widest text-[color:var(--gold)] font-medium">
+          {/* Divisor con contraste accesible WCAG 2.1 AA (dorado/ámbar oscuro sobre crema) */}
+          <p className="gold-divider mt-4 text-[11px] uppercase tracking-widest text-[#855b16] font-semibold">
             Wine Bar Boutique
           </p>
 
           <h1 className="mt-1 font-serif text-2xl sm:text-3xl font-bold tracking-tight text-[color:var(--wine)] flex items-center gap-1.5">
             Che Malbec
-            <Sparkles className="w-4 h-4 text-[color:var(--gold)] fill-[color:var(--gold)]" />
+            <Sparkles className="w-4 h-4 text-[#855b16] fill-[#855b16]" aria-hidden="true" />
           </h1>
 
-          <p className="mt-1 text-xs sm:text-sm text-[color:var(--ink)]/80 font-medium max-w-xs leading-snug">
+          <p className="mt-1 text-xs sm:text-sm text-[color:var(--ink)]/85 font-medium max-w-xs leading-snug">
             Catas guiadas por sommeliers, vinos boutique y picadas en Buenos Aires
           </p>
 
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2 text-xs">
             <span className="inline-flex items-center gap-1 rounded-full border border-[color:var(--gold)]/40 bg-[color:var(--wine)]/10 px-3 py-1 font-semibold text-[color:var(--wine)] shadow-2xs">
-              <MapPin className="w-3 h-3 text-[color:var(--gold)]" />
+              <MapPin className="w-3.5 h-3.5 text-[#855b16]" aria-hidden="true" />
               Monserrat (Palacio Vera)
             </span>
             <span className="inline-flex items-center gap-1 rounded-full border border-[color:var(--gold)]/40 bg-[color:var(--wine)]/10 px-3 py-1 font-semibold text-[color:var(--wine)] shadow-2xs">
-              <MapPin className="w-3 h-3 text-[color:var(--gold)]" />
+              <MapPin className="w-3.5 h-3.5 text-[#855b16]" aria-hidden="true" />
               San Telmo
             </span>
           </div>
         </header>
 
-        {/* Lista de Botones Linktree */}
+        {/* Lista de Botones Linktree: Enlaces nativos <a> para links externos y <button> para modales */}
         <nav aria-label="Enlaces rápidos" className="w-full space-y-3">
           {LINK_BUTTONS.map((btn) => {
             const isPrimary = btn.isPrimary;
-            return (
-              <button
-                key={btn.id}
-                onClick={() => handleButtonClick(btn)}
-                className={`group relative w-full text-left p-4 rounded-xl transition-all duration-300 flex items-center justify-between cursor-pointer btn-tactile ${
-                  isPrimary
-                    ? "bg-[color:var(--wine)] text-[color:var(--cream)] border-2 border-[color:var(--gold)] shadow-[0_10px_24px_-8px_rgba(107,63,46,0.35)] hover:shadow-[0_14px_28px_-6px_rgba(107,63,46,0.45)]"
-                    : "bg-[#fffdf9] hover:bg-white text-[color:var(--ink)] border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] shadow-xs hover:shadow-md"
-                }`}
-              >
-                {/* Badge opcional de recomendación */}
+            const isDirect = btn.actionType === "direct" && btn.url;
+
+            const buttonInner = (
+              <>
                 {btn.badge && (
                   <span className="absolute -top-2.5 right-4 bg-[color:var(--gold)] text-[color:var(--ink)] text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
                     {btn.badge}
@@ -267,23 +293,23 @@ export function LinktreePage() {
                         : "bg-[color:var(--wine)]/10 border border-[color:var(--gold)]/30 text-[color:var(--wine)]"
                     }`}
                   >
-                    <span>{btn.emoji}</span>
+                    <span aria-hidden="true">{btn.emoji}</span>
                   </div>
 
                   <div className="min-w-0 flex-1">
-                    <h2
-                      className={`font-semibold text-[15px] sm:text-[16px] leading-tight transition-colors ${
+                    <span
+                      className={`block font-semibold text-[15px] sm:text-[16px] leading-tight transition-colors ${
                         isPrimary
                           ? "text-[color:var(--cream)]"
                           : "text-[color:var(--ink)] group-hover:text-[color:var(--wine)]"
                       }`}
                     >
                       {btn.title}
-                    </h2>
+                    </span>
                     {btn.subtitle && (
                       <p
-                        className={`text-xs mt-0.5 line-clamp-1 ${
-                          isPrimary ? "text-[color:var(--cream)]/85" : "text-[color:var(--ink)]/65"
+                        className={`text-xs mt-0.5 line-clamp-2 leading-snug ${
+                          isPrimary ? "text-[color:var(--cream)]/90" : "text-[color:var(--ink)]/75"
                         }`}
                       >
                         {btn.subtitle}
@@ -296,26 +322,64 @@ export function LinktreePage() {
                   className={`shrink-0 pl-1 transition-transform duration-300 group-hover:translate-x-1 ${
                     isPrimary
                       ? "text-[color:var(--gold)]"
-                      : "text-[color:var(--wine)]/60 group-hover:text-[color:var(--wine)]"
+                      : "text-[color:var(--wine)]/70 group-hover:text-[color:var(--wine)]"
                   }`}
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-5 h-5" aria-hidden="true" />
                 </div>
+              </>
+            );
+
+            const commonClasses = `group relative w-full min-h-[64px] text-left p-4 rounded-xl transition-all duration-300 flex items-center justify-between cursor-pointer btn-tactile focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--cream)] ${
+              isPrimary
+                ? "bg-[color:var(--wine)] text-[color:var(--cream)] border-2 border-[color:var(--gold)] shadow-[0_10px_24px_-8px_rgba(107,63,46,0.35)] hover:shadow-[0_14px_28px_-6px_rgba(107,63,46,0.45)]"
+                : "bg-[#fffdf9] hover:bg-white text-[color:var(--ink)] border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] shadow-xs hover:shadow-md"
+            }`;
+
+            if (isDirect && btn.url) {
+              return (
+                <a
+                  key={btn.id}
+                  href={btn.url}
+                  target={btn.isExternal ? "_blank" : undefined}
+                  rel={btn.isExternal ? "noopener noreferrer" : undefined}
+                  className={commonClasses}
+                >
+                  {buttonInner}
+                </a>
+              );
+            }
+
+            return (
+              <button
+                key={btn.id}
+                type="button"
+                aria-haspopup="dialog"
+                aria-expanded={
+                  btn.actionType === "modal-reserva" ? reservaModalOpen : deliveryModalOpen
+                }
+                onClick={() => {
+                  if (btn.actionType === "modal-reserva") setReservaModalOpen(true);
+                  if (btn.actionType === "modal-delivery") setDeliveryModalOpen(true);
+                }}
+                className={commonClasses}
+              >
+                {buttonInner}
               </button>
             );
           })}
         </nav>
 
-        {/* Canales Oficiales / Redes Sociales (sin footer de texto) */}
+        {/* Canales Oficiales / Redes Sociales con touch targets >= 44x44px y aria-labels */}
         <div className="mt-8 mb-4 w-full flex items-center justify-center gap-3">
           <a
             href="https://www.instagram.com/che.malbec/"
             target="_blank"
             rel="noopener noreferrer"
-            title="Instagram Monserrat"
-            className="w-10 h-10 rounded-full bg-[#fffdf9] border border-[color:var(--gold)]/40 flex items-center justify-center text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all duration-200 hover:scale-110 shadow-xs"
+            aria-label="Instagram Che Malbec Monserrat (abre en nueva pestaña)"
+            className="w-11 h-11 rounded-full bg-[#fffdf9] border border-[color:var(--gold)]/40 flex items-center justify-center text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all duration-200 hover:scale-110 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
           >
-            <svg className="w-4.5 h-4.5 fill-current" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
             </svg>
           </a>
@@ -324,10 +388,12 @@ export function LinktreePage() {
             href="https://www.instagram.com/che.malbec.santelmo/"
             target="_blank"
             rel="noopener noreferrer"
-            title="Instagram San Telmo"
-            className="w-10 h-10 rounded-full bg-[#fffdf9] border border-[color:var(--gold)]/40 flex items-center justify-center text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all duration-200 hover:scale-110 shadow-xs"
+            aria-label="Instagram Che Malbec San Telmo (abre en nueva pestaña)"
+            className="w-11 h-11 rounded-full bg-[#fffdf9] border border-[color:var(--gold)]/40 flex items-center justify-center text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all duration-200 hover:scale-110 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
           >
-            <span className="text-[11px] font-bold">ST</span>
+            <span className="text-xs font-bold" aria-hidden="true">
+              ST
+            </span>
           </a>
 
           <a
@@ -336,36 +402,36 @@ export function LinktreePage() {
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            title="WhatsApp Oficial"
-            className="w-10 h-10 rounded-full bg-[#fffdf9] border border-[color:var(--gold)]/40 flex items-center justify-center text-[color:var(--wine)] hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-200 hover:scale-110 shadow-xs"
+            aria-label="WhatsApp Oficial Che Malbec (abre en nueva pestaña)"
+            className="w-11 h-11 rounded-full bg-[#fffdf9] border border-[color:var(--gold)]/40 flex items-center justify-center text-[color:var(--wine)] hover:bg-[#25D366] hover:text-white hover:border-[#25D366] transition-all duration-200 hover:scale-110 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
           >
-            <Phone className="w-4.5 h-4.5" />
+            <Phone className="w-5 h-5" aria-hidden="true" />
           </a>
 
           <a
             href="https://chemalbec.com"
             target="_blank"
             rel="noopener noreferrer"
-            title="Sitio Web Oficial"
-            className="w-10 h-10 rounded-full bg-[#fffdf9] border border-[color:var(--gold)]/40 flex items-center justify-center text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all duration-200 hover:scale-110 shadow-xs"
+            aria-label="Sitio Web Oficial Che Malbec (abre en nueva pestaña)"
+            className="w-11 h-11 rounded-full bg-[#fffdf9] border border-[color:var(--gold)]/40 flex items-center justify-center text-[color:var(--wine)] hover:bg-[color:var(--wine)] hover:text-[color:var(--cream)] transition-all duration-200 hover:scale-110 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
           >
-            <ExternalLink className="w-4.5 h-4.5" />
+            <ExternalLink className="w-5 h-5" aria-hidden="true" />
           </a>
         </div>
       </main>
 
-      {/* Modal / Selector de Sucursal para RESERVAS (Look & Feel Che Malbec) */}
+      {/* Modal / Selector de Sucursal para RESERVAS (Look & Feel Che Malbec + Padding A11y) */}
       <Dialog open={reservaModalOpen} onOpenChange={setReservaModalOpen}>
         <DialogContent className="bg-[color:var(--cream)] border-2 border-[color:var(--gold)]/50 text-[color:var(--ink)] max-w-md w-[92vw] sm:w-full rounded-2xl p-6 shadow-2xl">
-          <DialogHeader className="text-left space-y-1">
-            <p className="gold-divider text-[10px] uppercase tracking-wider text-[color:var(--gold)]">
+          <DialogHeader className="text-left space-y-1 pr-10">
+            <p className="gold-divider text-[10px] uppercase tracking-wider text-[#855b16] font-semibold">
               Reserva Directa
             </p>
             <DialogTitle className="font-serif text-xl font-bold text-[color:var(--wine)] flex items-center gap-2">
-              <Wine className="w-5 h-5 text-[color:var(--gold)]" />
+              <Wine className="w-5 h-5 text-[#855b16]" aria-hidden="true" />
               ¿En qué sucursal querés reservar?
             </DialogTitle>
-            <DialogDescription className="text-xs text-[color:var(--ink)]/75">
+            <DialogDescription className="text-xs text-[color:var(--ink)]/80">
               Elegí la sede de Che Malbec para comunicarte directamente por WhatsApp con nuestro
               equipo.
             </DialogDescription>
@@ -379,24 +445,27 @@ export function LinktreePage() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setReservaModalOpen(false)}
-              className="group flex items-start gap-3.5 p-4 rounded-xl bg-[#fffdf9] hover:bg-white border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] transition-all shadow-xs"
+              onClick={() => handleModalOptionClick(setReservaModalOpen)}
+              className="group flex items-start gap-3.5 p-4 rounded-xl bg-[#fffdf9] hover:bg-white border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
             >
               <div className="w-9 h-9 rounded-lg bg-[color:var(--wine)]/10 border border-[color:var(--gold)]/30 flex items-center justify-center shrink-0 text-[color:var(--wine)]">
-                <MapPin className="w-4 h-4" />
+                <MapPin className="w-4 h-4 text-[#855b16]" aria-hidden="true" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-sm text-[color:var(--wine)]">
                     Monserrat · Histórico Palacio Vera
                   </h3>
-                  <ChevronRight className="w-4 h-4 text-[color:var(--gold)] group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight
+                    className="w-4 h-4 text-[#855b16] group-hover:translate-x-1 transition-transform"
+                    aria-hidden="true"
+                  />
                 </div>
-                <p className="text-xs text-[color:var(--ink)]/70 mt-0.5">
+                <p className="text-xs text-[color:var(--ink)]/75 mt-0.5">
                   Avenida de Mayo 777 · CABA
                 </p>
-                <div className="mt-1 flex items-center gap-1.5 text-[11px] text-[color:var(--ink)]/80">
-                  <Clock className="w-3 h-3 text-[color:var(--gold)]" />
+                <div className="mt-1 flex items-center gap-1.5 text-[11px] text-[color:var(--ink)]/85">
+                  <Clock className="w-3 h-3 text-[#855b16]" aria-hidden="true" />
                   <span>Lun: 11—19 hs | Mar a Sáb: 11—23 hs</span>
                 </div>
               </div>
@@ -409,24 +478,27 @@ export function LinktreePage() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setReservaModalOpen(false)}
-              className="group flex items-start gap-3.5 p-4 rounded-xl bg-[#fffdf9] hover:bg-white border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] transition-all shadow-xs"
+              onClick={() => handleModalOptionClick(setReservaModalOpen)}
+              className="group flex items-start gap-3.5 p-4 rounded-xl bg-[#fffdf9] hover:bg-white border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
             >
               <div className="w-9 h-9 rounded-lg bg-[color:var(--wine)]/10 border border-[color:var(--gold)]/30 flex items-center justify-center shrink-0 text-[color:var(--wine)]">
-                <MapPin className="w-4 h-4" />
+                <MapPin className="w-4 h-4 text-[#855b16]" aria-hidden="true" />
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-sm text-[color:var(--wine)]">
                     San Telmo · Casco Histórico
                   </h3>
-                  <ChevronRight className="w-4 h-4 text-[color:var(--gold)] group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight
+                    className="w-4 h-4 text-[#855b16] group-hover:translate-x-1 transition-transform"
+                    aria-hidden="true"
+                  />
                 </div>
-                <p className="text-xs text-[color:var(--ink)]/70 mt-0.5">
+                <p className="text-xs text-[color:var(--ink)]/75 mt-0.5">
                   Estados Unidos 407 · CABA
                 </p>
-                <div className="mt-1 flex items-center gap-1.5 text-[11px] text-[color:var(--ink)]/80">
-                  <Clock className="w-3 h-3 text-[color:var(--gold)]" />
+                <div className="mt-1 flex items-center gap-1.5 text-[11px] text-[color:var(--ink)]/85">
+                  <Clock className="w-3 h-3 text-[#855b16]" aria-hidden="true" />
                   <span>Mar a Sáb: 18—00 hs</span>
                 </div>
               </div>
@@ -435,19 +507,19 @@ export function LinktreePage() {
         </DialogContent>
       </Dialog>
 
-      {/* Modal / Selector de Sucursal para DELIVERY (Look & Feel Che Malbec) */}
+      {/* Modal / Selector de Sucursal para DELIVERY (Look & Feel Che Malbec + Opción WhatsApp) */}
       <Dialog open={deliveryModalOpen} onOpenChange={setDeliveryModalOpen}>
         <DialogContent className="bg-[color:var(--cream)] border-2 border-[color:var(--gold)]/50 text-[color:var(--ink)] max-w-md w-[92vw] sm:w-full rounded-2xl p-6 shadow-2xl">
-          <DialogHeader className="text-left space-y-1">
-            <p className="gold-divider text-[10px] uppercase tracking-wider text-[color:var(--gold)]">
+          <DialogHeader className="text-left space-y-1 pr-10">
+            <p className="gold-divider text-[10px] uppercase tracking-wider text-[#855b16] font-semibold">
               Delivery Oficial
             </p>
             <DialogTitle className="font-serif text-xl font-bold text-[color:var(--wine)] flex items-center gap-2">
-              <Bike className="w-5 h-5 text-[color:var(--gold)]" />
-              Pedir por Delivery en PedidosYa
+              <Bike className="w-5 h-5 text-[#855b16]" aria-hidden="true" />
+              Pedir por Delivery
             </DialogTitle>
-            <DialogDescription className="text-xs text-[color:var(--ink)]/75">
-              Elegí la sede más cercana a tu ubicación para pedir platos, picadas y vinos boutique.
+            <DialogDescription className="text-xs text-[color:var(--ink)]/80">
+              Elegí la sede más cercana en PedidosYa o hacé tu pedido directo por WhatsApp.
             </DialogDescription>
           </DialogHeader>
 
@@ -456,47 +528,70 @@ export function LinktreePage() {
               href={PEDIDOSYA_MONSERRAT_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setDeliveryModalOpen(false)}
-              className="group flex items-center justify-between p-4 rounded-xl bg-[#fffdf9] hover:bg-white border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] transition-all shadow-xs"
+              onClick={() => handleModalOptionClick(setDeliveryModalOpen)}
+              className="group flex items-center justify-between p-4 rounded-xl bg-[#fffdf9] hover:bg-white border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-[color:var(--wine)]/10 border border-[color:var(--gold)]/30 flex items-center justify-center text-[color:var(--wine)]">
-                  <MapPin className="w-4 h-4" />
+                  <MapPin className="w-4 h-4 text-[#855b16]" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm text-[color:var(--wine)]">
-                    Sede Monserrat · Palacio Vera
+                    PedidosYa · Monserrat (Palacio Vera)
                   </h3>
-                  <p className="text-xs text-[color:var(--ink)]/70 mt-0.5">
+                  <p className="text-xs text-[color:var(--ink)]/75 mt-0.5">
                     Av. de Mayo 777 y alrededores
                   </p>
                 </div>
               </div>
-              <ExternalLink className="w-4 h-4 text-[color:var(--gold)] group-hover:translate-x-0.5 transition-transform" />
+              <ExternalLink
+                className="w-4 h-4 text-[#855b16] group-hover:translate-x-0.5 transition-transform"
+                aria-hidden="true"
+              />
             </a>
 
             <a
               href={PEDIDOSYA_SANTELMO_URL}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setDeliveryModalOpen(false)}
-              className="group flex items-center justify-between p-4 rounded-xl bg-[#fffdf9] hover:bg-white border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] transition-all shadow-xs"
+              onClick={() => handleModalOptionClick(setDeliveryModalOpen)}
+              className="group flex items-center justify-between p-4 rounded-xl bg-[#fffdf9] hover:bg-white border border-[color:var(--gold)]/40 hover:border-[color:var(--gold)] transition-all shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
             >
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-[color:var(--wine)]/10 border border-[color:var(--gold)]/30 flex items-center justify-center text-[color:var(--wine)]">
-                  <MapPin className="w-4 h-4" />
+                  <MapPin className="w-4 h-4 text-[#855b16]" aria-hidden="true" />
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm text-[color:var(--wine)]">
-                    Sede San Telmo · Casco Histórico
+                    PedidosYa · San Telmo
                   </h3>
-                  <p className="text-xs text-[color:var(--ink)]/70 mt-0.5">
+                  <p className="text-xs text-[color:var(--ink)]/75 mt-0.5">
                     Estados Unidos 407 y alrededores
                   </p>
                 </div>
               </div>
-              <ExternalLink className="w-4 h-4 text-[color:var(--gold)] group-hover:translate-x-0.5 transition-transform" />
+              <ExternalLink
+                className="w-4 h-4 text-[#855b16] group-hover:translate-x-0.5 transition-transform"
+                aria-hidden="true"
+              />
             </a>
+
+            {/* Alternativa directa por WhatsApp */}
+            <div className="pt-1 border-t border-[color:var(--gold)]/20">
+              <a
+                href={WA_DELIVERY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => handleModalOptionClick(setDeliveryModalOpen)}
+                className="group flex items-center justify-between p-3 rounded-xl bg-[color:var(--wine)]/5 hover:bg-[color:var(--wine)]/10 border border-[color:var(--gold)]/30 transition-all text-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--wine)] focus-visible:ring-offset-2"
+              >
+                <div className="flex items-center gap-2 text-[color:var(--wine)] font-semibold">
+                  <MessageCircle className="w-4 h-4 text-[#25D366]" aria-hidden="true" />
+                  <span>¿Fuera de zona? Pedí directo por WhatsApp</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-[#855b16]" aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </DialogContent>
       </Dialog>

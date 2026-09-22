@@ -5,17 +5,17 @@ import { renderErrorPage } from "./lib/error-page";
 const subdomainMiddleware = createMiddleware().server(async ({ next, request }) => {
   try {
     const url = new URL(request.url);
-    const host =
-      request.headers.get("x-forwarded-host") ||
-      request.headers.get("host") ||
-      url.host ||
-      "";
+    const forwardedHost = request.headers.get("x-forwarded-host")?.split(",")[0].trim();
+    const host = (forwardedHost || request.headers.get("host") || url.host || "").toLowerCase();
+    const isLinksSubdomain = host.startsWith("links.");
 
-    if (
-      host.toLowerCase().startsWith("links.") &&
-      (url.pathname === "/" || url.pathname === "")
-    ) {
-      return Response.redirect(new URL("/links", request.url).toString(), 302);
+    if (isLinksSubdomain && (url.pathname === "" || url.pathname === "/")) {
+      const proto =
+        request.headers.get("x-forwarded-proto") || url.protocol.replace(":", "") || "https";
+      const cleanHost = host.split(":")[0];
+      const destination = `${proto}://${cleanHost}/links${url.search}`;
+
+      return Response.redirect(destination, 302);
     }
   } catch (e) {
     console.error("Error in subdomainMiddleware", e);
