@@ -3161,7 +3161,15 @@ function Index() {
         </div>
 
         <div className="mx-auto mt-10 max-w-6xl border-t border-white/10 px-6 pt-6 text-center text-[11px] text-[color:var(--cream)]/50">
-          © {new Date().getFullYear()} Che Malbec Mercado & Wine Bar · Todos los derechos reservados
+          © {new Date().getFullYear()} Che Malbec Mercado & Wine Bar · Sitio web desarrollado por{" "}
+          <a
+            href="https://4daura.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[color:var(--gold)] transition-colors underline decoration-[color:var(--gold)]/40 hover:decoration-[color:var(--gold)]"
+          >
+            4daura.com
+          </a>{" "}
           · Buenos Aires, Argentina
         </div>
       </footer>
