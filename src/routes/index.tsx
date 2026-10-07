@@ -3030,9 +3030,6 @@ function Index() {
               Wine bar boutique en Buenos Aires. Vinos argentinos de bodegas seleccionadas, catas
               guiadas, picadas abundantes y eventos.
             </p>
-            <span className="mt-4 inline-block rounded-full bg-white/10 px-3 py-1 text-[10px] text-[color:var(--gold)] font-medium border border-[color:var(--gold)]/20">
-              Club de Vinos (Próximamente)
-            </span>
           </div>
 
           <div>
@@ -3049,7 +3046,7 @@ function Index() {
               <br />
               Dom cerrado
             </p>
-            <div className="mt-2 space-y-1">
+            <div className="mt-2">
               <a
                 href={SUCURSAL_MONSERRAT.mapsUrl}
                 target="_blank"
@@ -3057,14 +3054,6 @@ function Index() {
                 className="block text-[color:var(--gold)] hover:underline"
               >
                 Ver en Maps ↗
-              </a>
-              <a
-                href={PEDIDOSYA_MONSERRAT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-red-400 hover:underline"
-              >
-                PedidosYa Monserrat ↗
               </a>
             </div>
           </div>
@@ -3083,7 +3072,7 @@ function Index() {
               <br />
               Dom y Lun cerrado
             </p>
-            <div className="mt-2 space-y-1">
+            <div className="mt-2">
               <a
                 href={SUCURSAL_SANTELMO.mapsUrl}
                 target="_blank"
@@ -3091,14 +3080,6 @@ function Index() {
                 className="block text-[color:var(--gold)] hover:underline"
               >
                 Ver en Maps ↗
-              </a>
-              <a
-                href={PEDIDOSYA_SANTELMO_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-red-400 hover:underline"
-              >
-                PedidosYa San Telmo ↗
               </a>
             </div>
           </div>
