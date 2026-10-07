@@ -2977,20 +2977,6 @@ function Index() {
                 ))}
               </Accordion>
             </div>
-
-            <div className="mt-12 text-center">
-              <p className="text-xs sm:text-sm text-[color:var(--ink)]/70">
-                ¿Tenés otra consulta personalizada?{" "}
-                <a
-                  href={WA_GENERAL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-[color:var(--wine)] underline hover:text-[color:var(--gold)] transition-colors inline-flex items-center gap-1"
-                >
-                  Escribinos por WhatsApp ↗
-                </a>
-              </p>
-            </div>
           </div>
         </section>
 
