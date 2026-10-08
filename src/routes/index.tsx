@@ -7,6 +7,7 @@ import copaBotella from "@/assets/copa-botella.jpg";
 import burrata from "@/assets/burrata.jpg";
 import clientes from "@/assets/clientes.jpg";
 import feriaVinosVideo from "@/assets/feria-vinos.mp4";
+import feriaPoster from "@/assets/feria-poster.jpg";
 import { ReservationDialog } from "@/components/ReservationDialog";
 import { FranchiseDialog } from "@/components/FranchiseDialog";
 import {
@@ -2829,7 +2830,7 @@ function Index() {
                 <div className="w-full max-w-[260px] aspect-[9/16] rounded-xl overflow-hidden shadow-2xl border border-[color:var(--gold)]/40 bg-black">
                   <video
                     src={feriaVinosVideo}
-                    poster={clientes}
+                    poster={feriaPoster}
                     className="h-full w-full object-cover"
                     controls
                     playsInline
