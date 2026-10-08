@@ -261,8 +261,7 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
     // Redirección directa e instantánea a WhatsApp (evita bloqueos de pop-up en móviles)
     try {
       const isMobile =
-        typeof navigator !== "undefined" &&
-        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
         window.location.href = url;
       } else {
@@ -304,12 +303,14 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
               ¡Último paso para tu mesa! 🍷
             </DialogTitle>
             <DialogDescription className="mt-1 text-xs sm:text-sm text-[color:var(--ink)]/85 max-w-xs leading-relaxed font-medium">
-              Tu mesa <strong>no quedará reservada</strong> hasta que envíes este mensaje al restaurante por WhatsApp.
+              Tu mesa <strong>no quedará reservada</strong> hasta que envíes este mensaje al
+              restaurante por WhatsApp.
             </DialogDescription>
 
             {/* Aviso visual de alerta */}
             <div className="mt-3 w-full rounded-lg bg-amber-500/10 border border-amber-500/30 p-2.5 text-xs text-amber-950 dark:text-amber-200 text-center">
-              ⚠️ <strong>Mesa pendiente:</strong> Tocá el botón verde abajo para enviar el mensaje y confirmar con el restaurante.
+              ⚠️ <strong>Mesa pendiente:</strong> Tocá el botón verde abajo para enviar el mensaje y
+              confirmar con el restaurante.
             </div>
 
             {/* Reservation Summary Box */}
@@ -415,7 +416,8 @@ export function ReservationDialog({ open, onOpenChange, defaultSucursal }: Props
                 Pedí tu reserva
               </DialogTitle>
               <DialogDescription className="text-xs sm:text-sm text-[color:var(--ink)]/75">
-                Completá los datos y te redirigimos directo a WhatsApp para que el restaurante te reserve la mesa.
+                Completá los datos y te redirigimos directo a WhatsApp para que el restaurante te
+                reserve la mesa.
               </DialogDescription>
             </DialogHeader>
 

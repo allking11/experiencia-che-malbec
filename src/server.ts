@@ -43,10 +43,7 @@ export default {
       let req = request;
       const url = new URL(request.url);
       const host =
-        request.headers.get("x-forwarded-host") ||
-        request.headers.get("host") ||
-        url.host ||
-        "";
+        request.headers.get("x-forwarded-host") || request.headers.get("host") || url.host || "";
 
       if (host.toLowerCase().startsWith("links.") && url.pathname === "/") {
         url.pathname = "/links";
