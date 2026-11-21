@@ -86,15 +86,14 @@ const schema = z.object({
     .max(60, "El nombre no puede superar los 60 caracteres"),
   comensales: z
     .number({
-      invalid_type_error: "Ingresá el número de comensales",
+      error: "Ingresá el número de comensales",
     })
     .int("El número de comensales debe ser un entero")
     .min(1, "Ingresá al menos 1 comensal")
     .max(12, "El máximo de comensales por reserva es 12"),
   fecha: z
     .date({
-      required_error: "Elegí una fecha para tu reserva",
-      invalid_type_error: "Elegí una fecha para tu reserva",
+      error: "Elegí una fecha para tu reserva",
     })
     .refine((d) => !isBefore(startOfDay(d), startOfDay(new Date())), {
       message: "La fecha no puede ser en el pasado",

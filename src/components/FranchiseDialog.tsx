@@ -121,9 +121,10 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
     const res = schema.safeParse(formData);
     if (!res.success) {
       const errMap: Record<string, string> = {};
-      res.error.errors.forEach((err) => {
-        if (err.path[0]) {
-          errMap[err.path[0] as string] = err.message;
+      res.error.issues.forEach((err) => {
+        const field = err.path[0];
+        if (typeof field === "string") {
+          errMap[field] = err.message;
         }
       });
       setErrors(errMap);
