@@ -5,7 +5,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import { nitro } from "nitro/vite";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command, isPreview }) => ({
   plugins: [
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tailwindcss(),
@@ -13,6 +13,6 @@ export default defineConfig(({ command }) => ({
       server: { entry: "src/server.ts" },
     }),
     react(),
-    command === "build" ? nitro({ preset: "vercel" }) : null,
+    command === "build" || isPreview ? nitro({ preset: "vercel" }) : null,
   ].filter(Boolean),
 }));

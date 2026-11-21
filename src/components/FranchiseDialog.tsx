@@ -123,7 +123,7 @@ export function FranchiseDialog({ open, onOpenChange }: Props) {
       const errMap: Record<string, string> = {};
       res.error.issues.forEach((err) => {
         const field = err.path[0];
-        if (typeof field === "string") {
+        if (typeof field === "string" && !errMap[field]) {
           errMap[field] = err.message;
         }
       });

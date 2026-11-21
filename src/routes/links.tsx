@@ -10,7 +10,6 @@ export const Route = createFileRoute("/links")({
       {
         rel: "canonical",
         href: `${SITE_URL}/links`,
-        key: "canonical",
       },
     ],
     meta: [
